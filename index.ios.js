@@ -36,7 +36,7 @@ export default class CoinCheckerRN extends React.Component {
                     enableEmptySections
                     ref={'resultListView'}
                     dataSource={this.state.dataSource}
-                    renderRow={(data) => <CoinCell title={'Test1'}></CoinCell> }
+                    renderRow={(data) => <CoinCell coinName={'Test1'} coinPrice={'£1,000'} coinPercentageChange={'-4.2%'}></CoinCell> }
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
                     renderHeader={() => <Header />}
                 />
