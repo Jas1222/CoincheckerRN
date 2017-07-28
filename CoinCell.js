@@ -9,7 +9,7 @@ export default class CoinCell extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>{this.props.title}</Text>
+                <Text style={styles.titleStyle}>{this.props.title}</Text>
             </View>
         );
     }
@@ -17,9 +17,15 @@ export default class CoinCell extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#000000',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#ffffff',
+        alignItems: 'flex-start'
     },
+    titleStyle: {
+        color: '#000000',
+        textAlign: 'center',
+        fontSize: 18,
+        marginBottom: 10,
+        marginTop: 10,
+        marginLeft: 15
+    }
 });

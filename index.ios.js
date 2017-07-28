@@ -6,15 +6,16 @@ import {
     View,
     ListView
 } from 'react-native';
-import { CoinCell } from './CoinCell';
+import CoinCell from './CoinCell';
+import Header from './Header';
 
 export default class CoinCheckerRN extends React.Component {
 
-        constructor(props) {
-            super(props);
-            const dataSource = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
-         this.state = {
-             dataSource: dataSource.cloneWithRows(['row 1', 'row 2']),
+    constructor(props) {
+        super(props);
+        const dataSource = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+        this.state = {
+            dataSource: dataSource.cloneWithRows(['row 1', 'row 2']),
         };
 
         // this._renderRow = this._renderRow.bind(this);
@@ -30,12 +31,14 @@ export default class CoinCheckerRN extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View>
                 <ListView
                     enableEmptySections
                     ref={'resultListView'}
                     dataSource={this.state.dataSource}
-                    renderRow={(data) => <View><Text>{data}</Text></View>}
+                    renderRow={(data) => <CoinCell title={'Test1'}></CoinCell> }
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+                    renderHeader={() => <Header />}
                 />
             </View>
         );
@@ -43,11 +46,10 @@ export default class CoinCheckerRN extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    separator: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: '#8E8E8E',
     },
 });
 
