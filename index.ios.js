@@ -16,24 +16,32 @@ export default class CoinCheckerRN extends React.Component {
         super(props);
         const dataSource = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
         this.state = {
-            dataSource: dataSource.cloneWithRows(['row 1', 'row 2']),
+            dataSource: dataSource.cloneWithRows([]),
         };
 
-        getCryptocurrencyData();
         this._renderRow = this._renderRow.bind(this);
-        this._updateList = this._updateList.bind(this);
-
+        this._getCoinData = this._getCoinData.bind(this);
     }
 
-    _updateList(data) {
-        // this.setState({ dataSource: this.state.dataSource.cloneWithRows(data)});
+    componentWillMount() {
+        this._getCoinData();
+    }
 
+    _getCoinData() {
+        getCryptocurrencyData().then(function(result) {
+
+            const ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+            this.setState({
+                dataSource: ds.cloneWithRows(result),
+                jsonData: result
+            });
+        }.bind(this))
     }
 
 
-    _renderRow() {
+    _renderRow(data) {
         return (
-            <CoinCell coinName={'Bitcoin'} coinPrice={'£1,000'} coinPercentageChange={'-4.2%'}></CoinCell>        )
+            <CoinCell coinName={data.name} coinPrice={data.price_gbp} coinPercentageChange={data.percent_change_1h}></CoinCell>        )
     }
 
     render() {
