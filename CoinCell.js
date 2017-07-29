@@ -4,18 +4,24 @@ import {StyleSheet, Text, View} from 'react-native';
 export default class CoinCell extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            coinName: this.props.coinName,
+            coinPrice: this.props.coinPrice,
+            coinPercentageChange: this.props.coinPercentageChange
+        }
     }
 
     render() {
         return (
             <View>
                 <View style={styles.primaryContainer}>
-                    <Text style={styles.coinName}>{this.props.coinName}</Text>
-                    <Text style={styles.coinPrice}>{this.props.coinPrice}</Text>
+                    <Text style={styles.coinName}>{this.state.coinName}</Text>
+                    <Text style={styles.coinPrice}>{this.state.coinPrice}</Text>
                 </View>
 
                 <View style={styles.secondaryContainer}>
-                    <Text style={styles.coinPercentageChange}>{this.props.coinPercentageChange}</Text>
+                    <Text style={styles.coinPercentageChange}>{this.state.coinPercentageChange}</Text>
                 </View>
             </View>
         );
@@ -44,7 +50,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     coinPercentageChange: {
-        color: '#000000',
+        color: '#A9A9A9',
         fontSize: 12,
         marginBottom: 10,
         marginRight: 15,

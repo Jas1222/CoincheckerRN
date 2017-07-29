@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import CoinCell from './CoinCell';
 import Header from './Header';
+import { getCryptocurrencyData } from './NetworkHandler'
 
 export default class CoinCheckerRN extends React.Component {
 
@@ -18,15 +19,21 @@ export default class CoinCheckerRN extends React.Component {
             dataSource: dataSource.cloneWithRows(['row 1', 'row 2']),
         };
 
-        // this._renderRow = this._renderRow.bind(this);
+        getCryptocurrencyData();
+        this._renderRow = this._renderRow.bind(this);
+        this._updateList = this._updateList.bind(this);
+
+    }
+
+    _updateList(data) {
+        // this.setState({ dataSource: this.state.dataSource.cloneWithRows(data)});
 
     }
 
 
     _renderRow() {
         return (
-            <CoinCell title={"Test1"}></CoinCell>
-        )
+            <CoinCell coinName={'Bitcoin'} coinPrice={'£1,000'} coinPercentageChange={'-4.2%'}></CoinCell>        )
     }
 
     render() {
@@ -36,7 +43,7 @@ export default class CoinCheckerRN extends React.Component {
                     enableEmptySections
                     ref={'resultListView'}
                     dataSource={this.state.dataSource}
-                    renderRow={(data) => <CoinCell coinName={'Test1'} coinPrice={'£1,000'} coinPercentageChange={'-4.2%'}></CoinCell> }
+                    renderRow={this._renderRow}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
                     renderHeader={() => <Header />}
                 />
