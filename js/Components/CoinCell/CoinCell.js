@@ -23,7 +23,7 @@ export default class CoinCell extends React.Component {
                 </View>
 
                 <View style={styles.secondaryContainer}>
-                    <Text style={styles.coinPercentageChange}>{this.state.coinPercentageChange}</Text>
+                    <Text style={styles.coinPercentageChange}>{this.state.coinPercentageChange + '% 24hr'}</Text>
                 </View>
             </View>
         );
@@ -40,14 +40,14 @@ const styles = StyleSheet.create({
     coinName: {
         color: '#000000',
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 22,
         marginTop: 10,
         marginLeft: 15
     },
     coinPrice: {
         color: '#000000',
         marginTop: 10,
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
         marginRight: 15
     },
