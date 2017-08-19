@@ -28,7 +28,7 @@ export default class CoinCheckerRN extends React.Component {
     }
 
     _getCoinData() {
-        getCryptocurrencyData().then(function(result) {
+        getCryptocurrencyData(null).then(function(result) {
 
             const ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
             this.setState({
@@ -41,7 +41,8 @@ export default class CoinCheckerRN extends React.Component {
 
     _renderRow(data) {
         return (
-            <CoinCell coinName={data.name} coinPrice={data.price_gbp} coinPercentageChange={data.percent_change_1h}></CoinCell>        )
+            <CoinCell coinName={data.name} coinPrice={data.price_gbp} coinPercentageChange={data.percent_change_1h}></CoinCell>
+        )
     }
 
     render() {
