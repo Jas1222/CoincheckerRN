@@ -1,53 +1,72 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from 'react';
+import React from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
+    AppRegistry,
+    StyleSheet,
+    Text,
+    View,
+    ListView
 } from 'react-native';
+import CoinCell from './js/Components/CoinCell/CoinCell';
+import Header from './Header';
+import { getCryptocurrencyData } from './NetworkHandler'
 
-export default class CoincheckerRN extends Component {
+export default class CoinCheckerRN extends React.Component {
+
+  constructor(props) {
+    super(props);
+    const dataSource = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+    this.state = {
+      dataSource: dataSource.cloneWithRows([]),
+    };
+
+    this._renderRow = this._renderRow.bind(this);
+    this._getCoinData = this._getCoinData.bind(this);
+  }
+
+  componentWillMount() {
+    this._getCoinData();
+  }
+
+  _getCoinData() {
+    getCryptocurrencyData().then(function(result) {
+
+      const ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
+      this.setState({
+        dataSource: ds.cloneWithRows(result),
+        jsonData: result
+      });
+    }.bind(this))
+  }
+
+
+  _renderRow(data) {
+    return (
+        <CoinCell coinName={data.name} coinPrice={data.price_gbp} coinPercentageChange={data.percent_change_1h}></CoinCell>        )
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
-      </View>
+        <View>
+          <ListView
+              enableEmptySections
+              ref={'resultListView'}
+              dataSource={this.state.dataSource}
+              renderRow={this._renderRow}
+              renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+              renderHeader={() => <Header />}
+          />
+        </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  separator: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
   },
 });
 
-AppRegistry.registerComponent('CoincheckerRN', () => CoincheckerRN);
+
+AppRegistry.registerComponent('CoincheckerRN', () => CoinCheckerRN);
