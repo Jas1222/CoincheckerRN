@@ -6,7 +6,7 @@ import {
     View,
     ListView
 } from 'react-native';
-import CoinCell from './CoinCell';
+import CoinCell from './js/Components/CoinCell/CoinCell';
 import Header from './Header';
 import { getCryptocurrencyData } from './NetworkHandler'
 
