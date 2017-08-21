@@ -41,8 +41,15 @@ export default class CoinCheckerRN extends React.Component {
 
   _renderRow(data) {
     return (
-        <CoinCell coinName={data.name} coinPrice={data.price_gbp} coinPercentageChange={data.percent_change_1h}></CoinCell>        )
+        <CoinCell coinName={data.name} coinPrice={data.price_gbp} coinPercentageChange={data.percent_change_24h}></CoinCell>        )
   }
+
+  _renderHeader() {
+    return (
+        <Header />
+    )
+  }
+
 
   render() {
     return (
@@ -53,7 +60,7 @@ export default class CoinCheckerRN extends React.Component {
               dataSource={this.state.dataSource}
               renderRow={this._renderRow}
               renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-              renderHeader={() => <Header />}
+              renderHeader={() => this._renderHeader()}
           />
         </View>
     );

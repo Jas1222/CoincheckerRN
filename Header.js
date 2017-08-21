@@ -1,5 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View,
+    Text,
+    StyleSheet,
+    TextInput,
+    Picker} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -10,7 +14,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#03A9F4',
     },
     title: {
-        height: 20,
+        height: 40,
         marginTop: 10,
         fontSize: 16,
         fontWeight: 'bold',
@@ -18,10 +22,43 @@ const styles = StyleSheet.create({
     },
 });
 
-const Header = (props) => (
-    <View style={styles.container}>
-        <Text style={styles.title}>{"Coin-checker"}</Text>
-    </View>
-);
+export default class Header extends React.Component {
+    constructor(props) {
+        super(props);
 
-export default Header;
+        this.state = {
+            language: null,
+        }
+    }
+
+    _renderPicker() {
+        return (
+            <View>
+                <Picker
+                    selectedValue={this.state.language}
+                    onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}
+                    style={{height: 40, width: 100, color: '#FFF' }}>
+                    <Picker.Item label="Java" value="java" />
+                    <Picker.Item label="JavaScript" value="js" />
+                </Picker>
+            </View>
+        )
+    }
+
+    _renderHeader() {
+        return (
+            <View style={styles.container}>
+                { this._renderPicker() }
+            </View>
+        )
+    }
+
+    render() {
+        return (
+            <View>
+                { this._renderHeader()}
+            </View>
+        );
+    }
+}
+
