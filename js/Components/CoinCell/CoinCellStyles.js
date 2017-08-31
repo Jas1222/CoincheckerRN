@@ -1,5 +1,5 @@
 // /**
-//  * @providesModule MenuDetailStyles
+//  * @providesModule CoinCellStyles
 //  */
 
 import { StyleSheet } from 'react-native';
