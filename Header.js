@@ -1,9 +1,10 @@
 import React from 'react';
-import { View,
+import {
+    View,
     Text,
     StyleSheet,
-    TextInput,
-    Picker} from 'react-native';
+    TextInput
+} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -14,9 +15,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#03A9F4',
     },
     title: {
-        height: 40,
-        marginTop: 10,
-        fontSize: 16,
+        height: 30,
+        marginTop: 5,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#ffffff'
     },
@@ -34,13 +35,8 @@ export default class Header extends React.Component {
     _renderPicker() {
         return (
             <View>
-                <Picker
-                    selectedValue={this.state.language}
-                    onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}
-                    style={{height: 40, width: 100, color: '#FFF' }}>
-                    <Picker.Item label="Java" value="java" />
-                    <Picker.Item label="JavaScript" value="js" />
-                </Picker>
+                <Text
+                style={styles.title}>Coin-Checker</Text>
             </View>
         )
     }
