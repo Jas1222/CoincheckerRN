@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import CoinCell from './js/Components/CoinCell/CoinCell';
 import Header from './Header';
-import {getCryptocurrencyData} from './NetworkHandler'
+import {getCryptocurrencyData} from './js/NetworkHandler'
 
 export default class App extends React.Component {
 
