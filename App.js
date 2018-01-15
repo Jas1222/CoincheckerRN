@@ -4,7 +4,7 @@ import {
     StyleSheet,
     Text,
     View,
-    ListView,
+    FlatList,
     RefreshControl
 } from 'react-native';
 import CoinCell from './js/Components/CoinCell/CoinCell';
@@ -15,42 +15,45 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        const dataSource = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
         this.state = {
-            dataSource: dataSource.cloneWithRows([]),
-            refreshing: false
+            data: [],
+            refreshing: false,
+            loading: false
         };
 
         this._renderRow = this._renderRow.bind(this);
         this._getCoinData = this._getCoinData.bind(this);
+        this._onRefresh = this._onRefresh.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._getCoinData();
     }
 
     _getCoinData() {
         return new Promise((resolve) => {
+            this.setState({loading: true});
+
             getCryptocurrencyData()
-                .then(function (result) {
-                    const ds = new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2});
-                    console.log('!!!', result)
+                .then((result) => {
                     this.setState({
-                        dataSource: ds.cloneWithRows(result),
-                        jsonData: result
+                        loading: false,
+                        refreshing: false,
+                        data: result,
                     });
                     resolve();
-                }.bind(this))
+                })
         });
     }
 
 
     _renderRow(data) {
+        console.log('!!! percent change in list', data.item.percent_change_24h)
         return (
             <CoinCell
-                coinName={data.name}
-                coinPrice={data.price_gbp}
-                coinPercentageChange={data.percent_change_24h}>
+                coinName={data.item.name}
+                coinPrice={data.item.price_gbp}
+                coinPercentageChange={data.item.percent_change_24h}>
             </CoinCell>)
     }
 
@@ -68,33 +71,30 @@ export default class App extends React.Component {
             });
     }
 
+    _renderSeparator() {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: "100%",
+                    backgroundColor: "#CED0CE",
+                }}
+            />
+        );
+    };
+
 
     render() {
         return (
-            <View>
-                <ListView
-                    enableEmptySections
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.state.refreshing}
-                            onRefresh={this._onRefresh.bind(this)}
-                        />
-                    }
-                    ref={'resultListView'}
-                    dataSource={this.state.dataSource}
-                    renderRow={this._renderRow}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator}/>}
-                    renderHeader={() => this._renderHeader()}
-                />
-            </View>
+            <FlatList
+                data={this.state.data}
+                onRefresh={this._onRefresh}
+                refreshing={this.state.refreshing}
+                extraData={this.state}
+                renderItem={this._renderRow}
+                ListHeaderComponent={this._renderHeader()}
+                ItemSeparatorComponent={this._renderSeparator}
+            />
         );
     }
 }
-
-const styles = StyleSheet.create({
-    separator: {
-        flex: 1,
-        height: StyleSheet.hairlineWidth,
-        backgroundColor: '#8E8E8E',
-    },
-});
