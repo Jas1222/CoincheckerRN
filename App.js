@@ -48,7 +48,6 @@ export default class App extends React.Component {
 
 
     _renderRow(data) {
-        console.log('!!! percent change in list', data.item.percent_change_24h)
         return (
             <CoinCell
                 coinName={data.item.name}
@@ -94,6 +93,8 @@ export default class App extends React.Component {
                 renderItem={this._renderRow}
                 ListHeaderComponent={this._renderHeader()}
                 ItemSeparatorComponent={this._renderSeparator}
+                keyExtractor={item => item.id}
+
             />
         );
     }
