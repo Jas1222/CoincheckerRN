@@ -50,9 +50,9 @@ export default class App extends React.Component {
     _renderRow(data) {
         return (
             <CoinCell
-                coinName={data.item.name}
-                coinPrice={data.item.price_gbp}
-                coinPercentageChange={data.item.percent_change_24h}>
+                name={data.item.name}
+                price={data.item.price_gbp}
+                percentChange={data.item.percent_change_24h}>
             </CoinCell>)
     }
 
