@@ -1,7 +1,3 @@
-/**
- * @providesModule Header
- * @flow
- */
 import React from 'react';
 import {
     View,

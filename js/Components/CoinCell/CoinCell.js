@@ -9,25 +9,35 @@ export default class CoinCell extends React.Component {
     constructor(props) {
         super(props);
 
-        let roundedNumber = Math.round(this.props.coinPrice * 100) / 100
-
         this.state = {
-            coinName: this.props.coinName,
-            coinPrice: roundedNumber,
-            coinPercentageChange: this.props.coinPercentageChange
+            name: this.props.name,
+            price: this.roundNumber(this.props.price),
+            percentChange: this.props.percentChange
         }
+    }
+
+    componentWillReceiveProps() {
+        this.setState({
+            name: this.props.name,
+            price: this.roundNumber(this.props.price),
+            percentChange: this.props.percentChange
+        });
+    }
+
+    roundNumber(price) {
+        return Math.round(price * 100) / 100;
     }
 
     render() {
         return (
             <View>
                 <View style={styles.primaryContainer}>
-                    <Text style={styles.coinName}>{this.state.coinName}</Text>
-                    <Text style={styles.coinPrice}>{"£" + this.state.coinPrice}</Text>
+                    <Text style={styles.coinName}>{this.state.name}</Text>
+                    <Text style={styles.coinPrice}>{"£" + this.state.price}</Text>
                 </View>
 
                 <View style={styles.secondaryContainer}>
-                    <Text style={styles.coinPercentageChange}>{this.state.coinPercentageChange + '% 24hr'}</Text>
+                    <Text style={styles.coinPercentageChange}>{this.state.percentChange + '% 24h'}</Text>
                 </View>
             </View>
         );
