@@ -13,9 +13,9 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 8,
+        padding: 10,
         flexDirection: 'row',
-        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: '#03A9F4',
     },
     title: {
@@ -40,7 +40,7 @@ export default class Header extends React.Component {
         return (
             <View>
                 <Text
-                style={styles.title}>Coin-Checker</Text>
+                style={styles.title}>COIN-CHECK</Text>
             </View>
         )
     }

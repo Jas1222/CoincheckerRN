@@ -12,7 +12,8 @@ export default class CoinCell extends React.Component {
         this.state = {
             name: this.props.name,
             price: this.roundNumber(this.props.price),
-            percentChange: this.props.percentChange
+            percentChange: this.props.percentChange,
+            symbol: this.props.symbol
         }
     }
 
@@ -20,12 +21,23 @@ export default class CoinCell extends React.Component {
         this.setState({
             name: this.props.name,
             price: this.roundNumber(this.props.price),
-            percentChange: this.props.percentChange
+            percentChange: this.props.percentChange,
+            symbol: this.props.symbol
         });
     }
 
     roundNumber(price) {
         return Math.round(price * 100) / 100;
+    }
+
+    formatPercentColor() {
+        const percent = this.state.percentChange;
+
+        if (percent.charAt(0) == '-') {
+            return styles.negativePercent;
+        } else {
+            return styles.positivePercent;
+        }
     }
 
     render() {
@@ -37,7 +49,8 @@ export default class CoinCell extends React.Component {
                 </View>
 
                 <View style={styles.secondaryContainer}>
-                    <Text style={styles.coinPercentageChange}>{this.state.percentChange + '% 24h'}</Text>
+                    <Text style={styles.symbol}>{'(' + this.state.symbol + ')'}</Text>
+                    <Text style={this.formatPercentColor()}>{this.state.percentChange + '% 24h'}</Text>
                 </View>
             </View>
         );
@@ -47,7 +60,7 @@ export default class CoinCell extends React.Component {
 const styles = StyleSheet.create({
     primaryContainer: {
         flex: 1,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#FFFF',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -56,7 +69,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 22,
         marginTop: 10,
-        marginLeft: 15
+        marginLeft: 15,
+        marginBottom: 3
     },
     coinPrice: {
         color: '#000000',
@@ -65,18 +79,31 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginRight: 15
     },
-    coinPercentageChange: {
-        color: '#A9A9A9',
-        fontSize: 12,
+    positivePercent: {
+        color: '#3D9970',
+        fontSize: 13,
         marginBottom: 10,
         marginRight: 15,
-        fontStyle: 'italic'
+        fontWeight: 'bold',
 
     },
-    secondaryContainer: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
+    negativePercent: {
+        color: '#FF4136',
+        fontSize: 13,
+        marginBottom: 10,
+        marginRight: 15,
+        fontWeight: 'bold',
     },
+    secondaryContainer: {
+        backgroundColor: '#FFFF',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    symbol: {
+        fontSize: 13,
+        justifyContent: 'flex-start',
+        marginLeft: 15,
+
+    }
 });

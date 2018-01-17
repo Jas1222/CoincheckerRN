@@ -1,7 +1,7 @@
 var url ='https://api.coinmarketcap.com/v1/ticker/?convert=';
 const currencyType = 'gbp';
 const limit = '&limit=';
-const numberOfReturnsCrypto = 40;
+const numberOfReturnsCrypto = 25;
 url += currencyType + limit + numberOfReturnsCrypto;
 
 export function getCryptocurrencyData() {

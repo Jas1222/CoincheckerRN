@@ -52,7 +52,8 @@ export default class App extends React.Component {
             <CoinCell
                 name={data.item.name}
                 price={data.item.price_gbp}
-                percentChange={data.item.percent_change_24h}>
+                percentChange={data.item.percent_change_24h}
+                symbol={data.item.symbol}>
             </CoinCell>)
     }
 
