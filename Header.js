@@ -21,12 +21,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: '#03A9F4',
-        height: 30
     },
     title: {
-        height: 30,
-        marginTop: 5,
         fontSize: 20,
+        marginTop: 8,
         fontWeight: 'bold',
         color: '#ffffff'
     },
@@ -40,7 +38,7 @@ export default class Header extends React.Component {
 
         this.state = {
             language: null,
-            height: 500,
+            height: 60,
             expanded: false,
         }
     }
@@ -59,7 +57,7 @@ export default class Header extends React.Component {
     }
 
     _onPress() {
-        LayoutAnimation.spring();
+        LayoutAnimation.easeInEaseOut();
 
         if (this.state.expanded) {
             this.setState({
