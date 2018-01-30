@@ -11,12 +11,12 @@ import {
     Animated,
     TouchableOpacity,
     LayoutAnimation,
-    UIManager
+    UIManager,
+    Picker
 } from 'react-native';
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    titleContainer: {
         padding: 10,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -28,7 +28,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#ffffff'
     },
+    hourPicker: {
+        color: '#ffffff',
+        width: '40%',
+        marginLeft: 50
+    },
+    pickerOptions: {
+        fontWeight: 'bold',
+    }
 });
+
+const headerOffset = 150;
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -40,17 +50,20 @@ export default class Header extends React.Component {
             language: null,
             height: 60,
             expanded: false,
+            timeFormat: 'percent_change_24h',
+            currency: 'GBP',
+            numberOfCoins: 20
         }
     }
 
     _renderTitle() {
-        const coinText = <Text style={[styles.title, ]}>COIN-CHECK</Text>;
+        const coinText = <Text style={[styles.title,]}>COIN-CHECK</Text>;
         const settingsTest = <Text style={[styles.title, {textDecorationLine: 'underline'}]}>SETTINGS</Text>;
 
         let titleText = this.state.expanded ? settingsTest : coinText;
 
         return (
-            <View>
+            <View style={[styles.titleContainer]}>
                 {titleText}
             </View>
         )
@@ -61,7 +74,7 @@ export default class Header extends React.Component {
 
         if (this.state.expanded) {
             this.setState({
-                height: this.state.height - 150,
+                height: this.state.height - headerOffset,
                 expanded: false
             })
         } else {
@@ -76,11 +89,50 @@ export default class Header extends React.Component {
         });
     }
 
+    _renderSettingsContainer() {
+        if (this.state.expanded) {
+            return <View>
+                <Picker
+                    style={ styles.hourPicker }
+                    selectedValue={ this.state.timeFormat }
+                    mode={"dropdown"}
+                    onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
+                    <Picker.Item label="1 Hour" value="percent_change_1h"/>
+                    <Picker.Item label="24 Hour" value="percent_change_24h"/>
+                    <Picker.Item label="7 day" value="percent_change_7d"/>
+                </Picker>
+
+                <Picker
+                    style={ styles.hourPicker }
+                    selectedValue={ this.state.currency }
+                    mode={"dropdown"}
+                    onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
+                    <Picker.Item label="GBP" value="price_gbp"/>
+                    <Picker.Item label="EUR" value="price_eur"/>
+                    <Picker.Item label="USD" value="price_usd"/>
+                </Picker>
+
+                <Picker
+                    style={ styles.hourPicker }
+                    selectedValue={ this.state.numberOfCoins }
+                    mode={"dropdown"}
+                    onValueChange={(itemValue, itemIndex) => this.setState({numberOfCoins: itemValue})}>
+                    <Picker.Item label="10" value="10"/>
+                    <Picker.Item label="20" value="20"/>
+                    <Picker.Item label="30" value="30"/>
+                </Picker>
+
+
+            </View>
+        }
+    }
+
     _renderHeader() {
         return (
             <TouchableOpacity onPress={this._onPress.bind(this)}>
-                <View style={[styles.container, {height: this.state.height}]}>
+                <View style={[{height: this.state.height}, {backgroundColor: '#03A9F4'}]}>
                     { this._renderTitle() }
+                    { this._renderSettingsContainer() }
                 </View>
             </TouchableOpacity>
         )
