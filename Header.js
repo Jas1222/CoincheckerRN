@@ -15,26 +15,41 @@ import {
     Picker
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Feather';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const styles = StyleSheet.create({
     titleContainer: {
         padding: 10,
+        // backgroundColor: '#000000',
         flexDirection: 'row',
-        justifyContent: 'center',
         backgroundColor: '#03A9F4',
+        justifyContent: 'center'
     },
     title: {
         fontSize: 20,
         marginTop: 8,
         fontWeight: 'bold',
-        color: '#ffffff'
+        color: '#ffffff',
+        alignSelf: 'center'
     },
     hourPicker: {
         color: '#ffffff',
         width: '40%',
-        marginLeft: 50
+        marginLeft: 20,
     },
     pickerOptions: {
         fontWeight: 'bold',
+    },
+    clockIcon: {
+        marginTop: 15,
+        marginLeft: 20
+    },
+    rowFormat: {
+        flexDirection: 'row'
+    },
+    settingsIcon: {
+        alignSelf: 'flex-end'
     }
 });
 
@@ -65,6 +80,7 @@ export default class Header extends React.Component {
         return (
             <View style={[styles.titleContainer]}>
                 {titleText}
+                <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon } onPress={this._onPress.bind(this)}/>
             </View>
         )
     }
@@ -92,36 +108,45 @@ export default class Header extends React.Component {
     _renderSettingsContainer() {
         if (this.state.expanded) {
             return <View>
-                <Picker
-                    style={ styles.hourPicker }
-                    selectedValue={ this.state.timeFormat }
-                    mode={"dropdown"}
-                    onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
-                    <Picker.Item label="1 Hour" value="percent_change_1h"/>
-                    <Picker.Item label="24 Hour" value="percent_change_24h"/>
-                    <Picker.Item label="7 day" value="percent_change_7d"/>
-                </Picker>
 
-                <Picker
-                    style={ styles.hourPicker }
-                    selectedValue={ this.state.currency }
-                    mode={"dropdown"}
-                    onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
-                    <Picker.Item label="GBP" value="price_gbp"/>
-                    <Picker.Item label="EUR" value="price_eur"/>
-                    <Picker.Item label="USD" value="price_usd"/>
-                </Picker>
+                <View style={ styles.rowFormat }>
+                    <Icon name="clock" size={20} color="#FFFFFF" style={styles.clockIcon}/>
+                    <Picker
+                        style={ styles.hourPicker }
+                        selectedValue={ this.state.timeFormat }
+                        mode={"dropdown"}
+                        onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
+                        <Picker.Item label="1 Hour" value="percent_change_1h"/>
+                        <Picker.Item label="24 Hour" value="percent_change_24h"/>
+                        <Picker.Item label="7 day" value="percent_change_7d"/>
+                    </Picker>
+                </View>
 
-                <Picker
-                    style={ styles.hourPicker }
-                    selectedValue={ this.state.numberOfCoins }
-                    mode={"dropdown"}
-                    onValueChange={(itemValue, itemIndex) => this.setState({numberOfCoins: itemValue})}>
-                    <Picker.Item label="10" value="10"/>
-                    <Picker.Item label="20" value="20"/>
-                    <Picker.Item label="30" value="30"/>
-                </Picker>
+                <View style={ styles.rowFormat }>
+                    <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.clockIcon}/>
+                    <Picker
+                        style={ styles.hourPicker }
+                        selectedValue={ this.state.currency }
+                        mode={"dropdown"}
+                        onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
+                        <Picker.Item label="GBP" value="price_gbp"/>
+                        <Picker.Item label="EUR" value="price_eur"/>
+                        <Picker.Item label="USD" value="price_usd"/>
+                    </Picker>
+                </View>
 
+                <View style={ styles.rowFormat }>
+                    <Icon name="hash" size={20} color="#FFFFFF" style={styles.clockIcon}/>
+                    <Picker
+                        style={ styles.hourPicker }
+                        selectedValue={ this.state.numberOfCoins }
+                        mode={"dropdown"}
+                        onValueChange={(itemValue, itemIndex) => this.setState({numberOfCoins: itemValue})}>
+                        <Picker.Item label="10" value="10"/>
+                        <Picker.Item label="20" value="20"/>
+                        <Picker.Item label="30" value="30"/>
+                    </Picker>
+                </View>
 
             </View>
         }
@@ -129,12 +154,10 @@ export default class Header extends React.Component {
 
     _renderHeader() {
         return (
-            <TouchableOpacity onPress={this._onPress.bind(this)}>
                 <View style={[{height: this.state.height}, {backgroundColor: '#03A9F4'}]}>
                     { this._renderTitle() }
                     { this._renderSettingsContainer() }
                 </View>
-            </TouchableOpacity>
         )
     }
 
