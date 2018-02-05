@@ -21,10 +21,9 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 const styles = StyleSheet.create({
     titleContainer: {
         padding: 10,
-        // backgroundColor: '#000000',
         flexDirection: 'row',
         backgroundColor: '#03A9F4',
-        justifyContent: 'center'
+        justifyContent: 'space-between'
     },
     title: {
         fontSize: 20,
@@ -41,7 +40,7 @@ const styles = StyleSheet.create({
     pickerOptions: {
         fontWeight: 'bold',
     },
-    clockIcon: {
+    icon: {
         marginTop: 15,
         marginLeft: 20
     },
@@ -79,13 +78,14 @@ export default class Header extends React.Component {
 
         return (
             <View style={[styles.titleContainer]}>
+                <View></View>
                 {titleText}
-                <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon } onPress={this._onPress.bind(this)}/>
+                <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon } onPress={this._onSettingsPress.bind(this)}/>
             </View>
         )
     }
 
-    _onPress() {
+    _onSettingsPress() {
         LayoutAnimation.easeInEaseOut();
 
         if (this.state.expanded) {
@@ -95,7 +95,7 @@ export default class Header extends React.Component {
             })
         } else {
             this.setState({
-                height: this.state.height + 150,
+                height: this.state.height + headerOffset,
                 expanded: true
             })
         }
@@ -110,12 +110,12 @@ export default class Header extends React.Component {
             return <View>
 
                 <View style={ styles.rowFormat }>
-                    <Icon name="clock" size={20} color="#FFFFFF" style={styles.clockIcon}/>
+                    <Icon name="clock" size={20} color="#FFFFFF" style={styles.icon}/>
                     <Picker
                         style={ styles.hourPicker }
                         selectedValue={ this.state.timeFormat }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
+                        onValueChange={(itemValue, itemIndex) => this._updateFilterValues(itemValue)}>
                         <Picker.Item label="1 Hour" value="percent_change_1h"/>
                         <Picker.Item label="24 Hour" value="percent_change_24h"/>
                         <Picker.Item label="7 day" value="percent_change_7d"/>
@@ -123,20 +123,20 @@ export default class Header extends React.Component {
                 </View>
 
                 <View style={ styles.rowFormat }>
-                    <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.clockIcon}/>
+                    <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.icon}/>
                     <Picker
                         style={ styles.hourPicker }
                         selectedValue={ this.state.currency }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
-                        <Picker.Item label="GBP" value="price_gbp"/>
-                        <Picker.Item label="EUR" value="price_eur"/>
-                        <Picker.Item label="USD" value="price_usd"/>
+                        onValueChange={(itemValue, itemIndex) => this._updateFilterValues(itemValue)}>
+                        <Picker.Item label="GBP" value="gbp"/>
+                        <Picker.Item label="EUR" value="eur"/>
+                        <Picker.Item label="USD" value="usd"/>
                     </Picker>
                 </View>
 
                 <View style={ styles.rowFormat }>
-                    <Icon name="hash" size={20} color="#FFFFFF" style={styles.clockIcon}/>
+                    <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon}/>
                     <Picker
                         style={ styles.hourPicker }
                         selectedValue={ this.state.numberOfCoins }
@@ -145,6 +145,8 @@ export default class Header extends React.Component {
                         <Picker.Item label="10" value="10"/>
                         <Picker.Item label="20" value="20"/>
                         <Picker.Item label="30" value="30"/>
+                        <Picker.Item label="40" value="40"/>
+                        <Picker.Item label="50" value="50"/>
                     </Picker>
                 </View>
 
