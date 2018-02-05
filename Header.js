@@ -115,7 +115,7 @@ export default class Header extends React.Component {
                         style={ styles.hourPicker }
                         selectedValue={ this.state.timeFormat }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this._updateFilterValues(itemValue)}>
+                        onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
                         <Picker.Item label="1 Hour" value="percent_change_1h"/>
                         <Picker.Item label="24 Hour" value="percent_change_24h"/>
                         <Picker.Item label="7 day" value="percent_change_7d"/>
@@ -128,7 +128,7 @@ export default class Header extends React.Component {
                         style={ styles.hourPicker }
                         selectedValue={ this.state.currency }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this._updateFilterValues(itemValue)}>
+                        onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
                         <Picker.Item label="GBP" value="gbp"/>
                         <Picker.Item label="EUR" value="eur"/>
                         <Picker.Item label="USD" value="usd"/>
