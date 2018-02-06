@@ -59,7 +59,8 @@ export default class App extends React.Component {
 
     _renderHeader() {
         return (
-            <Header />
+            <Header
+                refresh={this._onRefresh}/>
         )
     }
 
