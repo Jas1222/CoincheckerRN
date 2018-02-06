@@ -32,23 +32,28 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         alignSelf: 'center'
     },
-    hourPicker: {
+    dropdown: {
         color: '#ffffff',
         width: '40%',
         marginLeft: 20,
-    },
-    pickerOptions: {
-        fontWeight: 'bold',
     },
     icon: {
         marginTop: 15,
         marginLeft: 20
     },
     rowFormat: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     settingsIcon: {
         alignSelf: 'flex-end'
+    },
+    settingsLabels: {
+        color: '#FFFFFF',
+        fontSize: 15,
+        marginLeft: 25,
+        marginTop: 15,
+        flex: 1
     }
 });
 
@@ -80,7 +85,8 @@ export default class Header extends React.Component {
             <View style={[styles.titleContainer]}>
                 <View></View>
                 {titleText}
-                <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon } onPress={this._onSettingsPress.bind(this)}/>
+                <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon }
+                      onPress={this._onSettingsPress.bind(this)}/>
             </View>
         )
     }
@@ -111,8 +117,9 @@ export default class Header extends React.Component {
 
                 <View style={ styles.rowFormat }>
                     <Icon name="clock" size={20} color="#FFFFFF" style={styles.icon}/>
+                    <Text style={styles.settingsLabels}> Time Period </Text>
                     <Picker
-                        style={ styles.hourPicker }
+                        style={ styles.dropdown }
                         selectedValue={ this.state.timeFormat }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
@@ -124,8 +131,9 @@ export default class Header extends React.Component {
 
                 <View style={ styles.rowFormat }>
                     <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.icon}/>
+                    <Text style={styles.settingsLabels}> Currency </Text>
                     <Picker
-                        style={ styles.hourPicker }
+                        style={ styles.dropdown }
                         selectedValue={ this.state.currency }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
@@ -137,8 +145,9 @@ export default class Header extends React.Component {
 
                 <View style={ styles.rowFormat }>
                     <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon}/>
+                    <Text style={styles.settingsLabels}> Number of Coins</Text>
                     <Picker
-                        style={ styles.hourPicker }
+                        style={ styles.dropdown }
                         selectedValue={ this.state.numberOfCoins }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.setState({numberOfCoins: itemValue})}>
@@ -156,10 +165,10 @@ export default class Header extends React.Component {
 
     _renderHeader() {
         return (
-                <View style={[{height: this.state.height}, {backgroundColor: '#03A9F4'}]}>
-                    { this._renderTitle() }
-                    { this._renderSettingsContainer() }
-                </View>
+            <View style={[{height: this.state.height}, {backgroundColor: '#03A9F4'}]}>
+                { this._renderTitle() }
+                { this._renderSettingsContainer() }
+            </View>
         )
     }
 
