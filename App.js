@@ -7,9 +7,9 @@ import {
     FlatList,
     RefreshControl
 } from 'react-native';
-import CoinCell from './js/Components/CoinCell/CoinCell';
-import Header from './Header';
-import {getCryptocurrencyData} from './js/NetworkHandler'
+import CoinCell from 'CoinCell';
+import Header from 'Header';
+import {getCryptocurrencyData} from 'NetworkHandler'
 
 export default class App extends React.Component {
 
@@ -27,23 +27,23 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        console.log('!!!!!componentdidmount');
+
         this._getCoinData();
     }
 
-    _getCoinData() {
-        return new Promise((resolve) => {
-            this.setState({loading: true});
+    async _getCoinData() {
+        console.log('!!!!!getcoinata');
 
-            getCryptocurrencyData()
-                .then((result) => {
-                    this.setState({
-                        loading: false,
-                        refreshing: false,
-                        data: result,
-                    });
-                    resolve();
-                })
-        });
+        this.setState({loading: true});
+
+        const result = await getCryptocurrencyData();
+        console.log('!!!!!result', result);
+        this.setState({
+            loading: false,
+            refreshing: false,
+            data: result,
+        })
     }
 
 
@@ -64,12 +64,9 @@ export default class App extends React.Component {
         )
     }
 
-    _onRefresh() {
+    async _onRefresh() {
         this.setState({refreshing: true});
-        this._getCoinData()
-            .then(() => {
-                this.setState({refreshing: false});
-            });
+        await this._getCoinData();
     }
 
     _renderSeparator() {
