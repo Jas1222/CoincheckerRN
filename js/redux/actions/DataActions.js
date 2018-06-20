@@ -3,12 +3,11 @@
  * @flow
  */
 import { getCryptocurrencyData } from 'NetworkHandler';
-
-export const DATA_AVAILABLE = 'DATA_AVAILABLE';
+import { DATA_AVAILABLE } from 'CoinActionTypes';
 
 export function getData() {
-    return (dispatch) => {
-        const data =
-        dispatch({type: DATA_AVAILABLE, data})
+    return async (dispatch) => {
+        const result = await getCryptocurrencyData();
+        dispatch({type: DATA_AVAILABLE, result})
     }
 }

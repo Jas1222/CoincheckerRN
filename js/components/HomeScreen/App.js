@@ -8,8 +8,8 @@ import {
     RefreshControl
 } from 'react-native';
 import CoinCell from 'CoinCell';
-import Header from 'Header';
-import {getCryptocurrencyData} from 'NetworkHandler'
+import Header from './Header';
+import { getCryptocurrencyData } from 'NetworkHandler'
 
 export default class App extends React.Component {
 
@@ -27,18 +27,14 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        console.log('!!!!!componentdidmount');
-
         this._getCoinData();
     }
 
     async _getCoinData() {
-        console.log('!!!!!getcoinata');
-
         this.setState({loading: true});
 
         const result = await getCryptocurrencyData();
-        console.log('!!!!!result', result);
+        console.log('!!!!! result', result)
         this.setState({
             loading: false,
             refreshing: false,
