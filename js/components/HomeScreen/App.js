@@ -34,7 +34,7 @@ export default class App extends React.Component {
         this.setState({loading: true});
 
         const result = await getCryptocurrencyData();
-        console.log('!!!!! result', result)
+        
         this.setState({
             loading: false,
             refreshing: false,

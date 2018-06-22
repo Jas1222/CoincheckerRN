@@ -5,8 +5,6 @@ import thunk from 'redux-thunk';
 
 export default function configureStore() {
     const createAppStore = compose(applyMiddleware(thunk))(createStore);
-
-
 }
 
 
