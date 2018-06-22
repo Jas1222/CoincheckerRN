@@ -1,3 +1,8 @@
+/**
+ * @providesModule RootReducer
+ * @flow
+ */
+
 import { combineReducers } from 'redux';
 import { coinReducer  } from 'CoinReducer';
 

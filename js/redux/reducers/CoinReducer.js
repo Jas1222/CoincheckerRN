@@ -1,4 +1,9 @@
-import { DATA_AVAILABLE, CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS } from 'CoinActionTypes';
+/**
+ * @providesModule CoinReducer
+ * @flow
+ */
+
+import { COIN_LIST_DATA, CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS } from 'CoinActionTypes';
 
 const initialState = {
     currencyType: 'gbp',
@@ -7,21 +12,24 @@ const initialState = {
 
 export function coinReducer(state = initialState, action) {
     switch(action.type) {
-        case DATA_AVAILABLE: {
+        case COIN_LIST_DATA: {
             return {
-                ...state
+                ...state,
+                coinData: action.result
             }
         }
         case CHANGE_CURRENCY_TYPE: {
             return {
-                currencyType: action.body
+                ...state,
             }
         }
         case CHANGE_NUMBER_COINS: {
             return {
-                ...state
+                ...state,
             }
         }
+        default:
+            return state
 
     }
 }
