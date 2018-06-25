@@ -3,11 +3,15 @@
  * @flow
  */
 
-import { createStore, applyMiddleware, compose } from 'redux';
-import { combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { rootReducer } from 'RootReducer';
 import thunk from 'redux-thunk';
 
-export default createStore(rootReducer, applyMiddleware(thunk));
+let store = null;
 
-
+export function getStore() {
+    if (!store) {
+        store = createStore(rootReducer, applyMiddleware(thunk));
+    } 
+    return store;
+}

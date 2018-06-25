@@ -9,11 +9,8 @@ import {
     RefreshControl
 } from 'react-native';
 import  Home from 'Home';
-import { getCryptocurrencyData } from 'NetworkHandler'
-import { getData } from 'DataActions';
 import { Provider } from 'react-redux';
-import store from 'GlobalStore';
-
+import { getStore } from 'GlobalStore';
 
 export default class App extends React.Component {
 
@@ -23,7 +20,7 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <Provider store={store}>
+            <Provider store={getStore()}>
                 <Home/>
             </Provider>
         );

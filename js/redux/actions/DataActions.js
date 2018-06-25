@@ -2,12 +2,17 @@
  * @providesModule DataActions
  * @flow
  */
-import { getCryptocurrencyData } from 'NetworkHandler';
-import { COIN_LIST_DATA } from 'CoinActionTypes';
+import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS } from 'CoinActionTypes';
 
-export function getData() {
+export function setCurrencyType(currency) {
+    console.log('!inside', currency)
     return async (dispatch) => {
-        const result = await getCryptocurrencyData();
-        dispatch({type: COIN_LIST_DATA, result})
+        return dispatch({type: CHANGE_CURRENCY_TYPE, currency});  
+    }
+}
+
+export function setNumberOfCoins(number) {
+    return async (dispatch) => {
+        dispatch({type: CHANGE_NUMBER_COINS, numberOfCoins: number});
     }
 }
