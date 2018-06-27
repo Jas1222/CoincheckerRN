@@ -3,11 +3,11 @@
  * @flow
  */
 import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS } from 'CoinActionTypes';
+import { getCryptocurrencyData } from 'NetworkHandler';
 
 export function setCurrencyType(currency) {
-    console.log('!inside', currency)
     return async (dispatch) => {
-        return dispatch({type: CHANGE_CURRENCY_TYPE, currency});  
+        return dispatch({type: CHANGE_CURRENCY_TYPE, currency});
     }
 }
 

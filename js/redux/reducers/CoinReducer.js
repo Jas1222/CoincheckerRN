@@ -13,7 +13,6 @@ const initialState = {
 export function coinReducer(state = initialState, action) {
     switch(action.type) {
         case CHANGE_CURRENCY_TYPE: {
-            console.log('!!! reducer', action)
             return {
                 ...state,
                 currencyType: action.currency

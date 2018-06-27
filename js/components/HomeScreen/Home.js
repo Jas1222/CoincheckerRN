@@ -35,6 +35,10 @@ export class Home extends React.Component {
 
     componentDidMount() {
         this._getCoinData();
+        
+        getStore().subscribe(() => {
+            this._onRefresh(this.state.data);
+        });
     }
 
     async _getCoinData() {
@@ -70,7 +74,6 @@ export class Home extends React.Component {
     async _onRefresh() {
         this.setState({refreshing: true});
         await this._getCoinData();
-        this.props.setCurrencyType(getStore().getState().coinReducer.currencyType)
     }
 
     _renderSeparator() {

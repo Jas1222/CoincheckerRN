@@ -7,9 +7,6 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput,
-    Animated,
-    TouchableOpacity,
     LayoutAnimation,
     UIManager,
     Picker
