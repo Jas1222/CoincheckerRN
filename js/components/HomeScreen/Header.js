@@ -7,16 +7,14 @@ import {
     View,
     Text,
     StyleSheet,
-    TextInput,
-    Animated,
-    TouchableOpacity,
     LayoutAnimation,
     UIManager,
     Picker
 } from 'react-native';
-
+import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { setCurrencyType, setNumberOfCoins } from 'DataActions';
 
 const styles = StyleSheet.create({
     titleContainer: {
@@ -61,7 +59,7 @@ const headerOffset = 150;
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
-export default class Header extends React.Component {
+export class Header extends React.Component {
     constructor(props) {
         super(props);
 
@@ -70,8 +68,8 @@ export default class Header extends React.Component {
             height: 60,
             expanded: false,
             timeFormat: 'percent_change_24h',
-            currency: 'GBP',
-            numberOfCoins: 20
+            currency: props.currencyType,
+            numberOfCoins: props.numberOfCoins
         }
     }
 
@@ -136,7 +134,7 @@ export default class Header extends React.Component {
                         style={ styles.dropdown }
                         selectedValue={ this.state.currency }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.setState({currency: itemValue})}>
+                        onValueChange={(itemValue, itemIndex) => this.props.setCurrencyType(itemValue)}>
                         <Picker.Item label="GBP" value="gbp"/>
                         <Picker.Item label="EUR" value="eur"/>
                         <Picker.Item label="USD" value="usd"/>
@@ -150,7 +148,7 @@ export default class Header extends React.Component {
                         style={ styles.dropdown }
                         selectedValue={ this.state.numberOfCoins }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.setState({numberOfCoins: itemValue})}>
+                        onValueChange={(itemValue, itemIndex) => this.props.setNumberOfCoins(itemValue)}>
                         <Picker.Item label="10" value="10"/>
                         <Picker.Item label="20" value="20"/>
                         <Picker.Item label="30" value="30"/>
@@ -181,3 +179,22 @@ export default class Header extends React.Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        currency: state.coinReducer.currencyType,
+        numberOfCoins: state.coinReducer.numberOfCoins
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setCurrencyType: (currency) => {
+            dispatch(setCurrencyType(currency));
+        },
+        setNumberOfCoins: (value) => {
+            dispatch(setNumberOfCoins(value));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
