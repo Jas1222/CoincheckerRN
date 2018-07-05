@@ -11,7 +11,7 @@ export default class CoinCell extends React.Component {
 
         this.state = {
             name: this.props.name,
-            price: this.roundNumber(this.props.price),
+            price: this.props.price,
             percentChange: this.props.percentChange,
             symbol: this.props.symbol
         }
@@ -31,7 +31,7 @@ export default class CoinCell extends React.Component {
     }
 
     formatPercentColor() {
-        const percent = this.state.percentChange;
+        const percent = String(this.state.percentChange);
 
         if (percent.charAt(0) == '-') {
             return styles.negativePercent;

@@ -15,6 +15,7 @@ import { getCryptocurrencyData } from 'NetworkHandler';
 import { getCurrencyTypeJson } from 'CoinUtil';
 import { getStore } from 'GlobalStore';
 import { setCurrencyType, setNumberOfCoins } from 'DataActions';
+import { adaptCoinData } from 'CoinAdapter';
 
 export class Home extends React.Component {
     constructor(props) {
@@ -44,22 +45,22 @@ export class Home extends React.Component {
     async _getCoinData() {
         this.setState({loading: true});
         const result = await getCryptocurrencyData();
+        const adaptedResult = adaptCoinData(result);
 
         this.setState({
             loading: false,
             refreshing: false,
-            data: result,
+            data: adaptedResult,
         });
     }
 
     _renderRow(data) {
-        const currencyTypeJson = getCurrencyTypeJson(data.item);
-        
+
         return (
             <CoinCell
                 name={data.item.name}
-                price={currencyTypeJson}
-                percentChange={data.item.percent_change_24h}
+                price={data.item.price}
+                percentChange={data.item.percentageChange}
                 symbol={data.item.symbol}>
             </CoinCell>)
     }
@@ -101,6 +102,7 @@ export class Home extends React.Component {
                     keyExtractor={item => item.id}
                 />
         );
+        return (<View/>)
     }
 }
 
