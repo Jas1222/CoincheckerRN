@@ -4,6 +4,10 @@
  */
 import { getStore } from 'GlobalStore';
 
+const LIMIT_PARAM = '&limit=';
+const CONVERT_PARAM = '?convert=';
+const STRUCTURE_PARAM = '&structure=array';
+
 export async function getCryptocurrencyData() {
     const url = buildUrl();
     const response = await fetch(url, {
@@ -16,10 +20,9 @@ export async function getCryptocurrencyData() {
 }
 
 function buildUrl() {
-    let url ='https://api.coinmarketcap.com/v1/ticker/?convert=';
-    let  currencyType = getStore().getState().coinReducer.currencyType;
-    const limit = '&limit=';
-    const numberOfReturnsCrypto = getStore().getState().coinReducer.numberOfCoins;
+    let url ='https://api.coinmarketcap.com/v2/ticker/';
+    let currencyType = getStore().getState().coinReducer.currencyType;
+    let numberOfReturnsCrypto = getStore().getState().coinReducer.numberOfCoins;
 
-    return url += currencyType + limit + numberOfReturnsCrypto;
+    return url += CONVERT_PARAM + currencyType + LIMIT_PARAM + numberOfReturnsCrypto + STRUCTURE_PARAM;
 }
