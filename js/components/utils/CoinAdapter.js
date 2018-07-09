@@ -3,7 +3,6 @@
  * @flow
  */
 export function adaptCoinData(data) {
-
     var result = data.data.map(coin => {
         let adaptedCoin = {
             name: coin.name,
@@ -12,7 +11,6 @@ export function adaptCoinData(data) {
             timePeriod: coin.quotes.GBP.volume_24h,
             percentageChange: coin.quotes.GBP.percent_change_24h
         };
-
         return adaptedCoin;
     });
 

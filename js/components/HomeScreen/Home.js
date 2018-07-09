@@ -102,7 +102,6 @@ export class Home extends React.Component {
                     keyExtractor={item => item.id}
                 />
         );
-        return (<View/>)
     }
 }
 

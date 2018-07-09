@@ -21,9 +21,7 @@ export async function getCryptocurrencyData() {
 
 function buildUrl() {
     let url ='https://api.coinmarketcap.com/v2/ticker/';
-
     let currencyType = getStore().getState().coinReducer.currencyType;
-
     let numberOfReturnsCrypto = getStore().getState().coinReducer.numberOfCoins;
 
     return url += CONVERT_PARAM + currencyType + LIMIT_PARAM + numberOfReturnsCrypto + STRUCTURE_PARAM;
