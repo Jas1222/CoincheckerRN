@@ -2,14 +2,19 @@
  * @providesModule CoinAdapter
  * @flow
  */
+
+import { convertJsonTypes } from 'CoinUtil';
+
 export function adaptCoinData(data) {
     var result = data.data.map(coin => {
+        let convertedCoin = convertJsonTypes(coin);
+
         let adaptedCoin = {
             name: coin.name,
             symbol: coin.symbol,
-            price: coin.quotes.GBP.price,
-            timePeriod: coin.quotes.GBP.volume_24h,
-            percentageChange: coin.quotes.GBP.percent_change_24h
+            timePeriod: convertedCoin.timePeriod,
+            percentageChange: convertedCoin.percentageChange,
+            price: convertedCoin.price
         };
         return adaptedCoin;
     });
