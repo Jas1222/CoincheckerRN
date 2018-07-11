@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 22,
         fontWeight: 'bold',
-        marginRight: 5
+        marginRight: 15
     },
     positivePercent: {
         color: '#3D9970',
