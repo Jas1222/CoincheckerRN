@@ -2,6 +2,9 @@
  * @providesModule CoinAdapter
  * @flow
  */
+import { getStore } from 'GlobalStore'; 
+
+
 export function adaptCoinData(data) {
     var result = data.data.map(coin => {
         let adaptedCoin = {
@@ -15,4 +18,22 @@ export function adaptCoinData(data) {
     });
 
     return result;
+}
+
+export function getSymbol() {
+    const fiatCurrency = getStore().getState().coinReducer.currencyType;
+
+    switch(fiatCurrency) {
+        case 'gbp':
+            return '£';
+            break;
+        case 'eur':
+            return '€';
+            break;
+        case 'usd':
+            return '$';
+            break;
+        default:
+            return '£';
+    }
 }
