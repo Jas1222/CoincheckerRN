@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import { getSymbol } from 'CoinAdapter';
 
 export default class CoinCell extends React.Component {
     constructor(props) {
@@ -20,17 +21,17 @@ export default class CoinCell extends React.Component {
     componentWillReceiveProps() {
         this.setState({
             name: this.props.name,
-            price: this.roundNumber(this.props.price),
+            price: this._roundNumber(this.props.price),
             percentChange: this.props.percentChange,
             symbol: this.props.symbol
         });
     }
 
-    roundNumber(price) {
+    _roundNumber(price) {
         return Math.round(price * 100) / 100;
     }
 
-    formatPercentColor() {
+    _formatPercentColor() {
         const percent = String(this.state.percentChange);
 
         if (percent.charAt(0) == '-') {
@@ -40,17 +41,21 @@ export default class CoinCell extends React.Component {
         }
     }
 
+    _getFiatSymbol() {
+        return getSymbol();
+    }
+
     render() {
         return (
             <View>
                 <View style={styles.primaryContainer}>
                     <Text style={styles.coinName}>{this.state.name}</Text>
-                    <Text style={styles.coinPrice}>{"£" + this.state.price}</Text>
+                    <Text style={styles.coinPrice}>{this._getFiatSymbol + this.state.price}</Text>
                 </View>
 
                 <View style={styles.secondaryContainer}>
                     <Text style={styles.symbol}>{'(' + this.state.symbol + ')'}</Text>
-                    <Text style={this.formatPercentColor()}>{this.state.percentChange + '% 24h'}</Text>
+                    <Text style={this._formatPercentColor()}>{this.state.percentChange + '% 24h'}</Text>
                 </View>
             </View>
         );
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 22,
         fontWeight: 'bold',
-        marginRight: 15
+        marginRight: 5
     },
     positivePercent: {
         color: '#3D9970',
