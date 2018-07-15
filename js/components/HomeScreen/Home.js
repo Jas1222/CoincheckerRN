@@ -12,7 +12,6 @@ import CoinCell from 'CoinCell';
 import Header from 'Header';
 import { connect } from 'react-redux';
 import { getCryptocurrencyData } from 'NetworkHandler';
-import { getCurrencyTypeJson } from 'CoinUtil';
 import { getStore } from 'GlobalStore';
 import { setCurrencyType, setNumberOfCoins } from 'DataActions';
 import { adaptCoinData } from 'CoinAdapter';
@@ -24,7 +23,6 @@ export class Home extends React.Component {
         this.state = {
             data: [],
             refreshing: false,
-            loading: false,
             numberOfCoins: props.numberOfCoins,
             currencyType: props.currencyType
         };
@@ -38,19 +36,17 @@ export class Home extends React.Component {
         this._getCoinData();
         
         getStore().subscribe(() => {
-            this._onRefresh(this.state.data);
+            this._onRefresh();
         });
     }
 
     async _getCoinData() {
-        this.setState({loading: true});
         const result = await getCryptocurrencyData();
         const adaptedResult = adaptCoinData(result);
 
         this.setState({
-            loading: false,
-            refreshing: false,
             data: adaptedResult,
+            refreshing: false
         });
     }
 
@@ -93,13 +89,13 @@ export class Home extends React.Component {
         return (
                 <FlatList
                     data={this.state.data}
+                    extraData={this.state.data}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
-                    extraData={this.state}
                     renderItem={this._renderRow}
                     ListHeaderComponent={this._renderHeader()}
                     ItemSeparatorComponent={this._renderSeparator}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.name}
                 />
         );
     }
