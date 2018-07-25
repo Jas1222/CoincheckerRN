@@ -3,7 +3,7 @@
  * @flow
  */
 
-import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS } from 'CoinActionTypes';
+import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS, GET_COIN_DATA } from 'CoinActionTypes';
 
 const initialState = {
     currencyType: 'gbp',
@@ -22,6 +22,12 @@ export function coinReducer(state = initialState, action) {
             return {
                 ...state,
                 numberOfCoins: action.numberOfCoins
+            }
+        }
+        case GET_COIN_DATA: {
+            return {
+                ...state,
+            coins: action
             }
         }
         default:

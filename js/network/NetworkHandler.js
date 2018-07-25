@@ -16,10 +16,11 @@ export async function getCryptocurrencyData() {
             'cache-control': 'max-age=0'
         }
     });
-    return await response.json();
+    return response.json();
 }
 
 function buildUrl() {
+    let url ='https://api.coinmarketcap.com/v2/ticker/';
     let currencyType = getStore().getState().coinReducer.currencyType;
     let numberOfReturnsCrypto = getStore().getState().coinReducer.numberOfCoins;
 

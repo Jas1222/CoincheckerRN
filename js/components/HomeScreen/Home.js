@@ -13,8 +13,7 @@ import Header from 'Header';
 import { connect } from 'react-redux';
 import { getCryptocurrencyData } from 'NetworkHandler';
 import { getStore } from 'GlobalStore';
-import { setCurrencyType, setNumberOfCoins } from 'DataActions';
-import { adaptCoinData } from 'CoinAdapter';
+import { setCurrencyType, setNumberOfCoins, getAllCoins } from 'DataActions';
 
 export class Home extends React.Component {
     constructor(props) {
@@ -28,28 +27,13 @@ export class Home extends React.Component {
         };
 
         this._renderRow = this._renderRow.bind(this);
-        this._getCoinData = this._getCoinData.bind(this);
         this._onRefresh = this._onRefresh.bind(this);
     }
 
     componentDidMount() {
-        this._getCoinData();
-        
-        getStore().subscribe(() => {
-            this._onRefresh();
-        });
+        this.props.getAllCoins();
     }
-
-    async _getCoinData() {
-        const result = await getCryptocurrencyData();
-        const adaptedResult = adaptCoinData(result);
-
-        this.setState({
-            data: adaptedResult,
-            refreshing: false
-        });
-    }
-
+    
     _renderRow(data) {
 
         return (
@@ -68,9 +52,8 @@ export class Home extends React.Component {
         )
     }
 
-    async _onRefresh() {
-        this.setState({refreshing: true});
-        await this._getCoinData();
+    _onRefresh() {
+        this.props.getAllCoins();
     }
 
     _renderSeparator() {
@@ -88,8 +71,8 @@ export class Home extends React.Component {
     render() {
         return (
                 <FlatList
-                    data={this.state.data}
-                    extraData={this.state.data}
+                    data={this.state.coinData}
+                    extraData={this.state.coinData}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderRow}
@@ -103,18 +86,14 @@ export class Home extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        currencyType: state.coinReducer.currencyType,
-        numberOfCoins: state.coinReducer.numberOfCoins
+        coinData: state.coinReducer.coins   
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        setCurrencyType: () => {
-            dispatch(setCurrencyType());
-        },
-        setNumberOfCoins: () => {
-            dispatch(setNumberOfCoins());
+        getAllCoins: () => {
+            dispatch(getAllCoins());
         }
     }
 }
