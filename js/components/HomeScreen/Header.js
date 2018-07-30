@@ -132,7 +132,7 @@ export class Header extends React.Component {
                     <Text style={styles.settingsLabels}> Currency </Text>
                     <Picker
                         style={ styles.dropdown }
-                        selectedValue={ this.state.currency }
+                        selectedValue={ this.props.currencyType }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.props.setCurrencyType(itemValue)}>
                         <Picker.Item label="GBP" value="gbp"/>
@@ -146,7 +146,7 @@ export class Header extends React.Component {
                     <Text style={styles.settingsLabels}> Number of Coins</Text>
                     <Picker
                         style={ styles.dropdown }
-                        selectedValue={ this.state.numberOfCoins }
+                        selectedValue={ this.props.numberOfCoins }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.props.setNumberOfCoins(itemValue)}>
                         <Picker.Item label="10" value="10"/>

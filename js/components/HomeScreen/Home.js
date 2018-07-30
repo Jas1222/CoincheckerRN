@@ -20,10 +20,8 @@ export class Home extends React.Component {
         super(props);
 
         this.state = {
-            data: [],
+            coinData: props.coinData,
             refreshing: false,
-            numberOfCoins: props.numberOfCoins,
-            currencyType: props.currencyType
         };
 
         this._renderRow = this._renderRow.bind(this);
@@ -35,7 +33,6 @@ export class Home extends React.Component {
     }
     
     _renderRow(data) {
-
         return (
             <CoinCell
                 name={data.item.name}
@@ -71,8 +68,8 @@ export class Home extends React.Component {
     render() {
         return (
                 <FlatList
-                    data={this.state.coinData}
-                    extraData={this.state.coinData}
+                    data={this.props.coinData}
+                    extraData={this.props.coinData}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderRow}
@@ -86,7 +83,7 @@ export class Home extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        coinData: state.coinReducer.coins   
+        coinData: state.coinReducer.coinData
     };
 }
 

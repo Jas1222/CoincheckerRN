@@ -4,6 +4,7 @@
  */
 import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS, GET_COIN_DATA } from 'CoinActionTypes';
 import { getCryptocurrencyData } from 'NetworkHandler';
+import { adaptCoinData } from 'CoinAdapter';
 
 export function setCurrencyType(currency) {
     return async (dispatch) => {
@@ -21,7 +22,6 @@ export function getAllCoins() {
     return async (dispatch) => {
         const data = await getCryptocurrencyData();
         const adaptedData = adaptCoinData(data);
-
         return dispatch({type: GET_COIN_DATA, adaptedData});
     }
 }

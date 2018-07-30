@@ -8,6 +8,7 @@ import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS, GET_COIN_DATA } from 'CoinAc
 const initialState = {
     currencyType: 'gbp',
     numberOfCoins: 25,
+    coinData: []
 };
 
 export function coinReducer(state = initialState, action) {
@@ -27,11 +28,10 @@ export function coinReducer(state = initialState, action) {
         case GET_COIN_DATA: {
             return {
                 ...state,
-            coins: action
+                coinData: action.adaptedData
             }
         }
         default:
             return state
-
     }
 }
