@@ -69,7 +69,7 @@ export class Home extends React.Component {
         return (
                 <FlatList
                     data={this.props.coinData}
-                    extraData={this.props.coinData}
+                    extraData={getStore().getState().coinReducer}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
                     renderItem={this._renderRow}
