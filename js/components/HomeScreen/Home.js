@@ -12,50 +12,27 @@ import CoinCell from 'CoinCell';
 import Header from 'Header';
 import { connect } from 'react-redux';
 import { getCryptocurrencyData } from 'NetworkHandler';
-import { getCurrencyTypeJson } from 'CoinUtil';
 import { getStore } from 'GlobalStore';
-import { setCurrencyType, setNumberOfCoins } from 'DataActions';
-import { adaptCoinData } from 'CoinAdapter';
+import { setCurrencyType, setNumberOfCoins, getAllCoins } from 'DataActions';
 
 export class Home extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            data: [],
+            coinData: props.coinData,
             refreshing: false,
-            loading: false,
-            numberOfCoins: props.numberOfCoins,
-            currencyType: props.currencyType
         };
 
         this._renderRow = this._renderRow.bind(this);
-        this._getCoinData = this._getCoinData.bind(this);
         this._onRefresh = this._onRefresh.bind(this);
     }
 
     componentDidMount() {
-        this._getCoinData();
-        
-        getStore().subscribe(() => {
-            this._onRefresh(this.state.data);
-        });
+        this.props.getAllCoins();
     }
-
-    async _getCoinData() {
-        this.setState({loading: true});
-        const result = await getCryptocurrencyData();
-        const adaptedResult = adaptCoinData(result);
-
-        this.setState({
-            loading: false,
-            refreshing: false,
-            data: adaptedResult,
-        });
-    }
-
+    
     _renderRow(data) {
-
         return (
             <CoinCell
                 name={data.item.name}
@@ -72,9 +49,8 @@ export class Home extends React.Component {
         )
     }
 
-    async _onRefresh() {
-        this.setState({refreshing: true});
-        await this._getCoinData();
+    _onRefresh() {
+        this.props.getAllCoins();
     }
 
     _renderSeparator() {
@@ -92,14 +68,14 @@ export class Home extends React.Component {
     render() {
         return (
                 <FlatList
-                    data={this.state.data}
+                    data={this.props.coinData}
+                    extraData={this.props.coinData}
                     onRefresh={this._onRefresh}
                     refreshing={this.state.refreshing}
-                    extraData={this.state}
                     renderItem={this._renderRow}
                     ListHeaderComponent={this._renderHeader()}
                     ItemSeparatorComponent={this._renderSeparator}
-                    keyExtractor={item => item.id}
+                    keyExtractor={item => item.name}
                 />
         );
     }
@@ -107,18 +83,14 @@ export class Home extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        currencyType: state.coinReducer.currencyType,
-        numberOfCoins: state.coinReducer.numberOfCoins
+        coinData: state.coinReducer.coinData
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        setCurrencyType: () => {
-            dispatch(setCurrencyType());
-        },
-        setNumberOfCoins: () => {
-            dispatch(setNumberOfCoins());
+        getAllCoins: () => {
+            dispatch(getAllCoins());
         }
     }
 }

@@ -16,7 +16,7 @@ export async function getCryptocurrencyData() {
             'cache-control': 'max-age=0'
         }
     });
-    return await response.json();
+    return response.json();
 }
 
 function buildUrl() {

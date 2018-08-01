@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { setCurrencyType, setNumberOfCoins } from 'DataActions';
+import { setCurrencyType, setNumberOfCoins, getAllCoins } from 'DataActions';
 
 const styles = StyleSheet.create({
     titleContainer: {
@@ -132,9 +132,12 @@ export class Header extends React.Component {
                     <Text style={styles.settingsLabels}> Currency </Text>
                     <Picker
                         style={ styles.dropdown }
-                        selectedValue={ this.state.currency }
+                        selectedValue={ this.props.currencyType }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.props.setCurrencyType(itemValue)}>
+                        onValueChange={(itemValue, itemIndex) => {
+                            this.props.setCurrencyType(itemValue);
+                            this.props.getAllCoins();
+                        }}>
                         <Picker.Item label="GBP" value="gbp"/>
                         <Picker.Item label="EUR" value="eur"/>
                         <Picker.Item label="USD" value="usd"/>
@@ -146,7 +149,7 @@ export class Header extends React.Component {
                     <Text style={styles.settingsLabels}> Number of Coins</Text>
                     <Picker
                         style={ styles.dropdown }
-                        selectedValue={ this.state.numberOfCoins }
+                        selectedValue={ this.props.numberOfCoins }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.props.setNumberOfCoins(itemValue)}>
                         <Picker.Item label="10" value="10"/>
@@ -193,6 +196,9 @@ function mapDispatchToProps(dispatch) {
         },
         setNumberOfCoins: (value) => {
             dispatch(setNumberOfCoins(value));
+        },
+        getAllCoins: () => {
+            dispatch(getAllCoins());
         }
     }
 }
