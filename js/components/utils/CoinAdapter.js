@@ -21,7 +21,7 @@ export function adaptCoinData(data) {
     return result;
 }
 
-export function getSymbol() {
+export function getFiatSymbol() {
     const fiatCurrency = getStore().getState().coinReducer.currencyType;
 
     switch(fiatCurrency) {

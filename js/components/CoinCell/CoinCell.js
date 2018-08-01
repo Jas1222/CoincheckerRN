@@ -4,27 +4,11 @@
  */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import { getSymbol } from 'CoinAdapter';
+import { getFiatSymbol } from 'CoinAdapter';
 
 export default class CoinCell extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            name: this.props.name,
-            price: this.props.price,
-            percentChange: this.props.percentChange,
-            symbol: this.props.symbol
-        }
-    }
-
-    componentWillReceiveProps() {
-        this.setState({
-            name: this.props.name,
-            price: this._roundNumber(this.props.price),
-            percentChange: this.props.percentChange,
-            symbol: this.props.symbol
-        });
     }
 
     _roundNumber(price) {
@@ -32,7 +16,7 @@ export default class CoinCell extends React.Component {
     }
 
     _formatPercentColor() {
-        const percent = String(this.state.percentChange);
+        const percent = String(this.props.percentChange);
 
         if (percent.charAt(0) == '-') {
             return styles.negativePercent;
@@ -41,21 +25,21 @@ export default class CoinCell extends React.Component {
         }
     }
 
-    _getFiatSymbol() {
-        return getSymbol();
+    _getPrice() {
+         return getFiatSymbol() + this._roundNumber(this.props.price);
     }
 
     render() {
         return (
             <View>
                 <View style={styles.primaryContainer}>
-                    <Text style={styles.coinName}>{this.state.name}</Text>
-                    <Text style={styles.coinPrice}>{this._getFiatSymbol() + this.state.price}</Text>
+                    <Text style={styles.coinName}>{this.props.name}</Text>
+                    <Text style={styles.coinPrice}>{this._getPrice()}</Text>
                 </View>
 
                 <View style={styles.secondaryContainer}>
-                    <Text style={styles.symbol}>{'(' + this.state.symbol + ')'}</Text>
-                    <Text style={this._formatPercentColor()}>{this.state.percentChange + '% 24h'}</Text>
+                    <Text style={styles.symbol}>{'(' + this.props.symbol + ')'}</Text>
+                    <Text style={this._formatPercentColor()}>{this.props.percentChange + '% 24h'}</Text>
                 </View>
             </View>
         );
