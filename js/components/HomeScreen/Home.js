@@ -31,6 +31,12 @@ export class Home extends React.Component {
     componentDidMount() {
         this.props.getAllCoins();
     }
+
+    async _onRefresh() {
+        this.setState({refreshing: true});
+        await this.props.getAllCoins();
+        this.setState({refreshing: false});
+    }
     
     _renderRow(data) {
         return (
@@ -47,10 +53,6 @@ export class Home extends React.Component {
             <Header
                 refresh={this._onRefresh}/>
         )
-    }
-
-    _onRefresh() {
-        this.props.getAllCoins();
     }
 
     _renderSeparator() {
