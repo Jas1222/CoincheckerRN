@@ -136,7 +136,7 @@ export class Header extends React.Component {
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => {
                             this.props.setCurrencyType(itemValue);
-                            this.props.getAllCoins();
+                            this.props.refresh();
                         }}>
                         <Picker.Item label="GBP" value="gbp"/>
                         <Picker.Item label="EUR" value="eur"/>
@@ -153,7 +153,7 @@ export class Header extends React.Component {
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => {
                             this.props.setNumberOfCoins(itemValue)
-                            this.props.getAllCoins();
+                            this.props.refresh;
                         }}>
                         <Picker.Item label="10" value="10"/>
                         <Picker.Item label="20" value="20"/>
