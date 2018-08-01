@@ -118,7 +118,7 @@ export class Header extends React.Component {
                     <Text style={styles.settingsLabels}> Time Period </Text>
                     <Picker
                         style={ styles.dropdown }
-                        selectedValue={ this.state.timeFormat }
+                        selectedValue={ this.props.timeFormat }
                         mode={"dropdown"}
                         onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
                         <Picker.Item label="1 Hour" value="percent_change_1h"/>
@@ -151,7 +151,10 @@ export class Header extends React.Component {
                         style={ styles.dropdown }
                         selectedValue={ this.props.numberOfCoins }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.props.setNumberOfCoins(itemValue)}>
+                        onValueChange={(itemValue, itemIndex) => {
+                            this.props.setNumberOfCoins(itemValue)
+                            this.props.getAllCoins();
+                        }}>
                         <Picker.Item label="10" value="10"/>
                         <Picker.Item label="20" value="20"/>
                         <Picker.Item label="30" value="30"/>
@@ -184,7 +187,7 @@ export class Header extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        currency: state.coinReducer.currencyType,
+        currencyType: state.coinReducer.currencyType,
         numberOfCoins: state.coinReducer.numberOfCoins
     };
 }
