@@ -2,7 +2,10 @@
  * @providesModule DataActions
  * @flow
  */
-import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS, GET_COIN_DATA } from 'CoinActionTypes';
+import { CHANGE_CURRENCY_TYPE, 
+    CHANGE_NUMBER_COINS, 
+    GET_COIN_DATA,
+    CHANGE_PERCENTAGE_TIME_PERIOD } from 'CoinActionTypes';
 import { getCryptocurrencyData } from 'NetworkHandler';
 import { adaptCoinData } from 'CoinAdapter';
 
@@ -15,6 +18,12 @@ export function setCurrencyType(currency) {
 export function setNumberOfCoins(number) {
     return async (dispatch) => {
         dispatch({type: CHANGE_NUMBER_COINS, numberOfCoins: number});
+    }
+}
+
+export function setPercentageChangeTimePeriod(timePeriod) {
+    return async (dispatch) => {
+        dispatch({type: CHANGE_PERCENTAGE_TIME_PERIOD, timePeriod});
     }
 }
 

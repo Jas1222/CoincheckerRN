@@ -11,7 +11,6 @@ export function adaptCoinData(data) {
         let adaptedCoin = {
             name: coin.name,
             symbol: coin.symbol,
-            timePeriod: convertedCoin.timePeriod,
             percentageChange: convertedCoin.percentageChange,
             price: convertedCoin.price
         };
@@ -41,30 +40,13 @@ export function getFiatSymbol() {
 
 export function convertJsonTypes(item) {
     const currencyType = getStore().getState().coinReducer.currencyType;
+    const timePeriod = getStore().getState().coinReducer.timePeriod;
+    const obj = item.quotes[currencyType.toUpperCase()];
 
-    let adaptedCoin = {};
-
-    switch(currencyType) {
-        case('gbp'):
-            adaptedCoin.price = item.quotes.GBP.price;
-            adaptedCoin.timePeriod = item.quotes.GBP.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.GBP.percent_change_24h;
-            break;
-        case('usd'):
-            adaptedCoin.price = item.quotes.USD.price;
-            adaptedCoin.timePeriod = item.quotes.USD.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.USD.percent_change_24h;
-            break;
-        case('eur'):
-            adaptedCoin.price = item.quotes.EUR.price;
-            adaptedCoin.timePeriod = item.quotes.EUR.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.EUR.percent_change_24h;
-            break;
-        default:
-            adaptedCoin.price = item.quotes.GBP.price;
-            adaptedCoin.timePeriod = item.quotes.GBP.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.GBP.percent_change_24h;
-    }
-
+    const adaptedCoin = {
+        price: obj.price,
+        percentageChange: obj[timePeriod]
+    };
+    
     return adaptedCoin;
 }

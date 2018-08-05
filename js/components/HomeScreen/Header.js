@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { setCurrencyType, setNumberOfCoins, getAllCoins } from 'DataActions';
+import { setCurrencyType, setNumberOfCoins, getAllCoins, setPercentageChangeTimePeriod } from 'DataActions';
 
 const styles = StyleSheet.create({
     titleContainer: {
@@ -120,7 +120,10 @@ export class Header extends React.Component {
                         style={ styles.dropdown }
                         selectedValue={ this.props.timeFormat }
                         mode={"dropdown"}
-                        onValueChange={(itemValue, itemIndex) => this.setState({timeFormat: itemValue})}>
+                        onValueChange={(itemValue, itemIndex) => {
+                            this.props.setPercentageChange(itemValue);
+                            this.props.refresh();
+                        }}>
                         <Picker.Item label="1 Hour" value="percent_change_1h"/>
                         <Picker.Item label="24 Hour" value="percent_change_24h"/>
                         <Picker.Item label="7 day" value="percent_change_7d"/>
@@ -199,6 +202,9 @@ function mapDispatchToProps(dispatch) {
         },
         setNumberOfCoins: (value) => {
             dispatch(setNumberOfCoins(value));
+        },
+        setPercentageChange: (value) => {
+            dispatch(setPercentageChangeTimePeriod(value));
         },
         getAllCoins: () => {
             dispatch(getAllCoins());
