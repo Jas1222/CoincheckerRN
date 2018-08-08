@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import { getFiatSymbol } from 'CoinAdapter';
+import { getFiatSymbol, getPercentageLabel } from 'CoinAdapter';
 
 export default class CoinCell extends React.Component {
     constructor(props) {
@@ -39,7 +39,7 @@ export default class CoinCell extends React.Component {
 
                 <View style={styles.secondaryContainer}>
                     <Text style={styles.symbol}>{'(' + this.props.symbol + ')'}</Text>
-                    <Text style={this._formatPercentColor()}>{this.props.percentChange + '% 24h'}</Text>
+                    <Text style={this._formatPercentColor()}>{getPercentageLabel()}</Text>
                 </View>
             </View>
         );

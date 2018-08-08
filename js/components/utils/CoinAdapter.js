@@ -2,7 +2,7 @@
  * @providesModule CoinAdapter
  * @flow
  */
-import { getStore } from 'GlobalStore'; 
+import { getStore } from 'GlobalStore';
 
 export function adaptCoinData(data) {
     var result = data.data.map(coin => {
@@ -38,6 +38,26 @@ export function getFiatSymbol() {
     }
 }
 
+export function getPercentageLabel() {
+    const percentTimePeriod = getStore().getState().coinReducer.timePeriod;
+
+    switch(percentTimePeriod) {
+        case 'percent_change_1h':
+            return '% 1h';
+            break;
+        case 'percent_change_24h':
+            return '% 24h';
+            break;
+        case 'percent_change_7d':
+            return '% 7d';
+            break;
+        default:
+            return '% 24h';
+            break;
+    }
+
+}
+
 export function convertJsonTypes(item) {
     const currencyType = getStore().getState().coinReducer.currencyType;
     const timePeriod = getStore().getState().coinReducer.timePeriod;
@@ -47,6 +67,6 @@ export function convertJsonTypes(item) {
         price: obj.price,
         percentageChange: obj[timePeriod]
     };
-    
+
     return adaptedCoin;
 }
