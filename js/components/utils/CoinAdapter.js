@@ -2,7 +2,7 @@
  * @providesModule CoinAdapter
  * @flow
  */
-import { getStore } from 'GlobalStore'; 
+import { getStore } from 'GlobalStore';
 
 export function adaptCoinData(data) {
     var result = data.data.map(coin => {
@@ -11,7 +11,6 @@ export function adaptCoinData(data) {
         let adaptedCoin = {
             name: coin.name,
             symbol: coin.symbol,
-            timePeriod: convertedCoin.timePeriod,
             percentageChange: convertedCoin.percentageChange,
             price: convertedCoin.price
         };
@@ -39,32 +38,35 @@ export function getFiatSymbol() {
     }
 }
 
-export function convertJsonTypes(item) {
-    const currencyType = getStore().getState().coinReducer.currencyType;
+export function getPercentageLabel() {
+    const percentTimePeriod = getStore().getState().coinReducer.timePeriod;
 
-    let adaptedCoin = {};
-
-    switch(currencyType) {
-        case('gbp'):
-            adaptedCoin.price = item.quotes.GBP.price;
-            adaptedCoin.timePeriod = item.quotes.GBP.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.GBP.percent_change_24h;
+    switch(percentTimePeriod) {
+        case 'percent_change_1h':
+            return '% 1h';
             break;
-        case('usd'):
-            adaptedCoin.price = item.quotes.USD.price;
-            adaptedCoin.timePeriod = item.quotes.USD.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.USD.percent_change_24h;
+        case 'percent_change_24h':
+            return '% 24h';
             break;
-        case('eur'):
-            adaptedCoin.price = item.quotes.EUR.price;
-            adaptedCoin.timePeriod = item.quotes.EUR.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.EUR.percent_change_24h;
+        case 'percent_change_7d':
+            return '% 7d';
             break;
         default:
-            adaptedCoin.price = item.quotes.GBP.price;
-            adaptedCoin.timePeriod = item.quotes.GBP.volume_24h;
-            adaptedCoin.percentageChange = item.quotes.GBP.percent_change_24h;
+            return '% 24h';
+            break;
     }
+
+}
+
+export function convertJsonTypes(item) {
+    const currencyType = getStore().getState().coinReducer.currencyType;
+    const timePeriod = getStore().getState().coinReducer.timePeriod;
+    const obj = item.quotes[currencyType.toUpperCase()];
+
+    const adaptedCoin = {
+        price: obj.price,
+        percentageChange: obj[timePeriod]
+    };
 
     return adaptedCoin;
 }

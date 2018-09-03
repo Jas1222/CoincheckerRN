@@ -43,7 +43,7 @@ export class Home extends React.Component {
             <CoinCell
                 name={data.item.name}
                 price={data.item.price}
-                percentChange={data.item.percentageChange}
+                percentageChange={data.item.percentageChange}
                 symbol={data.item.symbol}>
             </CoinCell>)
     }

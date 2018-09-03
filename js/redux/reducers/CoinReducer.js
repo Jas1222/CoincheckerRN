@@ -3,11 +3,15 @@
  * @flow
  */
 
-import { CHANGE_CURRENCY_TYPE, CHANGE_NUMBER_COINS, GET_COIN_DATA } from 'CoinActionTypes';
+import { CHANGE_CURRENCY_TYPE, 
+    CHANGE_NUMBER_COINS, 
+    GET_COIN_DATA, 
+    CHANGE_PERCENTAGE_TIME_PERIOD } from 'CoinActionTypes';
 
 const initialState = {
     currencyType: 'gbp',
     numberOfCoins: 25,
+    timePeriod: 'percent_change_24h',
     coinData: []
 };
 
@@ -29,6 +33,12 @@ export function coinReducer(state = initialState, action) {
             return {
                 ...state,
                 coinData: action.adaptedData
+            }
+        }
+        case CHANGE_PERCENTAGE_TIME_PERIOD: {
+            return {
+                ...state,
+                timePeriod: action.timePeriod
             }
         }
         default:
