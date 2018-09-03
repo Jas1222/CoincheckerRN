@@ -16,7 +16,7 @@ export default class CoinCell extends React.Component {
     }
 
     _formatPercentColor() {
-        const percent = String(this.props.percentChange);
+        const percent = String(this.props.percentageChange);
 
         if (percent.charAt(0) == '-') {
             return styles.negativePercent;
@@ -39,7 +39,7 @@ export default class CoinCell extends React.Component {
 
                 <View style={styles.secondaryContainer}>
                     <Text style={styles.symbol}>{'(' + this.props.symbol + ')'}</Text>
-                    <Text style={this._formatPercentColor()}>{getPercentageLabel()}</Text>
+                    <Text style={this._formatPercentColor()}>{this.props.percentageChange}{getPercentageLabel()}</Text>
                 </View>
             </View>
         );
