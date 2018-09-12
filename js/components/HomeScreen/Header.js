@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: 'row',
         backgroundColor: '#03A9F4',
-        justifyContent: 'space-between'
+//        justifyContent: 'space-between'
     },
     title: {
         fontSize: 20,
@@ -81,7 +81,6 @@ export class Header extends React.Component {
 
         return (
             <View style={[styles.titleContainer]}>
-                <View></View>
                 {titleText}
                 <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon }
                       onPress={this._onSettingsPress.bind(this)}/>
