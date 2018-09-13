@@ -33,14 +33,14 @@ export default class CoinCell extends React.Component {
     render() {
         return (
             <View style={styles.primaryContainer}>
-                    <View style={ styles.columnContainer }>cd ..
+                    <View style={ styles.columnContainer }>
                         <Text style={styles.name}>{this.props.name}</Text>
                         <Text style={styles.symbol}>{'(' + this.props.symbol + ')'}</Text>
                     </View>
 
-                    <View style={ styles.columnContainer }>
+                    <View style={ styles.columnContainer, {alignItems: 'flex-end'} }>
                         <Text style={styles.price}>{this._getPrice()}</Text>
-                        <Text style={this._formatPercentColor()}>{this.props.percentageChange}{getPercentageLabel()}</Text>
+                        <Text style={this._formatPercentColor()}>{this.props.percentageChange}% | {getPercentageLabel()}</Text>
                     </View>
             </View>
         );

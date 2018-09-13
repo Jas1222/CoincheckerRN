@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFFF',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 8
+        padding: 9
     },
     columnContainer: {
         flexDirection: 'column'
@@ -22,20 +22,19 @@ export const styles = StyleSheet.create({
     },
     price: {
         color: '#000000',
-        marginTop: 10,
+        // marginTop: 10,
         fontSize: 22,
         fontWeight: 'bold',
+        marginBottom: 3
     },
     positivePercent: {
         color: '#3D9970',
-        fontSize: 13,
-//        alignSelf: 'flex-start',
+        fontSize: 15,
         fontWeight: 'bold',
     },
     negativePercent: {
         color: '#FF4136',
-        fontSize: 13,
-//        alignSelf: 'flex-start',
+        fontSize: 15,
         fontWeight: 'bold',
     },
     secondaryContainer: {
