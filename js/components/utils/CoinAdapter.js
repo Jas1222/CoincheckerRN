@@ -43,16 +43,16 @@ export function getPercentageLabel() {
 
     switch(percentTimePeriod) {
         case 'percent_change_1h':
-            return '% 1h';
+            return '1h';
             break;
         case 'percent_change_24h':
-            return '% 24h';
+            return '24h';
             break;
         case 'percent_change_7d':
-            return '% 7d';
+            return '7d';
             break;
         default:
-            return '% 24h';
+            return '24h';
             break;
     }
 
