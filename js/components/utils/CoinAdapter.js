@@ -1,6 +1,5 @@
 /**
  * @providesModule CoinAdapter
- * @flow
  */
 import { getStore } from 'GlobalStore';
 
@@ -26,13 +25,10 @@ export function getFiatSymbol() {
     switch(fiatCurrency) {
         case 'gbp':
             return '£';
-            break;
         case 'eur':
             return '€';
-            break;
         case 'usd':
             return '$';
-            break;
         default:
             return '£';
     }
@@ -44,18 +40,27 @@ export function getPercentageLabel() {
     switch(percentTimePeriod) {
         case 'percent_change_1h':
             return '1h';
-            break;
         case 'percent_change_24h':
             return '24h';
-            break;
         case 'percent_change_7d':
             return '7d';
-            break;
         default:
             return '24h';
-            break;
     }
 
+}
+
+export function getPercentageJson(label) {
+    switch(label) {
+        case '1 Hour':
+            return 'percent_change_1h';
+        case '24 Hour':
+            return 'percent_change_24h';
+        case '7 Day':
+            return 'percent_change_7d';
+        default:
+            return 'percent_change_24h';
+    }
 }
 
 export function convertJsonTypes(item) {

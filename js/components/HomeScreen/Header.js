@@ -13,8 +13,9 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { setCurrencyType, setNumberOfCoins, getAllCoins, setPercentageChangeTimePeriod } from 'DataActions';
+import { setCurrencyType, setNumberOfCoins, getAllCoins, setPercentageChange } from 'DataActions';
 import styles from 'HeaderStyles';
+import { Dropdown } from 'react-native-material-dropdown';
 
 const headerOffset = 150;
 
@@ -30,7 +31,8 @@ export class Header extends React.Component {
             expanded: false,
             timeFormat: props.timePeriod,
             currency: props.currencyType,
-            numberOfCoins: props.numberOfCoins
+            numberOfCoins: props.numberOfCoins,
+
         }
     }
 
@@ -71,60 +73,40 @@ export class Header extends React.Component {
     }
 
     _renderSettingsContainer() {
+        const timeData = [{value: "1 Hour"}, {value: "24 Hour"}, {value: "7 Day"}];
+        const currencyData = [{value: "GBP"}, {value: "EUR"}, {value: "USD"}];
+        const numberOfCoins = [{value: "10"}, {value: "20"}, {value: "30"}, {value: "40"}, {value: "50"}];
+
         if (this.state.expanded) {
+
             return <View>
-
-                <View style={ styles.rowFormat }>
-                    <Icon name="clock" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Time Period </Text>
-                    <Picker
-                        style={ styles.dropdown }
-                        selectedValue={ this.props.timePeriod }
-                        mode={"dropdown"}
-                        onValueChange={(itemValue) => {
-                            this.props.setPercentageChange(itemValue);
+                <View >
+                    <Dropdown
+                        data={timeData}
+                        value={ this.state.timePeriod }
+                        onChangeText={(value) => {
+                            this.props.setPercentageChange(value);
                             this.props.refresh();
-                        }}>
-                        <Picker.Item label="1 Hour" value="percent_change_1h"/>
-                        <Picker.Item label="24 Hour" value="percent_change_24h"/>
-                        <Picker.Item label="7 day" value="percent_change_7d"/>
-                    </Picker>
-                </View>
+                        }}
+                    />
 
-                <View style={ styles.rowFormat }>
-                    <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Currency </Text>
-                    <Picker
-                        style={ styles.dropdown }
-                        selectedValue={ this.props.currencyType }
-                        mode={"dropdown"}
-                        onValueChange={(itemValue) => {
-                            this.props.setCurrencyType(itemValue);
+                    <Dropdown
+                        data={currencyData}
+                        value={ this.state.currency }
+                        onChangeText={(value) => {
+                            this.props.setCurrencyType(value);
                             this.props.refresh();
-                        }}>
-                        <Picker.Item label="GBP" value="gbp"/>
-                        <Picker.Item label="EUR" value="eur"/>
-                        <Picker.Item label="USD" value="usd"/>
-                    </Picker>
-                </View>
+                        }}
+                    />
 
-                <View style={ styles.rowFormat }>
-                    <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Number of Coins</Text>
-                    <Picker
-                        style={ styles.dropdown }
-                        selectedValue={ this.props.numberOfCoins }
-                        mode={"dropdown"}
-                        onValueChange={(itemValue) => {
-                            this.props.setNumberOfCoins(itemValue);
+                    <Dropdown
+                        data={numberOfCoins}
+                        value={ this.state.numberOfCoins }
+                        onChangeText={(value) => {
+                            this.props.setNumberOfCoins(value);
                             this.props.refresh();
-                        }}>
-                        <Picker.Item label="10" value="10"/>
-                        <Picker.Item label="20" value="20"/>
-                        <Picker.Item label="30" value="30"/>
-                        <Picker.Item label="40" value="40"/>
-                        <Picker.Item label="50" value="50"/>
-                    </Picker>
+                        }}
+                    />
                 </View>
 
             </View>
@@ -166,7 +148,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(setNumberOfCoins(value));
         },
         setPercentageChange: (value) => {
-            dispatch(setPercentageChangeTimePeriod(value));
+            dispatch(setPercentageChange(value));
         },
         getAllCoins: () => {
             dispatch(getAllCoins());

@@ -1,6 +1,5 @@
 /**
  * @providesModule Home
- * @flow
  */
 
 import React from 'react';

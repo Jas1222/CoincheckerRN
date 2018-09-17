@@ -1,17 +1,18 @@
 /**
  * @providesModule DataActions
- * @flow
  */
 import { CHANGE_CURRENCY_TYPE, 
     CHANGE_NUMBER_COINS, 
     GET_COIN_DATA,
     CHANGE_PERCENTAGE_TIME_PERIOD } from 'CoinActionTypes';
 import { getCryptocurrencyData } from 'NetworkHandler';
-import { adaptCoinData } from 'CoinAdapter';
+import { adaptCoinData, getPercentageJson } from 'CoinAdapter';
 
-export function setCurrencyType(currency) {
+export function setCurrencyType(currencyLabel) {
     return async (dispatch) => {
-        return dispatch({type: CHANGE_CURRENCY_TYPE, currency});
+        const currency = currencyLabel.toLocaleLowerCase();
+
+        dispatch({type: CHANGE_CURRENCY_TYPE, currency });
     }
 }
 
@@ -21,8 +22,10 @@ export function setNumberOfCoins(number) {
     }
 }
 
-export function setPercentageChangeTimePeriod(timePeriod) {
+export function setPercentageChange(timePeriodLabel) {
     return async (dispatch) => {
+    const timePeriod = getPercentageJson(timePeriodLabel);
+
         dispatch({type: CHANGE_PERCENTAGE_TIME_PERIOD, timePeriod});
     }
 }
@@ -31,6 +34,7 @@ export function getAllCoins() {
     return async (dispatch) => {
         const data = await getCryptocurrencyData();
         const adaptedData = adaptCoinData(data);
-        return dispatch({type: GET_COIN_DATA, adaptedData});
+        
+        dispatch({type: GET_COIN_DATA, adaptedData});
     }
 }
