@@ -26,13 +26,10 @@ export function getFiatSymbol() {
     switch(fiatCurrency) {
         case 'gbp':
             return '£';
-            break;
         case 'eur':
             return '€';
-            break;
         case 'usd':
             return '$';
-            break;
         default:
             return '£';
     }
