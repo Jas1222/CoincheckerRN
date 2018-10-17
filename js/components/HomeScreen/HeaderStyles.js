@@ -41,5 +41,21 @@ export default styles = StyleSheet.create({
         marginLeft: 25,
         marginTop: 15,
         flex: 1
+    },
+    lastUpdatedContainer: {
+        marginTop: 10,
+        padding: 3,
+        flexDirection: 'column'
+    },
+    lastUpdatedLabel: {
+        color: 'white',
+        fontSize: 12,
+        alignSelf: 'center',
+        textDecorationLine: 'underline'
+    },
+    lastUpdatedTime: {
+        fontSize: 12,
+        alignSelf: 'center',
+        color: 'white'
     }
 });

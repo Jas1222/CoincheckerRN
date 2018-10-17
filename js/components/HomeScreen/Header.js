@@ -13,7 +13,12 @@ import {
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { setCurrencyType, setNumberOfCoins, getAllCoins, setPercentageChangeTimePeriod } from 'DataActions';
+import {
+    setCurrencyType,
+    setNumberOfCoins,
+    setPercentageChangeTimePeriod,
+    setTimestamp
+} from 'DataActions';
 import styles from 'HeaderStyles';
 
 const headerOffset = 150;
@@ -26,23 +31,33 @@ export class Header extends React.Component {
 
         this.state = {
             language: null,
-            height: 60,
+            height: 65,
             expanded: false,
             timeFormat: props.timePeriod,
             currency: props.currencyType,
-            numberOfCoins: props.numberOfCoins
-        }
+            numberOfCoins: props.numberOfCoins,
+        };
+
     }
 
+    _renderLastUpdated = () => {
+        return (
+            <View style={styles.lastUpdatedContainer}>
+                <Text style={styles.lastUpdatedLabel}>Updated:</Text>
+                <Text style={styles.lastUpdatedTime}>{this.props.lastRefreshed}</Text>
+            </View>
+        )
+    };
+
     _renderTitle() {
-        const coinText = <Text style={[styles.title,]}>COIN-CHECK</Text>;
+        const coinText = <Text style={[styles.title,]}>COIN-CHECKER</Text>;
         const settingsTest = <Text style={[styles.title, {textDecorationLine: 'underline'}]}>SETTINGS</Text>;
 
         let titleText = this.state.expanded ? settingsTest : coinText;
 
         return (
             <View style={[styles.titleContainer]}>
-                <View/>
+                {this._renderLastUpdated()}
                 {titleText}
                 <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon }
                       onPress={this._onSettingsPress.bind(this)}/>
@@ -153,7 +168,8 @@ function mapStateToProps(state) {
     return {
         currencyType: state.coinReducer.currencyType,
         numberOfCoins: state.coinReducer.numberOfCoins,
-        timePeriod: state.coinReducer.timePeriod
+        timePeriod: state.coinReducer.timePeriod,
+        lastRefreshed: state.coinReducer.lastRefreshed
     };
 }
 
@@ -168,9 +184,6 @@ function mapDispatchToProps(dispatch) {
         setPercentageChange: (value) => {
             dispatch(setPercentageChangeTimePeriod(value));
         },
-        getAllCoins: () => {
-            dispatch(getAllCoins());
-        }
     }
 }
 

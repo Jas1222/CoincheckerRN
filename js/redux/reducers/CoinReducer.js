@@ -6,13 +6,15 @@
 import { CHANGE_CURRENCY_TYPE, 
     CHANGE_NUMBER_COINS, 
     GET_COIN_DATA, 
-    CHANGE_PERCENTAGE_TIME_PERIOD } from 'CoinActionTypes';
+    CHANGE_PERCENTAGE_TIME_PERIOD
+} from 'CoinActionTypes';
 
 const initialState = {
     currencyType: 'gbp',
     numberOfCoins: 25,
     timePeriod: 'percent_change_24h',
-    coinData: []
+    coinData: [],
+    lastRefreshed: ''
 };
 
 export function coinReducer(state = initialState, action) {
@@ -32,7 +34,8 @@ export function coinReducer(state = initialState, action) {
         case GET_COIN_DATA: {
             return {
                 ...state,
-                coinData: action.adaptedData
+                coinData: action.adaptedData,
+                lastRefreshed: action.adaptedData.lastRefreshed
             }
         }
         case CHANGE_PERCENTAGE_TIME_PERIOD: {
