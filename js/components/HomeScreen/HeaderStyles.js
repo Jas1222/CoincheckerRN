@@ -50,12 +50,12 @@ export default styles = StyleSheet.create({
     lastUpdatedLabel: {
         color: 'white',
         fontSize: 12,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        textDecorationLine: 'underline'
     },
     lastUpdatedTime: {
         fontSize: 12,
         alignSelf: 'center',
-        color: 'white',
-        textDecorationLine: 'underline'
+        color: 'white'
     }
 });
