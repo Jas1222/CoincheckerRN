@@ -31,10 +31,16 @@ export function setPercentageChangeTimePeriod(timePeriod) {
 
 export function getAllCoins() {
     return async (dispatch) => {
-        const data = await getCryptocurrencyData();
-        const adaptedData = adaptCoinData(data);
-        adaptedData.lastRefreshed = getCurrentTime();
+        let data = {};
 
-        return dispatch({type: GET_COIN_DATA, adaptedData});
+        try {
+            const rawData = await getCryptocurrencyData();
+            data.adaptedData = adaptCoinData(rawData);
+            data.lastRefreshed = getCurrentTime();
+        } catch (error) {
+            data.failedRequest = true;
+        }
+
+        return dispatch({type: GET_COIN_DATA, data});
     }
 }
