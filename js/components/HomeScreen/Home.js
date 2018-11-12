@@ -23,9 +23,6 @@ export class Home extends React.Component {
             coinData: props.coinData,
             refreshing: false,
         };
-
-        this.renderRow = this.renderRow.bind(this);
-        this.refresh = this.refresh.bind(this);
     }
 
      refresh = async () => {
@@ -70,17 +67,19 @@ export class Home extends React.Component {
     renderContent = () => {
         if (this.props.failedRequest) {
             return (
-                <View>
-                    <Header
-                        refresh={this.refresh}/>
-                    <ErrorMessage/>
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                    <Header/>
+                        <ErrorMessage
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.refresh}
+                            style={{alignSelf: 'center', justifyContent: 'center'}}
+                        />
                 </View>
             )
         } else {
             return (
                 <FlatList
                     data={this.props.coinData}
-                    extraData={getStore().getState().coinReducer}
                     onRefresh={this.refresh}
                     refreshing={this.state.refreshing}
                     renderItem={this.renderRow}
@@ -94,7 +93,7 @@ export class Home extends React.Component {
 
     render() {
         return (
-            <View>
+            <View style={{flex: 1}}>
                 {this.renderContent()}
             </View>
         );

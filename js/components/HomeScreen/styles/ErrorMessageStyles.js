@@ -8,14 +8,21 @@ import { StyleSheet } from 'react-native';
 export default styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignSelf: 'center'
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     title: {
-        fontSize: 16,
+        fontSize: 18,
         color: 'black'
     },
     subtitle: {
-        fontSize: 12,
-        color: 'grey'
+        fontSize: 14,
+        color: 'grey',
+        alignSelf: 'center'
+    },
+    icon: {
+        alignSelf: 'center',
+        marginBottom: 20
     }
 })
