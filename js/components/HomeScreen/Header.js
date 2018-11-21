@@ -51,7 +51,7 @@ export class Header extends React.Component {
 
     _renderTitle() {
         const coinText = <Text style={[styles.title,]}>COIN-CHECKER</Text>;
-        const settingsTest = <Text style={[styles.title, {textDecorationLine: 'underline'}]}>SETTINGS</Text>;
+        const settingsTest = <Text style={[styles.title, {textDecorationLine: 'underline'}]}>FILTERS</Text>;
 
         let titleText = this.state.expanded ? settingsTest : coinText;
 
@@ -59,7 +59,7 @@ export class Header extends React.Component {
             <View style={[styles.titleContainer]}>
                 {this._renderLastUpdated()}
                 {titleText}
-                <Icon name="settings" size={30} color="#FFFFFF" style={ styles.settingsIcon }
+                <Icon name="filter" size={30} color="#FFFFFF" style={ styles.settingsIcon }
                       onPress={this._onSettingsPress.bind(this)}/>
             </View>
         )
