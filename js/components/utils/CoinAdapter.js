@@ -5,19 +5,16 @@
 import { getStore } from 'GlobalStore';
 
 export function adaptCoinData(data) {
-    var result = data.data.map(coin => {
+    return data.data.map(coin => {
         let convertedCoin = convertJsonTypes(coin);
 
-        let adaptedCoin = {
+        return {
             name: coin.name,
             symbol: coin.symbol,
             percentageChange: convertedCoin.percentageChange,
             price: convertedCoin.price
         };
-        return adaptedCoin;
     });
-
-    return result;
 }
 
 export function getFiatSymbol() {
@@ -52,7 +49,6 @@ export function getPercentageLabel() {
             return '24h';
             break;
     }
-
 }
 
 export function convertJsonTypes(item) {
@@ -60,10 +56,8 @@ export function convertJsonTypes(item) {
     const timePeriod = getStore().getState().coinReducer.timePeriod;
     const obj = item.quotes[currencyType.toUpperCase()];
 
-    const adaptedCoin = {
+    return {
         price: obj.price,
         percentageChange: obj[timePeriod]
     };
-
-    return adaptedCoin;
 }

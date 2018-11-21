@@ -20,7 +20,6 @@ export async function getCryptocurrencyData() {
 }
 
 function buildUrl() {
-    // TODO change URL
     let url ='https://api.coinmarketcap.com/v2/ticker/';
     let currencyType = getStore().getState().coinReducer.currencyType;
     let numberOfReturnsCrypto = getStore().getState().coinReducer.numberOfCoins;

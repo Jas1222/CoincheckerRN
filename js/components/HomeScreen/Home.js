@@ -65,7 +65,7 @@ export class Home extends React.Component {
     };
 
     renderContent = () => {
-        if (this.props.failedRequest) {
+        if (this.props.failedRequest && !this.props.lastRefreshed) {
             return (
                 <View style={{flex: 1, flexDirection: 'column'}}>
                     <Header/>
