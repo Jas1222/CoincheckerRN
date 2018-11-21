@@ -29,8 +29,6 @@ const TabNavigator = createBottomTabNavigator({
                 iconName = `briefcase`;
             }
 
-            // You can return any component that you like here! We usually use an
-            // icon component from react-native-vector-icons
             return <Icon name={iconName} size={horizontal ? 20 : 25} color={tintColor}/>;
         },
         tabBarOptions: {
