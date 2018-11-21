@@ -11,9 +11,9 @@ import {
 import CoinCell from 'CoinCell';
 import Header from 'Header';
 import { connect } from 'react-redux';
-import { getCryptocurrencyData } from 'NetworkHandler';
 import { getStore } from 'GlobalStore';
-import { setCurrencyType, setNumberOfCoins, getAllCoins } from 'DataActions';
+import { getAllCoins } from 'DataActions';
+import ErrorMessage from 'ErrorMessage';
 
 export class Home extends React.Component {
     constructor(props) {
@@ -23,22 +23,19 @@ export class Home extends React.Component {
             coinData: props.coinData,
             refreshing: false,
         };
-
-        this._renderRow = this._renderRow.bind(this);
-        this._onRefresh = this._onRefresh.bind(this);
     }
 
-    componentDidMount() {
-        this.props.getAllCoins();
-    }
-
-    async _onRefresh() {
+     refresh = async () => {
         this.setState({refreshing: true});
         await this.props.getAllCoins();
         this.setState({refreshing: false});
+    };
+
+    componentDidMount = () => {
+        this.refresh();
     }
-    
-    _renderRow(data) {
+
+    renderRow = (data) => {
         return (
             <CoinCell
                 name={data.item.name}
@@ -46,16 +43,16 @@ export class Home extends React.Component {
                 percentageChange={data.item.percentageChange}
                 symbol={data.item.symbol}>
             </CoinCell>)
-    }
+    };
 
-    _renderHeader() {
+    renderHeader = () => {
         return (
             <Header
-                refresh={this._onRefresh}/>
+                refresh={this.refresh}/>
         )
-    }
+    };
 
-    _renderSeparator() {
+    renderSeparator = () => {
         return (
             <View
                 style={{
@@ -67,25 +64,46 @@ export class Home extends React.Component {
         );
     };
 
-    render() {
-        return (
+    renderContent = () => {
+        if (this.props.failedRequest && !this.props.lastRefreshed) {
+            return (
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                    <Header/>
+                        <ErrorMessage
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.refresh}
+                            style={{alignSelf: 'center', justifyContent: 'center'}}
+                        />
+                </View>
+            )
+        } else {
+            return (
                 <FlatList
                     data={this.props.coinData}
-                    extraData={getStore().getState().coinReducer}
-                    onRefresh={this._onRefresh}
+                    onRefresh={this.refresh}
                     refreshing={this.state.refreshing}
-                    renderItem={this._renderRow}
-                    ListHeaderComponent={this._renderHeader()}
-                    ItemSeparatorComponent={this._renderSeparator}
+                    renderItem={this.renderRow}
+                    ListHeaderComponent={this.renderHeader()}
+                    ItemSeparatorComponent={this.renderSeparator}
                     keyExtractor={item => item.name}
                 />
+            )
+        }
+    };
+
+    render() {
+        return (
+            <View style={{flex: 1}}>
+                {this.renderContent()}
+            </View>
         );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        coinData: state.coinReducer.coinData
+        coinData: state.coinReducer.coinData,
+        failedRequest: state.coinReducer.failedRequest
     };
 }
 

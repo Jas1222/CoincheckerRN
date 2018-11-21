@@ -14,7 +14,8 @@ const initialState = {
     numberOfCoins: 25,
     timePeriod: 'percent_change_24h',
     coinData: [],
-    lastRefreshed: ''
+    lastRefreshed: '',
+    failedRequest: false
 };
 
 export function coinReducer(state = initialState, action) {
@@ -34,8 +35,9 @@ export function coinReducer(state = initialState, action) {
         case GET_COIN_DATA: {
             return {
                 ...state,
-                coinData: action.adaptedData,
-                lastRefreshed: action.adaptedData.lastRefreshed
+                coinData: action.data.adaptedData,
+                lastRefreshed: action.data.lastRefreshed,
+                failedRequest: action.data.failedRequest
             }
         }
         case CHANGE_PERCENTAGE_TIME_PERIOD: {
