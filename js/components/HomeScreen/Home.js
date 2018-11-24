@@ -16,6 +16,10 @@ import { getAllCoins } from 'DataActions';
 import ErrorMessage from 'ErrorMessage';
 
 export class Home extends React.Component {
+    static navigationOptions = {
+        tabBarLabel: 'Coins'
+    };
+
     constructor(props) {
         super(props);
 
