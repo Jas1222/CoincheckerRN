@@ -11,7 +11,7 @@ import { CHANGE_CURRENCY_TYPE,
 
 const initialState = {
     currencyType: 'gbp',
-    numberOfCoins: 25,
+    numberOfCoins: 200,
     timePeriod: 'percent_change_24h',
     coinData: [],
     lastRefreshed: '',
