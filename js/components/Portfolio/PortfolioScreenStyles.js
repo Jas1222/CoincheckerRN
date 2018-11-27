@@ -28,7 +28,10 @@ export const styles = StyleSheet.create({
         height: '60%',
         width: '90%',
         marginTop: '5%',
-        marginBottom: '3%'
+        marginBottom: '3%',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 50
     },
     row: {
         marginLeft: 10,
@@ -37,7 +40,7 @@ export const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: '#FAFAFA',
-        width: '20%',
+        width: '25%',
         fontSize: 12,
     },
     button: {
@@ -50,5 +53,8 @@ export const styles = StyleSheet.create({
         width: '100%',
         alignSelf: 'center',
         textAlign: 'center',
+    },
+    header:{
+        
     }
 });

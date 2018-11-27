@@ -19,7 +19,7 @@ const newUserMessage = "Select your coins below and enter your quantity to start
 
 export class PortfolioScreen extends React.Component {
     static navigationOptions = {
-        tabBarLabel: 'Porfolio'
+        tabBarLabel: 'Portfolio'
     };
 
     adaptData = (coins) => {
@@ -50,8 +50,26 @@ export class PortfolioScreen extends React.Component {
     };
 
     hasUserSelectedCoin = (coin) => {
-        console.warn('!! hasUserSelected')
-        return this.state.selectedCoins.includes(coin);
+        const selectedCoins = this.state.selectedCoins;
+        let result = false;
+        
+        if (selectedCoins.length) {
+            console.warn('! not null')
+            result = selectedCoins.forEach((selectedCoin) => {
+                if (selectedCoin.value == coin)  {
+                    console.warn('TRUE')
+                    t = true
+                    return t;
+                } else {
+                    console.warn('FALSE')
+                    t = false;
+                    return t
+                }
+            });
+        }
+
+        return result;
+
     };
 
     onDonePressed = () => {
@@ -65,19 +83,32 @@ export class PortfolioScreen extends React.Component {
     };
 
     renderLabel = (coin) => {
-        console.log('!!! renderLabel')
         return (
             <View style={{ flex: 1}}>
                 <View style={styles.row}>
                     <Text>{coin}</Text>
                     <TextInput
                         style={styles.input}
-                        editable={(coin) => this.hasUserSelectedCoin(coin)}
+                        mode={'outlined'}
+                        keyboardType={'numeric'}
+                        autoCapitalize="none"
+                        placeholder={'0.0'}
+                        editable={this.hasUserSelectedCoin(coin)}
                     />
                 </View>
             </View>
         )
     };
+
+    renderHeader = () => {
+        return (
+               <View style={{flexDirection: 'row'}}>
+                   <Text>{"Owned"}</Text>
+                   <Text>{"Name"}</Text>
+                   <Text>{"Amount Held"}</Text>
+               </View> 
+        );
+    }
 
     render() {
         return (
