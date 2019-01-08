@@ -1,5 +1,5 @@
 /**
- * @providesModule PortfolioScreen
++ * @providesModule PortfolioScreen
  * @flow
  */
 
@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { styles } from 'PortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
 
+// TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
 
 export class PortfolioScreen extends React.Component {
@@ -22,6 +23,18 @@ export class PortfolioScreen extends React.Component {
         tabBarLabel: 'Portfolio'
     };
 
+    constructor(props) {
+        super(props);
+
+        const newData = this.adaptData(this.props.coinData);
+
+        this.state = {
+            coins: newData,
+            selectedCoins: [],
+        }
+    }
+
+    // shouldnt be here but roll with its
     adaptData = (coins) => {
         let data = [];
 
@@ -32,48 +45,63 @@ export class PortfolioScreen extends React.Component {
         return data.sort();
     };
 
-    constructor(props) {
-        super(props);
-
-        const newData = this.adaptData(this.props.coinData);
-
-        this.state = {
-            coins: newData,
-            selectedCoins: []
-        }
-    }
-
     onSelectionChange = (selectedCoins) => {
         this.setState({
-            selectedCoins: selectedCoins
+            selectedCoins: selectedCoins,
+            enteredCoins: []
         })
     };
 
     hasUserSelectedCoin = (coin) => {
+        // return to this function
         const selectedCoins = this.state.selectedCoins;
+
         let result = false;
+        let position = 0;
         
-        if (selectedCoins.length) {
-            console.warn('! not null')
-            result = selectedCoins.forEach((selectedCoin) => {
-                if (selectedCoin.value == coin)  {
-                    console.warn('TRUE')
-                    t = true
-                    return t;
-                } else {
-                    console.warn('FALSE')
-                    t = false;
-                    return t
-                }
+        if (selectedCoins.length) { 
+            result = selectedCoins.findIndex((selectedCoin) => {            
+                return selectedCoin.value == coin;
             });
+            
+            position = result;
+            result = result > -1 ? true : false;
         }
 
-        return result;
+        console.warn('result', result)
 
+        return [result, position];
+    };
+
+    onChangeText = (value, index) => {
+        const currentSelectedCoins = this.state.selectedCoins;
+        const [isAlreadySelected, position] = this.hasUserSelectedCoin(currentSelectedCoins[index]);
+
+      if (isAlreadySelected) {
+        //   console.warn('true')
+          currentSelectedCoins[position].quantity = value;
+      } else {
+        // console.warn('false')
+
+        const selectedCoin = {
+            value: this.state.coins[index],
+            quantity: value
+        };    
+
+        console.warn('coin to push', selectedCoin)
+        currentSelectedCoins.push(selectedCoin);
+
+        this.setState({
+            selectedCoins: currentSelectedCoins
+        });
+
+    }
+      
+    //   console.warn('this.state.selectedCoins', this.state.selectedCoins)
     };
 
     onDonePressed = () => {
-
+        console.warn('!!!! hey', this.state.selectedCoins)
     };
 
     renderNewUserTitle = () => {
@@ -83,18 +111,25 @@ export class PortfolioScreen extends React.Component {
     };
 
     renderLabel = (coin) => {
+        // TODO Fix autofocus
+        let [isCoinTicked, index] = this.hasUserSelectedCoin(coin);
+        console.warn('isCoinTicked', isCoinTicked)
+        
         return (
             <View style={{ flex: 1}}>
                 <View style={styles.row}>
                     <Text>{coin}</Text>
-                    <TextInput
-                        style={styles.input}
-                        mode={'outlined'}
-                        keyboardType={'numeric'}
-                        autoCapitalize="none"
-                        placeholder={'0.0'}
-                        editable={this.hasUserSelectedCoin(coin)}
-                    />
+
+                    {isCoinTicked &&
+                        <TextInput
+                            style={styles.input}
+                            mode={'outlined'}
+                            keyboardType={'numeric'}
+                            autoCapitalize="none"
+                            placeholder={'0.0'}
+                            editable={isCoinTicked}
+                            onChangeText={(value) => this.onChangeText(value, index)}
+                        />}
                 </View>
             </View>
         )
