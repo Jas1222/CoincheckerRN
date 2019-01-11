@@ -31,7 +31,8 @@ export class PortfolioScreen extends React.Component {
         this.state = {
             coins: newData,
             selectedCoins: [],
-            coinsWithQuantities: []
+            coinsWithQuantities: [],
+            buttonEnabled: false
         }
     }
 
@@ -57,6 +58,16 @@ export class PortfolioScreen extends React.Component {
     }
 
     onSelectionChange = (modifiedSelectedCoins) => {
+        if (modifiedSelectedCoins.length) {
+            this.setState({
+                buttonEnabled: true
+            })
+        } else {
+            this.setState({
+                buttonEnabled: false
+            })        
+        }
+
         const coinsWithQuantities = this.state.coinsWithQuantities;
         
         coinsWithQuantities.forEach((selectedCoin, index) => {
@@ -114,7 +125,17 @@ export class PortfolioScreen extends React.Component {
             coinsWithQuantities: coinsWithQuantities
         });
     };
-      
+    
+    isSubmitEnabled = () => {
+        console.log(this.state.coinsWithQuantities.length)
+
+        if (this.state.coinsWithQuantities.length) {
+            return true;
+        }  else {
+            return false;
+        }
+    }
+
     onDonePressed = () => {
         console.warn('!!!! hey', this.state.coinsWithQuantities)
     };
@@ -149,16 +170,6 @@ export class PortfolioScreen extends React.Component {
         )
     };
 
-    renderHeader = () => {
-        return (
-               <View style={{flexDirection: 'row'}}>
-                   <Text>{"Owned"}</Text>
-                   <Text>{"Name"}</Text>
-                   <Text>{"Amount Held"}</Text>
-               </View> 
-        );
-    }
-
     render() {
         return (
             <View style={styles.container}>
@@ -179,7 +190,10 @@ export class PortfolioScreen extends React.Component {
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
 
                     <TouchableOpacity
-                        onPress={this.onDonePressed} style={{flexDirection: 'row', height: 50, justifyContent: 'center'}}>
+                        onPress={this.onDonePressed} 
+                        style={[{flexDirection: 'row', height: 50, justifyContent: 'center'}, this.state.buttonEnabled ? {} : {opacity: 0.5}]}
+                        disabled={this.state.buttonEnabled}
+                        >
                         <Text
                             style = {styles.button}>
                             {"Done"}
