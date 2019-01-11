@@ -31,6 +31,7 @@ export class PortfolioScreen extends React.Component {
         this.state = {
             coins: newData,
             selectedCoins: [],
+            coinsWithQuantities: []
         }
     }
 
@@ -46,62 +47,57 @@ export class PortfolioScreen extends React.Component {
     };
 
     onSelectionChange = (selectedCoins) => {
+        //TODO if user deselects coin, remove from list
         this.setState({
-            selectedCoins: selectedCoins,
-            enteredCoins: []
+            selectedCoins: selectedCoins
         })
     };
 
-    hasUserSelectedCoin = (coin) => {
+    hasUserPreviouslySelectedCoin = (coin, selectedCoins) => {
         // return to this function
-        const selectedCoins = this.state.selectedCoins;
-
         let result = false;
         let position = 0;
         
-        if (selectedCoins.length) { 
+        if (selectedCoins) {
             result = selectedCoins.findIndex((selectedCoin) => {            
                 return selectedCoin.value == coin;
             });
-            
+    
             position = result;
             result = result > -1 ? true : false;
         }
-
-        console.warn('result', result)
 
         return [result, position];
     };
 
     onChangeText = (value, index) => {
-        const currentSelectedCoins = this.state.selectedCoins;
-        const [isAlreadySelected, position] = this.hasUserSelectedCoin(currentSelectedCoins[index]);
+        const coinsWithQuantities = this.state.coinsWithQuantities;
+        const selectedCoins = this.state.selectedCoins;
 
-      if (isAlreadySelected) {
-        //   console.warn('true')
-          currentSelectedCoins[position].quantity = value;
-      } else {
-        // console.warn('false')
+        let result = [false, 0];
 
-        const selectedCoin = {
-            value: this.state.coins[index],
-            quantity: value
-        };    
-
-        console.warn('coin to push', selectedCoin)
-        currentSelectedCoins.push(selectedCoin);
+        if (selectedCoins.length) {
+            result = this.hasUserPreviouslySelectedCoin(selectedCoins[index].value, coinsWithQuantities)
+        }
+        
+        if (result[0]) {
+            coinsWithQuantities[result[1]].quantity = value;
+        } else {
+            const coinToAdd = {
+                value: this.state.coins[index],
+                quantity: value
+            };    
+    
+            coinsWithQuantities.push(coinToAdd);
+        }
 
         this.setState({
-            selectedCoins: currentSelectedCoins
+            coinsWithQuantities: coinsWithQuantities
         });
-
-    }
-      
-    //   console.warn('this.state.selectedCoins', this.state.selectedCoins)
     };
-
+      
     onDonePressed = () => {
-        console.warn('!!!! hey', this.state.selectedCoins)
+        console.warn('!!!! hey', this.state.coinsWithQuantities)
     };
 
     renderNewUserTitle = () => {
@@ -112,8 +108,7 @@ export class PortfolioScreen extends React.Component {
 
     renderLabel = (coin) => {
         // TODO Fix autofocus
-        let [isCoinTicked, index] = this.hasUserSelectedCoin(coin);
-        console.warn('isCoinTicked', isCoinTicked)
+        let [isCoinTicked, index] = this.hasUserPreviouslySelectedCoin(coin, this.state.selectedCoins);
         
         return (
             <View style={{ flex: 1}}>

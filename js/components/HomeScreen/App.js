@@ -9,7 +9,7 @@ import {
     RefreshControl
 } from 'react-native';
 import  Home from 'Home';
-import PortfolioScreen from 'PortfolioScreen';
+import PortfolioScreen from '../Portfolio/PortfolioScreen';
 import { Provider } from 'react-redux';
 import { getStore } from 'GlobalStore';
 import Icon from 'react-native-vector-icons/Feather';
