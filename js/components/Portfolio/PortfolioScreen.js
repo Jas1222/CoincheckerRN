@@ -35,7 +35,7 @@ export class PortfolioScreen extends React.Component {
         }
     }
 
-    // shouldnt be here but roll with its
+    // TODO shouldnt be here but roll with its
     adaptData = (coins) => {
         let data = [];
 
@@ -46,20 +46,39 @@ export class PortfolioScreen extends React.Component {
         return data.sort();
     };
 
-    onSelectionChange = (selectedCoins) => {
-        //TODO if user deselects coin, remove from list
+    // TODO shouldnt be here but roll with its
+    findWithAttr = (array, attr, value) => {
+        for(var i = 0; i < array.length; i += 1) {
+            if(array[i][attr] === value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    onSelectionChange = (modifiedSelectedCoins) => {
+        const coinsWithQuantities = this.state.coinsWithQuantities;
+        
+        coinsWithQuantities.forEach((selectedCoin, index) => {
+            const result = this.findWithAttr(modifiedSelectedCoins, 'value', selectedCoin.value);
+
+            if (result < 0) {
+                coinsWithQuantities.splice(index, index)
+            }
+        })
+
         this.setState({
-            selectedCoins: selectedCoins
+            selectedCoins: modifiedSelectedCoins,
+            coinsWithQuantities: coinsWithQuantities
         })
     };
 
-    hasUserPreviouslySelectedCoin = (coin, selectedCoins) => {
-        // return to this function
+    hasUserPreviouslySelectedCoin = (coin, coinsWithQuantities) => {
         let result = false;
         let position = 0;
         
-        if (selectedCoins) {
-            result = selectedCoins.findIndex((selectedCoin) => {            
+        if (coinsWithQuantities) {
+            result = coinsWithQuantities.findIndex((selectedCoin) => {            
                 return selectedCoin.value == coin;
             });
     
@@ -74,14 +93,14 @@ export class PortfolioScreen extends React.Component {
         const coinsWithQuantities = this.state.coinsWithQuantities;
         const selectedCoins = this.state.selectedCoins;
 
-        let result = [false, 0];
+        let isPreviouslySelected = [false, 0];
 
         if (selectedCoins.length) {
-            result = this.hasUserPreviouslySelectedCoin(selectedCoins[index].value, coinsWithQuantities)
+            isPreviouslySelected = this.hasUserPreviouslySelectedCoin(selectedCoins[index].value, coinsWithQuantities)
         }
         
-        if (result[0]) {
-            coinsWithQuantities[result[1]].quantity = value;
+        if (isPreviouslySelected[0]) {
+            coinsWithQuantities[isPreviouslySelected[1]].quantity = value;
         } else {
             const coinToAdd = {
                 value: this.state.coins[index],
