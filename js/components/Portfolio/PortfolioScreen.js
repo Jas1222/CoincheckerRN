@@ -32,7 +32,7 @@ export class PortfolioScreen extends React.Component {
             coins: newData,
             selectedCoins: [],
             coinsWithQuantities: [],
-            buttonEnabled: false
+            buttonDisabled: true
         }
     }
 
@@ -58,23 +58,17 @@ export class PortfolioScreen extends React.Component {
     }
 
     onSelectionChange = (modifiedSelectedCoins) => {
-        if (modifiedSelectedCoins.length) {
-            this.setState({
-                buttonEnabled: true
-            })
-        } else {
-            this.setState({
-                buttonEnabled: false
-            })        
-        }
-
         const coinsWithQuantities = this.state.coinsWithQuantities;
         
         coinsWithQuantities.forEach((selectedCoin, index) => {
             const result = this.findWithAttr(modifiedSelectedCoins, 'value', selectedCoin.value);
+            console.warn('result', result)
+            console.warn('selectedCoin', selectedCoin)
 
             if (result < 0) {
-                coinsWithQuantities.splice(index, index)
+                coinsWithQuantities.splice(index, 1)
+                console.warn('after splice', coinsWithQuantities)
+
             }
         })
 
@@ -119,6 +113,16 @@ export class PortfolioScreen extends React.Component {
             };    
     
             coinsWithQuantities.push(coinToAdd);
+        }
+
+        if (coinsWithQuantities) {
+            this.setState({
+                buttonDisabled: false
+            })
+        } else {
+            this.setState({
+                buttonDisabled: true
+            })        
         }
 
         this.setState({
@@ -191,8 +195,8 @@ export class PortfolioScreen extends React.Component {
 
                     <TouchableOpacity
                         onPress={this.onDonePressed} 
-                        style={[{flexDirection: 'row', height: 50, justifyContent: 'center'}, this.state.buttonEnabled ? {} : {opacity: 0.5}]}
-                        disabled={this.state.buttonEnabled}
+                        style={[{flexDirection: 'row', height: 50, justifyContent: 'center'}, this.state.buttonDisabled ? {opacity: 0.5} : {}]}
+                        disabled={this.state.buttonDisabled}
                         >
                         <Text
                             style = {styles.button}>
