@@ -9,7 +9,7 @@ import {
     RefreshControl
 } from 'react-native';
 import  Home from 'Home';
-import PortfolioScreen from 'PortfolioScreen';
+import PortfolioScreen from '../Portfolio/PortfolioScreen';
 import { Provider } from 'react-redux';
 import { getStore } from 'GlobalStore';
 import Icon from 'react-native-vector-icons/Feather';
@@ -17,6 +17,7 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 const TabNavigator = createBottomTabNavigator({
     CoinListScreen: Home,
+    // TODO nested stack navigator
     PortfolioScreen: PortfolioScreen
 },{
     navigationOptions: ({navigation}) => ({
@@ -34,8 +35,9 @@ const TabNavigator = createBottomTabNavigator({
         tabBarOptions: {
             activeTintColor: '#03A9F4',
             inactiveTintColor: 'gray',
+            activeBackgroundColor: '#FAFAFA',
+            inactiveBackgroundColor: '#FAFAFA',
             style: {
-                backgroundColor: '#FAFAFA',
                 borderWidth: 0.8,
                 borderColor: '#93969b'
             }

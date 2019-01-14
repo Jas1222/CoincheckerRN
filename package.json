@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "moment": "^2.22.2",
-    "react": "^16.0.0-alpha.12",
-    "react-native": "0.46.4",
+    "react": "^16.4.1",
+    "react-native": "0.55.4",
+    "react-native-select-multiple": "^1.2.0",
     "react-native-vector-icons": "^4.5.0",
-    "react-navigation": "^2.13.0",
+    "react-navigation": "2.13.0",
     "react-redux": "^5.0.5",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
@@ -20,7 +21,7 @@
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
-    "babel-preset-react-native": "2.1.0",
+    "babel-preset-react-native": "4.0.0",
     "flow-bin": "^0.33.0",
     "jest": "20.0.4",
     "react-test-renderer": "16.0.0-alpha.12"
