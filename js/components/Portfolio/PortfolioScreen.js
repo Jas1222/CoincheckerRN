@@ -131,8 +131,6 @@ export class PortfolioScreen extends React.Component {
     };
     
     isSubmitEnabled = () => {
-        console.log(this.state.coinsWithQuantities.length)
-
         if (this.state.coinsWithQuantities.length) {
             return true;
         }  else {
@@ -191,8 +189,7 @@ export class PortfolioScreen extends React.Component {
                     selectedItems={this.state.selectedCoins}
                     onSelectionsChange={this.onSelectionChange} />
 
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-
+                <View style={styles.buttonContainer}> 
                     <TouchableOpacity
                         onPress={this.onDonePressed} 
                         style={[{flexDirection: 'row', height: 50, justifyContent: 'center'}, this.state.buttonDisabled ? {opacity: 0.5} : {}]}

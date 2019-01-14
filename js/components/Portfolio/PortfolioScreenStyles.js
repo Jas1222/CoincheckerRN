@@ -41,7 +41,12 @@ export const styles = StyleSheet.create({
     input: {
         backgroundColor: '#FAFAFA',
         width: '25%',
-        fontSize: 12,
+        fontSize: 12
+    },
+    buttonContainer: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center'
     },
     button: {
         backgroundColor: '#03A9F4',
@@ -53,8 +58,5 @@ export const styles = StyleSheet.create({
         width: '100%',
         alignSelf: 'center',
         textAlign: 'center',
-    },
-    header:{
-        
     }
 });
