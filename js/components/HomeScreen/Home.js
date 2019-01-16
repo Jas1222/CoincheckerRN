@@ -12,7 +12,7 @@ import CoinCell from 'CoinCell';
 import Header from 'Header';
 import { connect } from 'react-redux';
 import { getStore } from 'GlobalStore';
-import { getAllCoins } from 'DataActions';
+import { getAllCoins, setUserCoinWorth } from 'DataActions';
 import ErrorMessage from 'ErrorMessage';
 
 export class Home extends React.Component {
@@ -33,10 +33,21 @@ export class Home extends React.Component {
         this.setState({refreshing: true});
         await this.props.getAllCoins();
         this.setState({refreshing: false});
+
+        console.warn('home', this.props.userCoinData)
+
+        if (this.props.userCoinData) {
+            console.warn('inside if')
+            this.props.setUserCoinWorth(this.props.userCoinData, this.props.coinData);
+        }
     };
 
     componentDidMount = () => {
         this.refresh();
+        // if (this.props.userCoinData) {
+        //     console.warn('inside if')
+        //     this.props.setUserCoinWorth(this.props.userCoinData, this.props.coinData);
+        // }
     }
 
     renderRow = (data) => {
@@ -107,7 +118,8 @@ export class Home extends React.Component {
 function mapStateToProps(state) {
     return {
         coinData: state.coinReducer.coinData,
-        failedRequest: state.coinReducer.failedRequest
+        failedRequest: state.coinReducer.failedRequest,
+        userCoinData: state.coinReducer.userCoinData
     };
 }
 
@@ -115,6 +127,9 @@ function mapDispatchToProps(dispatch) {
     return {
         getAllCoins: () => {
             dispatch(getAllCoins());
+        },
+        setUserCoinWorth: () => {
+            dispatch(setUserCoinWorth());
         }
     }
 }

@@ -61,3 +61,15 @@ export function convertJsonTypes(item) {
         percentageChange: obj[timePeriod]
     };
 }
+
+export function calculateUserCoinWorth(latestPrices, userPortfolio) {
+    // console.warn('latestPrices', latestPrices)
+    console.warn('userPortfolio', userPortfolio)
+    
+    userPortfolio.forEach((portfolioCoin) => {
+        latestPrices.find((coinWithPrice) => {
+            // return coinWithPrice.
+        });
+    });
+
+}

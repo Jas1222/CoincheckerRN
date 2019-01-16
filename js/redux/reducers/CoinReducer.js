@@ -6,7 +6,8 @@
 import { CHANGE_CURRENCY_TYPE, 
     CHANGE_NUMBER_COINS, 
     GET_COIN_DATA, 
-    CHANGE_PERCENTAGE_TIME_PERIOD
+    CHANGE_PERCENTAGE_TIME_PERIOD,
+    USER_COINS
 } from 'CoinActionTypes';
 
 const initialState = {
@@ -44,6 +45,12 @@ export function coinReducer(state = initialState, action) {
             return {
                 ...state,
                 timePeriod: action.timePeriod
+            }
+        }
+        case USER_COINS: {
+            return {
+                ...state,
+                userCoins: action.userCoins
             }
         }
         default:
