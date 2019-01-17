@@ -62,14 +62,19 @@ export function convertJsonTypes(item) {
     };
 }
 
-export function calculateUserCoinWorth(latestPrices, userPortfolio) {
-    // console.warn('latestPrices', latestPrices)
-    console.warn('userPortfolio', userPortfolio)
+export function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
+    let userCoinsWithTotalPrice = [];
     
     userPortfolio.forEach((portfolioCoin) => {
-        latestPrices.find((coinWithPrice) => {
-            // return coinWithPrice.
+        const matchedCoin = latestPrices.find((coinWithPrice) => {
+            return coinWithPrice.name == portfolioCoin.value
         });
+
+        if (matchedCoin) {
+            matchedCoin.userSum = Math.round(matchedCoin.price * portfolioCoin.quantity * 100) / 100;
+            userCoinsWithTotalPrice.push(matchedCoin)
+        }
     });
 
+    return userCoinsWithTotalPrice;
 }

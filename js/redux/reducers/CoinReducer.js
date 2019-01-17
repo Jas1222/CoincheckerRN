@@ -7,7 +7,9 @@ import { CHANGE_CURRENCY_TYPE,
     CHANGE_NUMBER_COINS, 
     GET_COIN_DATA, 
     CHANGE_PERCENTAGE_TIME_PERIOD,
-    USER_COINS
+    USER_COINS,
+    SET_PORTFOLIO_VALUE,
+    GET_USER_PORTFOLIO
 } from 'CoinActionTypes';
 
 const initialState = {
@@ -16,7 +18,9 @@ const initialState = {
     timePeriod: 'percent_change_24h',
     coinData: [],
     lastRefreshed: '',
-    failedRequest: false
+    failedRequest: false,
+    userCoins: [],
+    portfolioData: []
 };
 
 export function coinReducer(state = initialState, action) {
@@ -48,9 +52,18 @@ export function coinReducer(state = initialState, action) {
             }
         }
         case USER_COINS: {
+            console.warn('USER_COINS', action)
+
             return {
                 ...state,
                 userCoins: action.userCoins
+            }
+        }
+        case SET_PORTFOLIO_VALUE: {
+            console.warn('setPortfolioValue', action)
+            return {
+                ...state,
+                portfolioData: action.portfolioData
             }
         }
         default:

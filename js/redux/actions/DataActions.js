@@ -7,9 +7,11 @@ import { CHANGE_CURRENCY_TYPE,
     GET_COIN_DATA,
     CHANGE_PERCENTAGE_TIME_PERIOD,
     USER_COINS,
+    SET_PORTFOLIO_VALUE,
+    GET_USER_PORTFOLIO
 } from 'CoinActionTypes';
 import { getCryptocurrencyData } from 'NetworkHandler';
-import { adaptCoinData, calculateUserCoinWorth } from 'CoinAdapter';
+import { adaptCoinData, calculateUserCoinPortfolio } from 'CoinAdapter';
 import { getCurrentTime } from 'TimeUtil';
 import { AsyncStorage } from 'react-native';
 
@@ -44,6 +46,15 @@ export function setUserCoins(userCoins) {
     }
 }
 
+export function setUserCoinPortfolio(userCoinData, allCoins) {
+    return async (dispatch) => {
+        const portfolioData = await calculateUserCoinPortfolio(userCoinData, allCoins);
+        console.warn('portfolioData in action', portfolioData)
+
+        return dispatch({type: SET_PORTFOLIO_VALUE}, portfolioData);
+    }
+}
+
 export function getAllCoins() {
     return async (dispatch) => {
         let data = {};
@@ -62,18 +73,15 @@ export function getAllCoins() {
 
 export function getUserCoins() {
     return async (dispatch) => {
-        const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA');
+        const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA'); 
         const userCoins = JSON.parse(stringifiedData);
 
         return dispatch({type: USER_COINS}, userCoins)
     }
 }
 
-export function setUserCoinWorth(userCoinData, allCoins) {
+// export function getUserPortfolio() {
+//     return async (dispatch) => {
 
-    return async (dispatch) => {
-        const coinsWithValues = calculateUserCoinWorth(userCoinData, allCoins);
-
-        return dispatch({type, CALCULATE_PORTFOLIO_VALUE}, coinsWithValues);
-    }
-}
+//     }
+// }

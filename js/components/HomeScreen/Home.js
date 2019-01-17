@@ -11,8 +11,11 @@ import {
 import CoinCell from 'CoinCell';
 import Header from 'Header';
 import { connect } from 'react-redux';
-import { getStore } from 'GlobalStore';
-import { getAllCoins, setUserCoinWorth } from 'DataActions';
+import {
+    getAllCoins, 
+    setUserCoinWorth, 
+    getUserCoins 
+} from 'DataActions';
 import ErrorMessage from 'ErrorMessage';
 
 export class Home extends React.Component {
@@ -32,22 +35,17 @@ export class Home extends React.Component {
      refresh = async () => {
         this.setState({refreshing: true});
         await this.props.getAllCoins();
+        await this.props.getUserCoins();
         this.setState({refreshing: false});
 
-        console.warn('home', this.props.userCoinData)
-
-        if (this.props.userCoinData) {
-            console.warn('inside if')
-            this.props.setUserCoinWorth(this.props.userCoinData, this.props.coinData);
+        if (this.props.userCoins.length) {
+            this.props.setUserCoinPortfolio(this.props.userCoins, this.props.coinData);
+            console.warn('!! from redux store', this.props.portfolioData)
         }
     };
 
     componentDidMount = () => {
         this.refresh();
-        // if (this.props.userCoinData) {
-        //     console.warn('inside if')
-        //     this.props.setUserCoinWorth(this.props.userCoinData, this.props.coinData);
-        // }
     }
 
     renderRow = (data) => {
@@ -119,7 +117,9 @@ function mapStateToProps(state) {
     return {
         coinData: state.coinReducer.coinData,
         failedRequest: state.coinReducer.failedRequest,
-        userCoinData: state.coinReducer.userCoinData
+        userCoins: state.coinReducer.userCoins,
+        // TODO: MOVE TO PORTOFLIO SECTION
+        portfolioData: state.coinReducer.portfolioData
     };
 }
 
@@ -128,8 +128,11 @@ function mapDispatchToProps(dispatch) {
         getAllCoins: () => {
             dispatch(getAllCoins());
         },
-        setUserCoinWorth: () => {
-            dispatch(setUserCoinWorth());
+        setUserCoinPortfolio: (userCoinData, allCoins) => {
+            dispatch(setUserCoinPortfolio(userCoinData, allCoins));
+        },
+        getUserCoins: () => {
+            dispatch(getUserCoins())
         }
     }
 }
