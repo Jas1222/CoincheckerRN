@@ -1,5 +1,5 @@
 /**
-+ * @providesModule PortfolioScreen
++ * @providesModule CreatePortfolioScreen
  * @flow
  */
 
@@ -12,16 +12,18 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import { styles } from 'PortfolioScreenStyles';
+import { styles } from 'CreatePortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
 import { setUserCoins } from 'DataActions';
+import { setUserCoinPortfolio } from 'DataActions';
 
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
 
 export class PortfolioScreen extends React.Component {
     static navigationOptions = {
-        tabBarLabel: 'Portfolio'
+        tabBarLabel: 'Portfolio',
+        header: null
     };
 
     constructor(props) {
@@ -136,12 +138,13 @@ export class PortfolioScreen extends React.Component {
     }
 
     onDonePressed = () => {
-        console.warn('onDonePressed', this.state.coinsWithQuantities)
-        this.props.setUserCoins(this.state.coinsWithQuantities)
+        this.props.setUserCoinPortfolio(this.state.coinsWithQuantities, this.props.coinData);
+        console.warn('Being set', this.state.coinsWithQuantities)
+        this.props.navigation.navigate('DisplayPortfolio');
     };
 
     renderNewUserTitle = () => {
-        return(
+        return (
             <Text style={styles.subtitle}>{newUserMessage}</Text>
         )
     };
@@ -207,7 +210,8 @@ export class PortfolioScreen extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        coinData: state.coinReducer.coinData
+        coinData: state.coinReducer.coinData,
+        userCoins: state.coinReducer.userCoins
     };
 }
 
@@ -215,7 +219,11 @@ function mapDispatchToProps(dispatch) {
     return {
         setUserCoins: (coinsWithQuantities) => {
             dispatch(setUserCoins(coinsWithQuantities));
-        }
+        },
+        setUserCoinPortfolio: (userCoinData, allCoins) => {
+            //TODO: REMOVE? DO WE NEED THIS?
+            dispatch(setUserCoinPortfolio(userCoinData, allCoins));
+        },
     }
 }
 

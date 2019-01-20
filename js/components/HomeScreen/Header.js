@@ -16,8 +16,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
     setCurrencyType,
     setNumberOfCoins,
-    setPercentageChangeTimePeriod,
-    setTimestamp
+    setPercentageChangeTimePeriod
 } from 'DataActions';
 import styles from 'HeaderStyles';
 
