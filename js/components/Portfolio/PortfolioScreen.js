@@ -14,6 +14,7 @@ import {
 import { connect } from 'react-redux';
 import { styles } from 'PortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
+import { setUserCoins } from 'DataActions';
 
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
@@ -62,13 +63,9 @@ export class PortfolioScreen extends React.Component {
         
         coinsWithQuantities.forEach((selectedCoin, index) => {
             const result = this.findWithAttr(modifiedSelectedCoins, 'value', selectedCoin.value);
-            console.warn('result', result)
-            console.warn('selectedCoin', selectedCoin)
 
             if (result < 0) {
                 coinsWithQuantities.splice(index, 1)
-                console.warn('after splice', coinsWithQuantities)
-
             }
         })
 
@@ -139,7 +136,8 @@ export class PortfolioScreen extends React.Component {
     }
 
     onDonePressed = () => {
-        console.warn('!!!! hey', this.state.coinsWithQuantities)
+        console.warn('onDonePressed', this.state.coinsWithQuantities)
+        this.props.setUserCoins(this.state.coinsWithQuantities)
     };
 
     renderNewUserTitle = () => {
@@ -215,6 +213,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
+        setUserCoins: (coinsWithQuantities) => {
+            dispatch(setUserCoins(coinsWithQuantities));
+        }
     }
 }
 

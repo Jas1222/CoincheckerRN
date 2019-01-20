@@ -5,11 +5,15 @@
 import { CHANGE_CURRENCY_TYPE, 
     CHANGE_NUMBER_COINS, 
     GET_COIN_DATA,
-    CHANGE_PERCENTAGE_TIME_PERIOD
+    CHANGE_PERCENTAGE_TIME_PERIOD,
+    USER_COINS,
+    SET_PORTFOLIO_VALUE,
+    GET_USER_PORTFOLIO
 } from 'CoinActionTypes';
 import { getCryptocurrencyData } from 'NetworkHandler';
-import { adaptCoinData } from 'CoinAdapter';
+import { adaptCoinData, calculateUserCoinPortfolio } from 'CoinAdapter';
 import { getCurrentTime } from 'TimeUtil';
+import { AsyncStorage } from 'react-native';
 
 export function setCurrencyType(currency) {
     return (dispatch) => {
@@ -29,6 +33,27 @@ export function setPercentageChangeTimePeriod(timePeriod) {
     }
 }
 
+export function setUserCoins(userCoins) {
+    return async (dispatch) => {
+        try {
+            const stringifiedData = JSON.stringify(userCoins)
+            await AsyncStorage.setItem('USER_COIN_DATA', stringifiedData)
+        } catch (err) {
+            console.warn('Messed up saving coin values')
+        }
+
+        return dispatch({type: USER_COINS, userCoins})
+    }
+}
+
+export function setUserCoinPortfolio(userCoinData, allCoins) {
+    return async (dispatch) => {
+        const portfolioData = await calculateUserCoinPortfolio(userCoinData, allCoins);
+        
+        return dispatch({type: SET_PORTFOLIO_VALUE, portfolioData});
+    }
+}
+
 export function getAllCoins() {
     return async (dispatch) => {
         let data = {};
@@ -42,5 +67,15 @@ export function getAllCoins() {
         }
 
         return dispatch({type: GET_COIN_DATA, data});
+    }
+}
+
+export function getUserCoins() {
+    return async (dispatch) => {
+        const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA'); 
+        const userCoins = JSON.parse(stringifiedData);
+        console.warn('userCoins', userCoins)
+
+        return dispatch({type: USER_COINS, userCoins})
     }
 }

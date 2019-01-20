@@ -61,3 +61,20 @@ export function convertJsonTypes(item) {
         percentageChange: obj[timePeriod]
     };
 }
+
+export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
+    let userCoinsWithTotalPrice = [];
+    
+    userPortfolio.forEach((portfolioCoin) => {
+        const matchedCoin = latestPrices.find((coinWithPrice) => {
+            return coinWithPrice.name == portfolioCoin.value
+        });
+
+        if (matchedCoin) {
+            matchedCoin.userSum = Math.round(matchedCoin.price * portfolioCoin.quantity * 100) / 100;
+            userCoinsWithTotalPrice.push(matchedCoin)
+        }
+    });
+
+    return userCoinsWithTotalPrice;
+}
