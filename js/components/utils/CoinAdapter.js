@@ -62,7 +62,7 @@ export function convertJsonTypes(item) {
     };
 }
 
-export function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
+export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
     let userCoinsWithTotalPrice = [];
     
     userPortfolio.forEach((portfolioCoin) => {

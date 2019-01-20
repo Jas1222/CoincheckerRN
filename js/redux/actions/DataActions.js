@@ -49,9 +49,8 @@ export function setUserCoins(userCoins) {
 export function setUserCoinPortfolio(userCoinData, allCoins) {
     return async (dispatch) => {
         const portfolioData = await calculateUserCoinPortfolio(userCoinData, allCoins);
-        console.warn('portfolioData in action', portfolioData)
-
-        return dispatch({type: SET_PORTFOLIO_VALUE}, portfolioData);
+        
+        return dispatch({type: SET_PORTFOLIO_VALUE, portfolioData});
     }
 }
 
@@ -75,13 +74,8 @@ export function getUserCoins() {
     return async (dispatch) => {
         const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA'); 
         const userCoins = JSON.parse(stringifiedData);
+        console.warn('userCoins', userCoins)
 
-        return dispatch({type: USER_COINS}, userCoins)
+        return dispatch({type: USER_COINS, userCoins})
     }
 }
-
-// export function getUserPortfolio() {
-//     return async (dispatch) => {
-
-//     }
-// }

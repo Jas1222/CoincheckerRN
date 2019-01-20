@@ -52,15 +52,12 @@ export function coinReducer(state = initialState, action) {
             }
         }
         case USER_COINS: {
-            console.warn('USER_COINS', action)
-
             return {
                 ...state,
                 userCoins: action.userCoins
             }
         }
         case SET_PORTFOLIO_VALUE: {
-            console.warn('setPortfolioValue', action)
             return {
                 ...state,
                 portfolioData: action.portfolioData

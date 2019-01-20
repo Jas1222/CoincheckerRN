@@ -13,7 +13,7 @@ import Header from 'Header';
 import { connect } from 'react-redux';
 import {
     getAllCoins, 
-    setUserCoinWorth, 
+    setUserCoinPortfolio, 
     getUserCoins 
 } from 'DataActions';
 import ErrorMessage from 'ErrorMessage';
@@ -40,7 +40,6 @@ export class Home extends React.Component {
 
         if (this.props.userCoins.length) {
             this.props.setUserCoinPortfolio(this.props.userCoins, this.props.coinData);
-            console.warn('!! from redux store', this.props.portfolioData)
         }
     };
 
