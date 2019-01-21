@@ -77,6 +77,13 @@ export class PortfolioScreen extends React.Component {
         })
     };
 
+    getPositionOfCoinInState = (coin) => {
+        const listOfCoins = this.state.coins;
+        const index = listOfCoins.indexOf(coin);
+
+        return index;
+    };
+
     hasUserPreviouslySelectedCoin = (coin, coinsWithQuantities) => {
         let result = false;
         let position = 0;
@@ -93,28 +100,28 @@ export class PortfolioScreen extends React.Component {
         return [result, position];
     };
 
-    onChangeText = (value, index) => {
+    onChangeText = (name, value) => {
         const coinsWithQuantities = this.state.coinsWithQuantities;
         const selectedCoins = this.state.selectedCoins;
 
         let isPreviouslySelected = [false, 0];
 
         if (selectedCoins.length) {
-            isPreviouslySelected = this.hasUserPreviouslySelectedCoin(selectedCoins[index].value, coinsWithQuantities)
+            isPreviouslySelected = this.hasUserPreviouslySelectedCoin(name, coinsWithQuantities)
         }
         
         if (isPreviouslySelected[0]) {
             coinsWithQuantities[isPreviouslySelected[1]].quantity = value;
         } else {
             const coinToAdd = {
-                value: this.state.coins[index],
+                value: name,
                 quantity: value
             };    
     
             coinsWithQuantities.push(coinToAdd);
         }
 
-        if (coinsWithQuantities) {
+        if (coinsWithQuantities.length) {
             this.setState({
                 buttonDisabled: false
             })
@@ -139,7 +146,6 @@ export class PortfolioScreen extends React.Component {
 
     onDonePressed = () => {
         this.props.setUserCoinPortfolio(this.state.coinsWithQuantities, this.props.coinData);
-        console.warn('Being set', this.state.coinsWithQuantities)
         this.props.navigation.navigate('DisplayPortfolio');
     };
 
@@ -151,7 +157,7 @@ export class PortfolioScreen extends React.Component {
 
     renderLabel = (coin) => {
         // TODO Fix autofocus
-        let [isCoinTicked, index] = this.hasUserPreviouslySelectedCoin(coin, this.state.selectedCoins);
+        const [isCoinTicked, position] = this.hasUserPreviouslySelectedCoin(coin, this.state.selectedCoins);
         
         return (
             <View style={{ flex: 1}}>
@@ -166,7 +172,7 @@ export class PortfolioScreen extends React.Component {
                             autoCapitalize="none"
                             placeholder={'0.0'}
                             editable={isCoinTicked}
-                            onChangeText={(value) => this.onChangeText(value, index)}
+                            onChangeText={(value) => this.onChangeText(coin, value)}
                         />}
                 </View>
             </View>
