@@ -14,6 +14,7 @@ import {
 import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
+import PortfolioRow from 'PortfolioRow';
 
 export class DisplayPortfolioScreen extends React.Component {
     static navigationOptions = {
@@ -36,12 +37,7 @@ export class DisplayPortfolioScreen extends React.Component {
 
     renderRow = (item) => {
         return (
-            <View style={{height: 50, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text> {item.item.name} </Text>
-                <Text> {item.item.symbol} </Text>
-                <Text> {item.item.quantity} </Text>
-                <Text> {getFiatSymbol()}{item.item.userSum} </Text>
-            </View>
+            <PortfolioRow item={item.item} >
         )
     }
 
