@@ -12,6 +12,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: 'white',
         alignItems: 'center',
+        margin: 8,
+        borderRadius: 5
     },
     columnContainer: {
         margin: 10,

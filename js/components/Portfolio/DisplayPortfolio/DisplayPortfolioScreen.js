@@ -18,7 +18,7 @@ import PortfolioRow from 'PortfolioRow';
 
 export class DisplayPortfolioScreen extends React.Component {
     static navigationOptions = {
-        // header: null
+        header: null
     };
 
     constructor(props) {
@@ -42,22 +42,11 @@ export class DisplayPortfolioScreen extends React.Component {
         )
     }
 
-    renderHeader = () => {
-        return (
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{fontWeight: 'bold'}}> {'Name'} </Text>
-                <Text style={{fontWeight: 'bold'}}> {'Symbol'} </Text>
-                <Text style={{fontWeight: 'bold'}}> {'Quantity'} </Text>
-                <Text style={{fontWeight: 'bold'}}> {'Value'} </Text>
-            </View>
-        )
-    }
-
     renderPortfolioPrice = () => {
         return (
-            <View style={{height: 125, alignItems: 'center', marginTop: 20}}>
-                <Text style={{fontSize: 22, fontWeight: '300'}}> {'Your portfolio is worth:'}</Text>
-                <Text style={{fontSize: 30, fontWeight: 'bold', alignSelf: 'center'}}> {this.state.fiatSymbol}{this.props.totalPrice}</Text>
+            <View style={styles.header}>
+                <Text style={styles.subtitle}> {'Your portfolio is worth:'}</Text>
+                <Text style={styles.title}> {this.state.fiatSymbol}{this.props.totalPrice}</Text>
             </View>
         )
     }
