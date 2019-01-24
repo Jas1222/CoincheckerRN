@@ -1,5 +1,5 @@
 /**
-+ * @providesModule CreatePortfolioScreen
+ * @providesModule CreatePortfolioScreen
  * @flow
  */
 
@@ -25,7 +25,8 @@ export class DisplayPortfolioScreen extends React.Component {
         super(props);
 
         this.state = {
-            data: null
+            data: null,
+            fiatSymbol: getFiatSymbol()
         };
     }
 
@@ -37,11 +38,11 @@ export class DisplayPortfolioScreen extends React.Component {
 
     renderRow = (item) => {
         return (
-            <PortfolioRow item={item.item} >
+            <PortfolioRow item={item.item} fiatSymbol={this.state.fiatSymbol}/>
         )
     }
 
-    renderHeader = (item) => {
+    renderHeader = () => {
         return (
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={{fontWeight: 'bold'}}> {'Name'} </Text>
@@ -56,7 +57,7 @@ export class DisplayPortfolioScreen extends React.Component {
         return (
             <View style={{height: 125, alignItems: 'center', marginTop: 20}}>
                 <Text style={{fontSize: 22, fontWeight: '300'}}> {'Your portfolio is worth:'}</Text>
-                <Text style={{fontSize: 30, fontWeight: 'bold', alignSelf: 'center'}}> {getFiatSymbol()}{this.props.totalPrice}</Text>
+                <Text style={{fontSize: 30, fontWeight: 'bold', alignSelf: 'center'}}> {this.state.fiatSymbol}{this.props.totalPrice}</Text>
             </View>
         )
     }
@@ -70,7 +71,6 @@ export class DisplayPortfolioScreen extends React.Component {
                     data={this.state.data}
                     renderItem={this.renderRow}
                     keyExtractor={item => item.name}
-                    ListHeaderComponent={this.renderHeader()}
                 />
             </View>
         );

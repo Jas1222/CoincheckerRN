@@ -1,5 +1,5 @@
 /**
-+ * @providesModule PortfolioRow
+ * @providesModule PortfolioRow
  * @flow
  */
 
@@ -10,19 +10,25 @@ import {
 } from 'react-native';
 import { styles } from 'PortfolioRowStyles';
 
-export class PortfolioRow extends React.PureComponent {
+export default class PortfolioRow extends React.Component {
 
     constructor(props) {
         super(props);
+        console.warn(props)
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text> {this.props.item.name} </Text>
-                <Text> {this.props.item.symbol} </Text>
-                <Text> {this.props.item.quantity} </Text>
-                <Text> {this.props.item.fiatSymbol}{this.props.item.userSum} </Text>
+                <View style={[styles.columnContainer]}>
+                    <Text style={styles.bold}> {this.props.item.symbol} </Text>
+                    <Text style={styles.name}> {this.props.item.name} </Text>
+                </View>
+
+                <View style={[styles.columnContainer, { alignItems: 'center' }]}>
+                    <Text style={styles.bold}> {this.props.fiatSymbol}{this.props.item.userSum} </Text>
+                    <Text style={styles.thin}> {this.props.item.quantity} </Text>
+                </View>
             </View>
         );
     }
