@@ -8,17 +8,15 @@ import {
     RefreshControl
 } from 'react-native';
 import  Home from 'Home';
-import CreatePortfolioScreen from '../Portfolio/CreatePortfolio/CreatePortfolioScreen';
-import DisplayPortfolioScreen from '../Portfolio/DisplayPortfolio/DisplayPortfolioScreen';
+import PortfolioIndex from 'PortfolioIndex';
 import { Provider } from 'react-redux';
 import { getStore } from 'GlobalStore';
 import Icon from 'react-native-vector-icons/Feather';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 const PortfolioNavigator = createStackNavigator({
-    CreatePortfolio: CreatePortfolioScreen,
-    DisplayPortfolio: DisplayPortfolioScreen
-})
+    PortfolioIndex: PortfolioIndex
+});
 
 const TabNavigator = createBottomTabNavigator({
     CoinListScreen: Home,
@@ -50,7 +48,6 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 export default class App extends React.Component {
-
     constructor(props) {
         super(props);
     }

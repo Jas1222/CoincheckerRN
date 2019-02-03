@@ -1,5 +1,5 @@
 /**
-+ * @providesModule CreatePortfolioScreen
+ * @providesModule CreatePortfolioScreen
  * @flow
  */
 
@@ -14,8 +14,8 @@ import {
 import { connect } from 'react-redux';
 import { styles } from 'CreatePortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
-import { setUserCoins } from 'DataActions';
-import { setUserCoinPortfolio } from 'DataActions';
+import { setUserCoins } from 'CoinActions';
+import { setUserCoinPortfolio } from 'CoinActions';
 
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";

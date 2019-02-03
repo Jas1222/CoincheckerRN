@@ -17,7 +17,7 @@ import {
     setCurrencyType,
     setNumberOfCoins,
     setPercentageChangeTimePeriod
-} from 'DataActions';
+} from 'CoinActions';
 import styles from 'HeaderStyles';
 
 const headerOffset = 150;

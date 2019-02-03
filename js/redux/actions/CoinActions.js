@@ -1,5 +1,5 @@
 /**
- * @providesModule DataActions
+ * @providesModule CoinActions
  * @flow
  */
 import { CHANGE_CURRENCY_TYPE, 

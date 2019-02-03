@@ -15,7 +15,7 @@ import {
     getAllCoins, 
     setUserCoinPortfolio, 
     getUserCoins 
-} from 'DataActions';
+} from 'CoinActions';
 import ErrorMessage from 'ErrorMessage';
 
 export class Home extends React.Component {
