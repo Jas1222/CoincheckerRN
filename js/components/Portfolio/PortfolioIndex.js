@@ -9,6 +9,10 @@ import { NavigationActions, StackActions } from 'react-navigation'
 import {connect} from 'react-redux';
 
 export class PortfolioIndex extends React.Component {
+    static navigationOptions = {
+        tabBarLabel: 'Portfolio'
+    };
+
     constructor(props) {
         super(props);
     }
@@ -18,10 +22,8 @@ export class PortfolioIndex extends React.Component {
     }
 
     checkUserHasCoins = () => {
-        console.log('!!', this.props.coinData);
-        const routeName = this.props.coinData !== null ? 'DisplayPortfolioScreen' : 'CreatePortfolioScreen';
-        console.warn(routeName)
-
+        //TODO Check why null?
+        const routeName = this.props.coinData ? 'DisplayPortfolio' : 'CreatePortfolio';
         // const resetAction = StackActions.reset({
         //     index: 0,
         //     key: routeName,
@@ -48,11 +50,5 @@ function mapStateToProps(state) {
         coinData: state.coinReducer.userCoins,
     };
 }
-
-// function mapDispatchToProps(dispatch) {
-//     return {
-//
-//     };
-// }
 
 export default connect(mapStateToProps)(PortfolioIndex)

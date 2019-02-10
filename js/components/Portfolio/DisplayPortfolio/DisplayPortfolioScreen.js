@@ -1,5 +1,5 @@
 /**
- * @providesModule CreatePortfolioScreen
+ * @providesModule DisplayPortfolioScreen
  * @flow
  */
 
@@ -7,16 +7,15 @@ import React from 'react';
 import {
     View,
     Text,
-    FlatList,
-    TextInput,
-    TouchableOpacity
+    FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
+import { setUserCoinPortfolio } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
 
-export class DisplayPortfolioScreen extends React.Component {
+export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
         header: null
     };
@@ -30,8 +29,12 @@ export class DisplayPortfolioScreen extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.props.setUserCoinPortfolio(this.props.userCoins, this.props.coinData)
+    }
+
     componentWillReceiveProps(nextProps){
-        if(nextProps.data !== this.props.data){
+        if (nextProps.data !== this.props.data){
              this.setState({ data: nextProps.data })
         }
     }
@@ -69,15 +72,17 @@ export class DisplayPortfolioScreen extends React.Component {
 function mapStateToProps(state) {
     return {
         data: state.coinReducer.portfolioData,
-        totalPrice: state.coinReducer.totalPrice
+        totalPrice: state.coinReducer.totalPrice,
+        coinData: state.coinReducer.coinData,
+        userCoins: state.coinReducer.userCoins
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        // setUserCoinPortfolio: (userCoinData, allCoins) => {
-        //     dispatch(setUserCoinPortfolio(userCoinData, allCoins));
-        // }
+        setUserCoinPortfolio: (userCoinData, allCoins) => {
+            dispatch(setUserCoinPortfolio(userCoinData, allCoins));
+        }
     }
 }
 

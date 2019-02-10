@@ -8,14 +8,18 @@ import {
     RefreshControl
 } from 'react-native';
 import  Home from 'Home';
-import PortfolioIndex from 'PortfolioIndex';
 import { Provider } from 'react-redux';
 import { getStore } from 'GlobalStore';
 import Icon from 'react-native-vector-icons/Feather';
+import CreatePortfolioScreen from 'CreatePortfolioScreen';
+import DisplayPortfolioScreen from 'DisplayPortfolioScreen';
+import PortfolioIndex from 'PortfolioIndex';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 const PortfolioNavigator = createStackNavigator({
-    PortfolioIndex: PortfolioIndex
+    PortfolioIndex: PortfolioIndex,
+    CreatePortfolio: CreatePortfolioScreen,
+    DisplayPortfolio: DisplayPortfolioScreen
 });
 
 const TabNavigator = createBottomTabNavigator({
@@ -28,7 +32,7 @@ const TabNavigator = createBottomTabNavigator({
             let iconName;
             if (routeName === 'CoinListScreen') {
                 iconName = `list`;
-            } else if (routeName === 'PortfolioScreen') {
+            } else if (routeName === 'CreatePortfolioScreen') {
                 iconName = `briefcase`;
             }
 

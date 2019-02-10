@@ -20,7 +20,7 @@ import { setUserCoinPortfolio } from 'CoinActions';
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
 
-export class PortfolioScreen extends React.Component {
+export class CreatePortfolioScreen extends React.Component {
     static navigationOptions = {
         tabBarLabel: 'Portfolio',
         header: null
@@ -29,6 +29,7 @@ export class PortfolioScreen extends React.Component {
     constructor(props) {
         super(props);
 
+        console.warn('loaded ')
         const newData = this.adaptData(this.props.coinData);
 
         this.state = {
@@ -146,6 +147,7 @@ export class PortfolioScreen extends React.Component {
 
     onDonePressed = () => {
         this.props.setUserCoinPortfolio(this.state.coinsWithQuantities, this.props.coinData);
+        this.props.setUserCoins(this.state.coinsWithQuantities);
         this.props.navigation.navigate('DisplayPortfolio');
     };
 
@@ -233,4 +235,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PortfolioScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePortfolioScreen)
