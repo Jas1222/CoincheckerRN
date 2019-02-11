@@ -23,16 +23,16 @@ const PortfolioNavigator = createStackNavigator({
 });
 
 const TabNavigator = createBottomTabNavigator({
-    CoinListScreen: Home,
-    PortfolioScreen: PortfolioNavigator
+    CoinList: Home,
+    Portfolio: PortfolioNavigator
 },{
     navigationOptions: ({navigation}) => ({
         tabBarIcon: ({focused, horizontal, tintColor}) => {
             const {routeName} = navigation.state;
             let iconName;
-            if (routeName === 'CoinListScreen') {
+            if (routeName === 'CoinList') {
                 iconName = `list`;
-            } else if (routeName === 'CreatePortfolioScreen') {
+            } else if (routeName === 'Portfolio') {
                 iconName = `briefcase`;
             }
 
