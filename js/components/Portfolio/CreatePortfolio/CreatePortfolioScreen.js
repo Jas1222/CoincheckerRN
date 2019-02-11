@@ -29,7 +29,6 @@ export class CreatePortfolioScreen extends React.Component {
     constructor(props) {
         super(props);
 
-        console.warn('loaded ')
         const newData = this.adaptData(this.props.coinData);
 
         this.state = {

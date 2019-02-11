@@ -17,8 +17,7 @@ import PortfolioRow from 'PortfolioRow';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
-        header: null,
-        headerForceInset: { top: 'never', bottom: 'never' }
+        header: null
     };
 
     constructor(props) {
