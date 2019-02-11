@@ -62,6 +62,10 @@ export function convertJsonTypes(item) {
     };
 }
 
+function add(a, b) {
+    return a + b;
+}
+
 export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
     let userCoinsWithTotalPrice = [];
     
@@ -71,10 +75,17 @@ export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
         });
 
         if (matchedCoin) {
+            matchedCoin.quantity = portfolioCoin.quantity;
             matchedCoin.userSum = Math.round(matchedCoin.price * portfolioCoin.quantity * 100) / 100;
+            delete matchedCoin.percentageChange;
             userCoinsWithTotalPrice.push(matchedCoin)
         }
     });
 
-    return userCoinsWithTotalPrice;
+    const totalPortfolioSum = userCoinsWithTotalPrice.map((coin) => coin.userSum).reduce(add, 0);
+
+    return {
+        userCoinsWithTotalPrice: userCoinsWithTotalPrice,
+        totalPortfolioSum: totalPortfolioSum
+    }
 }

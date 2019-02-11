@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
     AppRegistry,
@@ -9,24 +8,31 @@ import {
     RefreshControl
 } from 'react-native';
 import  Home from 'Home';
-import PortfolioScreen from '../Portfolio/PortfolioScreen';
 import { Provider } from 'react-redux';
 import { getStore } from 'GlobalStore';
 import Icon from 'react-native-vector-icons/Feather';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import CreatePortfolioScreen from 'CreatePortfolioScreen';
+import DisplayPortfolioScreen from 'DisplayPortfolioScreen';
+import PortfolioIndex from 'PortfolioIndex';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+
+const PortfolioNavigator = createStackNavigator({
+    PortfolioIndex: PortfolioIndex,
+    CreatePortfolio: CreatePortfolioScreen,
+    DisplayPortfolio: DisplayPortfolioScreen
+});
 
 const TabNavigator = createBottomTabNavigator({
-    CoinListScreen: Home,
-    // TODO nested stack navigator
-    PortfolioScreen: PortfolioScreen
+    CoinList: Home,
+    Portfolio: PortfolioNavigator
 },{
     navigationOptions: ({navigation}) => ({
         tabBarIcon: ({focused, horizontal, tintColor}) => {
             const {routeName} = navigation.state;
             let iconName;
-            if (routeName === 'CoinListScreen') {
+            if (routeName === 'CoinList') {
                 iconName = `list`;
-            } else if (routeName === 'PortfolioScreen') {
+            } else if (routeName === 'Portfolio') {
                 iconName = `briefcase`;
             }
 
@@ -46,7 +52,6 @@ const TabNavigator = createBottomTabNavigator({
 });
 
 export default class App extends React.Component {
-
     constructor(props) {
         super(props);
     }

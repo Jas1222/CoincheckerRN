@@ -1,5 +1,5 @@
 /**
- * @providesModule PortfolioScreenStyles
+ * @providesModule CreatePortfolioScreenStyles
  * @flow
  */
 

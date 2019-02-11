@@ -1,5 +1,5 @@
 /**
- * @providesModule DataActions
+ * @providesModule CoinActions
  * @flow
  */
 import { CHANGE_CURRENCY_TYPE, 
@@ -7,8 +7,7 @@ import { CHANGE_CURRENCY_TYPE,
     GET_COIN_DATA,
     CHANGE_PERCENTAGE_TIME_PERIOD,
     USER_COINS,
-    SET_PORTFOLIO_VALUE,
-    GET_USER_PORTFOLIO
+    SET_PORTFOLIO_VALUE
 } from 'CoinActionTypes';
 import { getCryptocurrencyData } from 'NetworkHandler';
 import { adaptCoinData, calculateUserCoinPortfolio } from 'CoinAdapter';
@@ -72,9 +71,9 @@ export function getAllCoins() {
 
 export function getUserCoins() {
     return async (dispatch) => {
-        const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA'); 
+        const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA');
+        
         const userCoins = JSON.parse(stringifiedData);
-        console.warn('userCoins', userCoins)
 
         return dispatch({type: USER_COINS, userCoins})
     }

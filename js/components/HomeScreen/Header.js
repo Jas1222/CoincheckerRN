@@ -16,9 +16,8 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
     setCurrencyType,
     setNumberOfCoins,
-    setPercentageChangeTimePeriod,
-    setTimestamp
-} from 'DataActions';
+    setPercentageChangeTimePeriod
+} from 'CoinActions';
 import styles from 'HeaderStyles';
 
 const headerOffset = 150;

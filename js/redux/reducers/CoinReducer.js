@@ -9,7 +9,6 @@ import { CHANGE_CURRENCY_TYPE,
     CHANGE_PERCENTAGE_TIME_PERIOD,
     USER_COINS,
     SET_PORTFOLIO_VALUE,
-    GET_USER_PORTFOLIO
 } from 'CoinActionTypes';
 
 const initialState = {
@@ -60,7 +59,8 @@ export function coinReducer(state = initialState, action) {
         case SET_PORTFOLIO_VALUE: {
             return {
                 ...state,
-                portfolioData: action.portfolioData
+                portfolioData: action.portfolioData.userCoinsWithTotalPrice,
+                totalPrice: action.portfolioData.totalPortfolioSum
             }
         }
         default:

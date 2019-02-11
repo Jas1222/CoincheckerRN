@@ -13,9 +13,8 @@ import Header from 'Header';
 import { connect } from 'react-redux';
 import {
     getAllCoins, 
-    setUserCoinPortfolio, 
     getUserCoins 
-} from 'DataActions';
+} from 'CoinActions';
 import ErrorMessage from 'ErrorMessage';
 
 export class Home extends React.Component {
@@ -34,13 +33,9 @@ export class Home extends React.Component {
 
      refresh = async () => {
         this.setState({refreshing: true});
-        await this.props.getAllCoins();
-        await this.props.getUserCoins();
+        this.props.getAllCoins();
+        this.props.getUserCoins();
         this.setState({refreshing: false});
-
-        if (this.props.userCoins.length) {
-            this.props.setUserCoinPortfolio(this.props.userCoins, this.props.coinData);
-        }
     };
 
     componentDidMount = () => {
@@ -116,9 +111,6 @@ function mapStateToProps(state) {
     return {
         coinData: state.coinReducer.coinData,
         failedRequest: state.coinReducer.failedRequest,
-        userCoins: state.coinReducer.userCoins,
-        // TODO: MOVE TO PORTOFLIO SECTION
-        portfolioData: state.coinReducer.portfolioData
     };
 }
 
@@ -126,9 +118,6 @@ function mapDispatchToProps(dispatch) {
     return {
         getAllCoins: () => {
             dispatch(getAllCoins());
-        },
-        setUserCoinPortfolio: (userCoinData, allCoins) => {
-            dispatch(setUserCoinPortfolio(userCoinData, allCoins));
         },
         getUserCoins: () => {
             dispatch(getUserCoins())
