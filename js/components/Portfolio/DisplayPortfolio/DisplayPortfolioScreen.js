@@ -14,6 +14,7 @@ import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
 import { setUserCoinPortfolio } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
+import EditCoinComponent from 'EditCoinComponent';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -37,6 +38,12 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         if (nextProps.data !== this.props.data){
              this.setState({ data: nextProps.data })
         }
+    }
+
+    renderEditButton = () => {
+        return (
+            <EditCoinComponent/>
+        )
     }
 
     renderRow = (item) => {
@@ -64,6 +71,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                     renderItem={this.renderRow}
                     keyExtractor={item => item.name}
                 />
+                {this.renderEditButton()}
             </View>
         );
     }
