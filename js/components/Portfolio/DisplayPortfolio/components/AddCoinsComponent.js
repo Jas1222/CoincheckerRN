@@ -1,17 +1,16 @@
 /**
- * @providesModule EditCoinComponent
+ * @providesModule AddCoinComponent
  * @flow
  */
 
 import React from 'react';
 import {
-    View,
     Text,
     TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-export default class EditCoinComponent extends React.PureComponent {
+export default class AddCoinComponent extends React.PureComponent {
 
     constructor(props) {
         super(props);
@@ -22,7 +21,6 @@ export default class EditCoinComponent extends React.PureComponent {
     }
 
     onPress = () => {
-        console.warn('! hi')
         const enable = this.state.enabled ? false : true
         this.setState({
             enabled: enable
@@ -38,5 +36,3 @@ export default class EditCoinComponent extends React.PureComponent {
         );
     }
 }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(DisplayPortfolioScreen)

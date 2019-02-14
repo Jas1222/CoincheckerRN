@@ -7,14 +7,15 @@ import React from 'react';
 import {
     View,
     Text,
-    FlatList
+    FlatList,
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
 import { setUserCoinPortfolio } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
-import EditCoinComponent from 'EditCoinComponent';
+import AddCoinComponent from 'AddCoinComponent';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -26,7 +27,8 @@ export class DisplayPortfolioScreen extends React.PureComponent {
 
         this.state = {
             data: null,
-            fiatSymbol: getFiatSymbol()
+            fiatSymbol: getFiatSymbol(),
+            editMode: false
         };
     }
 
@@ -34,21 +36,47 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         this.props.setUserCoinPortfolio(this.props.userCoins, this.props.coinData)
     }
 
-    componentWillReceiveProps(nextProps){
-        if (nextProps.data !== this.props.data){
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.data !== this.props.data) {
              this.setState({ data: nextProps.data })
         }
     }
 
+    onRowEditPressed = (item) => {
+        console.warn(item)
+        // TODO: Implementation
+    }
+
+    toggleEditMode = () => {
+        const toggleEdit = this.state.editMode ? false : true;
+
+        this.setState({
+            editMode: toggleEdit
+        })
+    }
+
     renderEditButton = () => {
         return (
-            <EditCoinComponent/>
+            <TouchableOpacity onPress={this.toggleEditMode}>
+                <Text style={styles.editButton}>{"EDIT"}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    renderAddAssetButton = () => {
+        return (
+            <AddCoinComponent/>
         )
     }
 
     renderRow = (item) => {
         return (
-            <PortfolioRow item={item.item} fiatSymbol={this.state.fiatSymbol}/>
+            <PortfolioRow 
+            item={item.item} 
+            fiatSymbol={this.state.fiatSymbol}
+            editMode={this.state.editMode}
+            onRowEditPressed={this.onRowEditPressed}
+            />
         )
     }
 
@@ -62,16 +90,19 @@ export class DisplayPortfolioScreen extends React.PureComponent {
     }
 
     render() {
-
         return (
             <View>
                 {this.renderPortfolioPrice()}
+                <View style={{ margin: 8 }}>
+                {this.renderEditButton()}
                 <FlatList
                     data={this.state.data}
                     renderItem={this.renderRow}
                     keyExtractor={item => item.name}
+                    extraData={this.state.editMode}
                 />
-                {this.renderEditButton()}
+                {this.renderAddAssetButton()}
+                </View>
             </View>
         );
     }

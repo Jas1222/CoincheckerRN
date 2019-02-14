@@ -72,7 +72,6 @@ export function getAllCoins() {
 export function getUserCoins() {
     return async (dispatch) => {
         const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA');
-        
         const userCoins = JSON.parse(stringifiedData);
 
         return dispatch({type: USER_COINS, userCoins})
