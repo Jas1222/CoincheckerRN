@@ -30,6 +30,7 @@ export default class PortfolioRow extends React.Component {
                         <Text style={this.styles.name}> {this.props.item.name} </Text>
                     </View>
 
+
                     <View style={[this.styles.columnContainer, { alignItems: 'center' }]}>
                         <Text style={this.styles.bold}> {this.props.fiatSymbol}{this.props.item.userSum} </Text>
                         <Text style={this.styles.thin}> {this.props.item.quantity} </Text>
@@ -37,10 +38,10 @@ export default class PortfolioRow extends React.Component {
                 </View>
 
                 <Icon name="edit-2" 
-                        size={20} 
+                        size={30}
                         color={'#03A9F4'} 
-                        style={ styles.editRowButton }
-                        onPress={this.props.onRowEditPressed(this.props.item)}/>
+                        style={ this.styles.editRowButton }
+                        onPress={() => this.props.onRowEditPressed(this.props.item)}/>
             </View>
 
         );

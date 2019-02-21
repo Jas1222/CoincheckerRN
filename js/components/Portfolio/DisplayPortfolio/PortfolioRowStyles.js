@@ -16,7 +16,7 @@ export const getStyles = (editMode) => {
             backgroundColor: 'white',
             borderRadius: 10,
             marginBottom: 8,
-            width: editMode ? '85%' : '100%' ,
+            width: editMode ? '90%' : '100%' ,
             justifyContent: 'space-between',
             alignItems: 'center',
         },
@@ -30,6 +30,10 @@ export const getStyles = (editMode) => {
         },
         thin: {
             fontWeight: '200'
+        },
+        editRowButton: {
+            paddingLeft: 10,
+            paddingTop: 20
         }
     });   
-} 
+};

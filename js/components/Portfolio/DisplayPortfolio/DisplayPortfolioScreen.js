@@ -7,6 +7,7 @@ import React from 'react';
 import {
     View,
     Text,
+    TextInput,
     FlatList,
     TouchableOpacity
 } from 'react-native';
@@ -28,7 +29,8 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         this.state = {
             data: null,
             fiatSymbol: getFiatSymbol(),
-            editMode: false
+            editMode: false,
+            itemToEdit: null
         };
     }
 
@@ -42,18 +44,22 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         }
     }
 
-    onRowEditPressed = (item) => {
-        console.warn(item)
-        // TODO: Implementation
-    }
+    onRowEditPressed = (itemToEdit) => {
+        console.warn('onRowEditPressed')
+        console.warn(itemToEdit)
+        this.setState({
+            itemToEdit,
+            // editMode: false
+        });
+    };
 
     toggleEditMode = () => {
-        const toggleEdit = this.state.editMode ? false : true;
+        const toggleEdit = !this.state.editMode;
 
         this.setState({
-            editMode: toggleEdit
+            editMode: toggleEdit,
         })
-    }
+    };
 
     renderEditButton = () => {
         return (
@@ -61,24 +67,42 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                 <Text style={styles.editButton}>{"EDIT"}</Text>
             </TouchableOpacity>
         )
-    }
+    };
 
     renderAddAssetButton = () => {
         return (
             <AddCoinComponent/>
         )
-    }
+    };
 
     renderRow = (item) => {
-        return (
-            <PortfolioRow 
-            item={item.item} 
-            fiatSymbol={this.state.fiatSymbol}
-            editMode={this.state.editMode}
-            onRowEditPressed={this.onRowEditPressed}
-            />
-        )
-    }
+        if (item.item == this.state.itemToEdit) {
+           // TODO: INVALIDATE AFTER NULL??
+            // this.setState({
+            //     itemToEdit: null
+            // });
+            //
+            return (
+                <View>
+                    <TextInput
+                        mode={'outlined'}
+                        placeholder={'Enter new quantity'}
+                        onChangeText={(value) => {}}>
+
+                    </TextInput>
+                </View>
+            )
+        } else {
+            return (
+                <PortfolioRow
+                    item={item.item}
+                    fiatSymbol={this.state.fiatSymbol}
+                    editMode={this.state.editMode}
+                    onRowEditPressed={this.onRowEditPressed}
+                />
+            )
+        }
+    };
 
     renderPortfolioPrice = () => {
         return (
@@ -87,7 +111,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                 <Text style={styles.title}> {this.state.fiatSymbol}{this.props.totalPrice}</Text>
             </View>
         )
-    }
+    };
 
     render() {
         return (
@@ -99,7 +123,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                     data={this.state.data}
                     renderItem={this.renderRow}
                     keyExtractor={item => item.name}
-                    extraData={this.state.editMode}
+                    extraData={this.state}
                 />
                 {this.renderAddAssetButton()}
                 </View>

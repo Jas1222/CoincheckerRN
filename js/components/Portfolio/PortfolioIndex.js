@@ -22,7 +22,6 @@ export class PortfolioIndex extends React.Component {
     }
 
     checkUserHasCoins = () => {
-        //TODO Check why null?
         const routeName = this.props.coinData ? 'DisplayPortfolio' : 'CreatePortfolio';
 
         this.props.navigation.navigate(routeName);
