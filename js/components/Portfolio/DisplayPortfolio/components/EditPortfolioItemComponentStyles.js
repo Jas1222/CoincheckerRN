@@ -7,19 +7,27 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        width: '80%',
+        padding: 10,
         backgroundColor: '#03A9F4',
         alignSelf: 'center'
     },
     headerText: {
         color: 'white',
-        fontSize: 16
+        flexWrap: 'wrap',
+        fontSize: 16,
+        marginBottom: 10,
+        alignSelf: 'center'
     },
     button: {
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginTop: 10,
         width: 50,
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: 'white'
+        borderColor: 'white',
+        color: 'white'
     }
 
 });

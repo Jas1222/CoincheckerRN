@@ -5,6 +5,7 @@
 
 import React from 'react';
 import {
+    View,
     Text,
     TextInput,
     TouchableOpacity
@@ -23,23 +24,25 @@ export default class EditPortfolioItemComponent extends React.PureComponent {
     render() {
         return (
             <View
-                style={styles.container}
-            >
-                <Text styles={styles.headerText}>
-                    {"Enter your new " + this.props.name + " quantity:"}
+                style={styles.container}>
+
+                <Text style={styles.headerText}>
+                    {"Enter your new " + this.props.item.name + " quantity:"}
                 </Text>
 
                 <TextInput
-                    onChangeText={}
+                    onChangeText={(value) => this.props.onQuantityChanged(this.props.item.name, value)}
+                    placeholder={"New quantity"}
+                    style={{ color: 'white' }}
+                    keyboardType={'numeric'}
                 >
 
                 </TextInput>
 
                 <TouchableOpacity
-                    onPress={() => this.props.onQuantityPressed(this.state.newQuantity)}
-
-                >
-                    <Text>
+                    style={{ alignItems: 'center' }}
+                    onPress={() => this.props.onSavePressed()}>
+                    <Text style={styles.button}>
                         {"SAVE"}
                     </Text>
                 </TouchableOpacity>

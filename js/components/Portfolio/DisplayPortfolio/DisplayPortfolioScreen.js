@@ -14,9 +14,11 @@ import {
 import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
-import { setUserCoinPortfolio } from 'CoinActions';
+import { setUserCoinPortfolio, setUserCoins } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
 import AddCoinComponent from 'AddCoinComponent';
+import EditPortfolioItemComponent from 'EditPortfolioItemComponent';
+import Modal from 'react-native-modal';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -30,7 +32,9 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             data: null,
             fiatSymbol: getFiatSymbol(),
             editMode: false,
-            itemToEdit: null
+            itemToEdit: null,
+            coinToUpdate: null,
+            showModal: false
         };
     }
 
@@ -40,28 +44,53 @@ export class DisplayPortfolioScreen extends React.PureComponent {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.data !== this.props.data) {
-             this.setState({ data: nextProps.data })
+            this.setState({ data: nextProps.data })
         }
     }
 
     onRowEditPressed = (itemToEdit) => {
-        console.warn('onRowEditPressed')
-        console.warn(itemToEdit)
         this.setState({
             itemToEdit,
-            // editMode: false
+            editMode: true,
+            showModal: true
         });
+    };
+
+    onQuantityChanged = (coinName, quantity) => {
+        const coinToUpdate = {
+            name: coinName,
+            quantity: quantity
+        }
+
+        this.setState({
+            coinToUpdate
+        })
+    };
+
+    updateUserCoins = () => {
+        const coinToUpdate = this.state.coinToUpdate;
+        const userCoins = this.props.userCoins;
+
+        const positionToUpdate = userCoins.findIndex((coin) => {
+            return coin.value = coinToUpdate.name
+        })
+
+        userCoins[positionToUpdate].quantity = coinToUpdate.quantity;
+
+        this.props.setUserCoins(userCoins);
     };
 
     toggleEditMode = () => {
         const toggleEdit = !this.state.editMode;
 
         this.setState({
-            editMode: toggleEdit,
+            editMode: toggleEdit
         })
     };
 
-    renderEditButton = () => {
+    /** RENDER **/
+
+    renderEditButton() {
         return (
             <TouchableOpacity onPress={this.toggleEditMode}>
                 <Text style={styles.editButton}>{"EDIT"}</Text>
@@ -69,42 +98,25 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         )
     };
 
-    renderAddAssetButton = () => {
+    renderAddAssetButton() {
         return (
-            <AddCoinComponent/>
+            <AddCoinComponent />
         )
     };
 
     renderRow = (item) => {
-        if (item.item == this.state.itemToEdit) {
-           // TODO: INVALIDATE AFTER NULL??
-            // this.setState({
-            //     itemToEdit: null
-            // });
-            //
-            return (
-                <View>
-                    <TextInput
-                        mode={'outlined'}
-                        placeholder={'Enter new quantity'}
-                        onChangeText={(value) => {}}>
-
-                    </TextInput>
-                </View>
-            )
-        } else {
-            return (
-                <PortfolioRow
-                    item={item.item}
-                    fiatSymbol={this.state.fiatSymbol}
-                    editMode={this.state.editMode}
-                    onRowEditPressed={this.onRowEditPressed}
-                />
-            )
-        }
+        return (
+            <PortfolioRow
+                item={item.item}
+                fiatSymbol={this.state.fiatSymbol}
+                editMode={this.state.editMode}
+                onRowEditPressed={this.onRowEditPressed}
+                onSavePressed={this.updateUserCoins}
+            />
+        )
     };
 
-    renderPortfolioPrice = () => {
+    renderPortfolioPrice() {
         return (
             <View style={styles.header}>
                 <Text style={styles.subtitle}> {'Your portfolio is worth:'}</Text>
@@ -113,19 +125,43 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         )
     };
 
+    renderCoinEditor() {
+        if (!this.state.showModal) {
+            return null;
+        }
+
+        return (
+            <View>
+                <Modal
+                    isVisible={this.state.showModal && this.state.editMode}
+                    animationIn={'pulse'}
+                    onBackdropPress={() => { this.setState({ showModal: false, editMode: false }) }}
+                >
+                    <EditPortfolioItemComponent
+                        item={this.state.itemToEdit}
+                        onQuantityChanged={this.onQuantityChanged}
+                        onSavePressed={this.updateUserCoins}
+                        showModa={this.state.showModal}
+                    />
+                </Modal>
+            </View>
+        )
+    }
+
     render() {
         return (
             <View>
+                {this.renderCoinEditor()}
                 {this.renderPortfolioPrice()}
                 <View style={{ margin: 8 }}>
-                {this.renderEditButton()}
-                <FlatList
-                    data={this.state.data}
-                    renderItem={this.renderRow}
-                    keyExtractor={item => item.name}
-                    extraData={this.state}
-                />
-                {this.renderAddAssetButton()}
+                    {this.renderEditButton()}
+                    <FlatList
+                        data={this.state.data}
+                        renderItem={this.renderRow}
+                        keyExtractor={item => item.name}
+                        extraData={this.state}
+                    />
+                    {this.renderAddAssetButton()}
                 </View>
             </View>
         );
@@ -145,6 +181,9 @@ function mapDispatchToProps(dispatch) {
     return {
         setUserCoinPortfolio: (userCoinData, allCoins) => {
             dispatch(setUserCoinPortfolio(userCoinData, allCoins));
+        },
+        setUserCoins: (userCoins) => {
+            dispatch(setUserCoins(userCoins));
         }
     }
 }

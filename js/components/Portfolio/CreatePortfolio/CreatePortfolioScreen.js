@@ -16,7 +16,6 @@ import { styles } from 'CreatePortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
 import { setUserCoins } from 'CoinActions';
 import { setUserCoinPortfolio } from 'CoinActions';
-import EditPortfolioItemComponent from 'EditPortfolioItemComponent';
 
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
@@ -145,21 +144,6 @@ export class CreatePortfolioScreen extends React.Component {
         this.props.setUserCoinPortfolio(this.state.coinsWithQuantities, this.props.coinData);
         this.props.setUserCoins(this.state.coinsWithQuantities);
         this.props.navigation.navigate('DisplayPortfolio');
-    };
-
-    updateCoinQuantity = () => {
-
-    };
-
-    // Rendering
-
-    renderEditCoinPopup = () => {
-      return (
-          <EditPortfolioItemComponent
-              style={{ width: 500, height: 500 }}
-              onQuantityPressed={this.updateCoinQuantity}
-          />
-      )
     };
 
     renderNewUserTitle = () => {
