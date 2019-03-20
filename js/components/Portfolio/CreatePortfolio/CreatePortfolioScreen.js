@@ -140,8 +140,8 @@ export class CreatePortfolioScreen extends React.Component {
         return !!this.state.coinsWithQuantities.length;
     };
 
-    onDonePressed = () => {
-        this.props.setUserCoinPortfolio(this.state.coinsWithQuantities, this.props.coinData);
+    onDonePressed = async () => {
+        await this.props.setUserCoinPortfolio(this.state.coinsWithQuantities, this.props.coinData);
         this.props.setUserCoins(this.state.coinsWithQuantities);
         this.props.navigation.navigate('DisplayPortfolio');
     };

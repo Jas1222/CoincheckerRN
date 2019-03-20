@@ -22,7 +22,7 @@ export class PortfolioIndex extends React.Component {
     }
 
     checkUserHasCoins = () => {
-        const routeName = this.props.coinData ? 'DisplayPortfolio' : 'CreatePortfolio';
+        const routeName = this.props.coinData && this.props.coinData.length > 0 ? 'DisplayPortfolio' : 'CreatePortfolio';
 
         this.props.navigation.navigate(routeName);
     };

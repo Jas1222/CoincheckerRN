@@ -51,6 +51,7 @@ export function coinReducer(state = initialState, action) {
             }
         }
         case USER_COINS: {
+            console.warn('REDUCER', action.userCoins)
             return {
                 ...state,
                 userCoins: action.userCoins

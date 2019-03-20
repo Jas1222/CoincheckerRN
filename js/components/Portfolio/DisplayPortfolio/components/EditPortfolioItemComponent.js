@@ -33,7 +33,7 @@ export default class EditPortfolioItemComponent extends React.PureComponent {
                 <TextInput
                     onChangeText={(value) => this.props.onQuantityChanged(this.props.item.name, value)}
                     placeholder={"New quantity"}
-                    style={{ color: 'white' }}
+                    style={styles.inputTextPresent}
                     keyboardType={'numeric'}
                 >
 
@@ -41,9 +41,21 @@ export default class EditPortfolioItemComponent extends React.PureComponent {
 
                 <TouchableOpacity
                     style={{ alignItems: 'center' }}
-                    onPress={() => this.props.onSavePressed()}>
-                    <Text style={styles.button}>
+                    onPress={() => this.props.onButtonPressed('edit')}>
+                    <Text style={styles.saveButton}>
                         {"SAVE"}
+                    </Text>
+                </TouchableOpacity>
+
+                <Text style={styles.orText}> 
+                    {"OR"}
+                </Text>
+                
+                <TouchableOpacity
+                    style={{ justifyContent: 'center' }}
+                    onPress={this.props.onDeletePressed}>
+                    <Text style={styles.deleteButton}>
+                        {"DELETE"}
                     </Text>
                 </TouchableOpacity>
 

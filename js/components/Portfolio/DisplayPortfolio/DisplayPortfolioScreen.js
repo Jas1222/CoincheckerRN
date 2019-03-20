@@ -7,7 +7,7 @@ import React from 'react';
 import {
     View,
     Text,
-    TextInput,
+    Alert,
     FlatList,
     TouchableOpacity
 } from 'react-native';
@@ -38,14 +38,8 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         };
     }
 
-    componentDidMount() {
-        this.props.setUserCoinPortfolio(this.props.userCoins, this.props.coinData)
-    }
-
     componentWillReceiveProps(nextProps) {
-        if (nextProps.data !== this.props.data) {
-            this.setState({ data: nextProps.data })
-        }
+        console.warn('HERE', nextProps)
     }
 
     onRowEditPressed = (itemToEdit) => {
@@ -54,6 +48,20 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             editMode: true,
             showModal: true
         });
+    };
+
+    onDeletePressed = () => {
+        Alert.alert( 
+            'Confirm Delete',
+            'Are you sure you want to delete ' + this.state.itemToEdit.name,
+            [
+                {text: 'Cancel', onPress: () => this.setState({showModal: false, editMode: false})},
+                {text: 'Ok', onPress: () => this.updateUserCoins('delete')}
+            ]
+        )
+        
+        console.warn(this.state.itemToEdit.name)
+
     };
 
     onQuantityChanged = (coinName, quantity) => {
@@ -67,15 +75,27 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         })
     };
 
-    updateUserCoins = () => {
-        const coinToUpdate = this.state.coinToUpdate;
-        const userCoins = this.props.userCoins;
-
-        const positionToUpdate = userCoins.findIndex((coin) => {
-            return coin.value = coinToUpdate.name
+    getSelectedCoinPosition(selectedCoin, list) {
+        const result = list.findIndex((coin) => {
+            return coin.value = selectedCoin.name
         })
 
-        userCoins[positionToUpdate].quantity = coinToUpdate.quantity;
+        return result;
+    }
+
+    updateUserCoins = (mode) => {
+        const coin = (mode == 'delete') ? this.state.itemToEdit : this.state.coinToUpdate;
+        const userCoins = this.props.userCoins;
+
+        const positionToUpdate = this.getSelectedCoinPosition(coin, userCoins);
+
+        if (mode === 'edit') {
+            userCoins[positionToUpdate].quantity = coin.quantity;
+        } else if (mode === 'delete') {
+            userCoins.splice(positionToUpdate, 1);
+        } else {
+            return;
+        }
 
         this.props.setUserCoins(userCoins);
     };
@@ -140,8 +160,9 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                     <EditPortfolioItemComponent
                         item={this.state.itemToEdit}
                         onQuantityChanged={this.onQuantityChanged}
-                        onSavePressed={this.updateUserCoins}
-                        showModa={this.state.showModal}
+                        onButtonPressed={this.updateUserCoins}
+                        onDeletePressed={this.onDeletePressed}
+                        showModal={this.state.showModal}
                     />
                 </Modal>
             </View>
@@ -156,7 +177,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                 <View style={{ margin: 8 }}>
                     {this.renderEditButton()}
                     <FlatList
-                        data={this.state.data}
+                        data={this.props.data}
                         renderItem={this.renderRow}
                         keyExtractor={item => item.name}
                         extraData={this.state}
