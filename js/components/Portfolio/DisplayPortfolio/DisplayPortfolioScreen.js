@@ -58,6 +58,11 @@ export class DisplayPortfolioScreen extends React.PureComponent {
     };
 
     onSavePressed = () => {
+        if (!this.state.coinToUpdate) {
+            this.displayErrorMessage();
+            return;
+        }
+
         Alert.alert( 
             'Confirm Edit',
             'Are you sure you want to edit ' + this.state.itemToEdit.name,
@@ -100,6 +105,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
 
     saveUserCoin = () => {
         const coin = this.state.coinToUpdate;
+
         const userCoins = this.props.userCoins;
         const positionToUpdate = this.getSelectedCoinPosition(coin, userCoins);
         userCoins[positionToUpdate].quantity = coin.quantity;
@@ -117,6 +123,16 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             editMode: toggleEdit
         })
     };
+
+    displayErrorMessage = () => {
+        Alert.alert( 
+            'Invalid quantity',
+            'Please enter a valid quantity',
+            [
+                {text: 'Ok', onPress: () => {}}
+            ]
+        )  
+    }
 
     /** RENDER **/
 

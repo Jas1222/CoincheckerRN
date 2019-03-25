@@ -40,8 +40,8 @@ export default class EditPortfolioItemComponent extends React.PureComponent {
                 </TextInput>
 
                 <TouchableOpacity
-                    style={{ alignItems: 'center' }}
-                    onPress={() => this.props.onSavePressed()}>
+                    style={{ alignItems: 'center', opacity: this.state.newQuantity ? 1 : 0.3 }}
+                    onPress={() => this.state.newQuantity? this.props.onSavePressed() : {}}>
                     <Text style={styles.saveButton}>
                         {"SAVE"}
                     </Text>

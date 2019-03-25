@@ -41,7 +41,6 @@ export function setUserCoins(userCoins) {
             console.warn('Messed up saving coin values')
         }
 
-        console.warn('SETACTION', userCoins)
         return dispatch({type: USER_COINS, userCoins})
     }
 }
