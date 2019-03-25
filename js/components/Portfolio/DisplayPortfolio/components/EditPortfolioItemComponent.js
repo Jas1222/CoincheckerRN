@@ -41,7 +41,7 @@ export default class EditPortfolioItemComponent extends React.PureComponent {
 
                 <TouchableOpacity
                     style={{ alignItems: 'center' }}
-                    onPress={() => this.props.onButtonPressed('edit')}>
+                    onPress={() => this.props.onSavePressed()}>
                     <Text style={styles.saveButton}>
                         {"SAVE"}
                     </Text>
@@ -53,7 +53,7 @@ export default class EditPortfolioItemComponent extends React.PureComponent {
                 
                 <TouchableOpacity
                     style={{ justifyContent: 'center' }}
-                    onPress={this.props.onDeletePressed}>
+                    onPress={() => this.props.onDeletePressed()}>
                     <Text style={styles.deleteButton}>
                         {"DELETE"}
                     </Text>
