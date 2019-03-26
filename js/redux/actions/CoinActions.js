@@ -54,7 +54,6 @@ export function setUserCoinPortfolio(userCoinData, allCoins) {
 }
 
 export function getAllCoins() {
-    
     return async (dispatch) => {
         let data = {};
 
@@ -71,7 +70,6 @@ export function getAllCoins() {
 }
 
 export function getUserCoins() {
-
     return async (dispatch) => {
         const stringifiedData = await AsyncStorage.getItem('USER_COIN_DATA');
         const userCoins = JSON.parse(stringifiedData);

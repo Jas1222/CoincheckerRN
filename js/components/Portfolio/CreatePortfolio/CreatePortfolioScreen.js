@@ -39,6 +39,10 @@ export class CreatePortfolioScreen extends React.Component {
         }
     }
 
+    componentDidMount() {
+        // TODO set portfolio to coinsWithQuantities
+    }
+
     // TODO shouldnt be here but roll with its
     adaptData = (coins) => {
         let data = [];
@@ -84,12 +88,14 @@ export class CreatePortfolioScreen extends React.Component {
         return index;
     };
 
+
+    // 2 methods below could be merged
     hasUserPreviouslySelectedCoin = (coin, coinsWithQuantities) => {
         let result = false;
         let position = 0;
         
         if (coinsWithQuantities) {
-            result = coinsWithQuantities.findIndex((selectedCoin) => {            
+            result = coinsWithQuantities.findIndex((selectedCoin) => {  
                 return selectedCoin.value == coin;
             });
     
@@ -98,6 +104,22 @@ export class CreatePortfolioScreen extends React.Component {
         }
 
         return [result, position];
+    };
+
+    // Could be merged with above
+    isCoinInUsersPortfolio = (coin, userPortfolio) => {
+        let result = false;
+        let position = 0;
+        result = userPortfolio.findIndex((userCoin) => {
+
+            return userCoin.name == coin
+        });
+        
+
+        position = result;
+        result = result > -1 ? true : false;
+
+        return [result, position]
     };
 
     onChangeText = (name, value) => {
@@ -155,6 +177,17 @@ export class CreatePortfolioScreen extends React.Component {
     renderLabel = (coin) => {
         // TODO Fix autofocus
         const [isCoinTicked, position] = this.hasUserPreviouslySelectedCoin(coin, this.state.selectedCoins);
+        let portfolioValue;
+        
+        if (this.props.coinPortfolio) {
+            const [existsInPortfolio, where] = this.isCoinInUsersPortfolio(coin, this.props.coinPortfolio);
+
+            if (existsInPortfolio) {
+                
+                portfolioValue = this.props.coinPortfolio[where].quantity
+            }
+
+        }
         
         return (
             <View style={{ flex: 1}}>
@@ -165,10 +198,11 @@ export class CreatePortfolioScreen extends React.Component {
                         <TextInput
                             style={styles.input}
                             mode={'outlined'}
+                            defaultValue={portfolioValue}
                             keyboardType={'numeric'}
                             autoCapitalize="none"
                             placeholder={'0.0'}
-                            editable={isCoinTicked}
+                            editable={isCoinTicked || existsInPortfolio}
                             onChangeText={(value) => this.onChangeText(coin, value)}
                         />}
                 </View>
@@ -214,7 +248,8 @@ export class CreatePortfolioScreen extends React.Component {
 function mapStateToProps(state) {
     return {
         coinData: state.coinReducer.coinData,
-        userCoins: state.coinReducer.userCoins
+        userCoins: state.coinReducer.userCoins,
+        coinPortfolio: state.coinReducer.portfolioData
     };
 }
 

@@ -67,8 +67,8 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             'Confirm Edit',
             'Are you sure you want to edit ' + this.state.itemToEdit.name,
             [
-                {text: 'Cancel', onPress: () => this.setState({showModal: false, editMode: false})},
-                {text: 'Ok', onPress: () => this.saveUserCoin()}
+                { text: 'Cancel', onPress: () => this.setState({showModal: false, editMode: false}) },
+                { text: 'Ok', onPress: () => this.saveUserCoin() }
             ]
         )
     }
@@ -90,7 +90,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         })
 
         return result;
-    }
+    };
 
     deleteUserCoin = () => {
         const coin = this.state.itemToEdit;
@@ -101,13 +101,13 @@ export class DisplayPortfolioScreen extends React.PureComponent {
 
         this.props.setUserCoins(userCoins);
         this.setState({ showModal: false })
-    }
+    };
 
     saveUserCoin = () => {
         const coin = this.state.coinToUpdate;
-
         const userCoins = this.props.userCoins;
         const positionToUpdate = this.getSelectedCoinPosition(coin, userCoins);
+
         userCoins[positionToUpdate].quantity = coin.quantity;
 
         this.props.setUserCoinPortfolio(userCoins, this.props.coinData);
@@ -146,7 +146,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
 
     renderAddAssetButton() {
         return (
-            <AddCoinComponent />
+            <AddCoinComponent onPress={ () => this.props.navigation.navigate('CreatePortfolio') } />
         )
     };
 
