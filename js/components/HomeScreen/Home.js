@@ -13,7 +13,8 @@ import Header from 'Header';
 import { connect } from 'react-redux';
 import {
     getAllCoins, 
-    getUserCoins 
+    getUserCoins,
+    setUserCoinPortfolio
 } from 'CoinActions';
 import ErrorMessage from 'ErrorMessage';
 
@@ -31,10 +32,17 @@ export class Home extends React.Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.coinData !== this.props.coinData) {
+            this.props.setUserCoinPortfolio(nextProps.userCoins, nextProps.coinData);
+        }
+    }
+
      refresh = async () => {
         this.setState({refreshing: true});
-        this.props.getAllCoins();
-        this.props.getUserCoins();
+        await this.props.getAllCoins();
+        await this.props.getUserCoins();
+        
         this.setState({refreshing: false});
     };
 
@@ -110,6 +118,7 @@ export class Home extends React.Component {
 function mapStateToProps(state) {
     return {
         coinData: state.coinReducer.coinData,
+        userCoins: state.coinReducer.userCoins,
         failedRequest: state.coinReducer.failedRequest,
     };
 }
@@ -121,6 +130,9 @@ function mapDispatchToProps(dispatch) {
         },
         getUserCoins: () => {
             dispatch(getUserCoins())
+        },
+        setUserCoinPortfolio: (userCoins, allCoins) => {
+            dispatch(setUserCoinPortfolio(userCoins, allCoins));
         }
     }
 }

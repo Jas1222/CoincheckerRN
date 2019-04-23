@@ -67,8 +67,12 @@ function add(a, b) {
 }
 
 export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
+    if (!userPortfolio) {
+        return;
+    }
+
     let userCoinsWithTotalPrice = [];
-    
+
     userPortfolio.forEach((portfolioCoin) => {
         const matchedCoin = latestPrices.find((coinWithPrice) => {
             return coinWithPrice.name == portfolioCoin.value
