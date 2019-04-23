@@ -9,16 +9,17 @@ import {
     Text,
     Alert,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
 } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
 import { setUserCoinPortfolio, setUserCoins } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
-import AddCoinComponent from 'AddCoinComponent';
 import EditPortfolioItemComponent from 'EditPortfolioItemComponent';
 import Modal from 'react-native-modal';
+import ActionButton from 'react-native-action-button';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -134,19 +135,31 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         )  
     }
 
-    /** RENDER **/
-
     renderEditButton() {
         return (
-            <TouchableOpacity onPress={this.toggleEditMode}>
-                <Text style={styles.editButton}>{"EDIT"}</Text>
-            </TouchableOpacity>
+            <View style={ styles.editContainer }>
+                <View style={{ flexGrow: 1 }}>
+                    <TouchableOpacity >
+                            <Text style={styles.editButton}>{"Add new asset"}</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ flexGrow: 1}}>
+                    <TouchableOpacity onPress={this.toggleEditMode} >
+                            <Text style={styles.editButton}>{"Edit existing asset"}</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         )
     };
 
     renderAddAssetButton() {
         return (
-            <AddCoinComponent onPress={ () => this.props.navigation.navigate('CreatePortfolio') } />
+            <View>
+                <ActionButton 
+                    buttonColor="#03A9F4"
+                    onPress={() => {}} />
+            </View>
         )
     };
 
@@ -200,8 +213,8 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             <View>
                 {this.renderCoinEditor()}
                 {this.renderPortfolioPrice()}
+                {this.renderEditButton()}
                 <View style={{ margin: 8 }}>
-                    {this.renderEditButton()}
                     <FlatList
                         data={this.props.data}
                         renderItem={this.renderRow}

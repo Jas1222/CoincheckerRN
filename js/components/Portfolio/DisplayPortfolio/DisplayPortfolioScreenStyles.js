@@ -26,13 +26,14 @@ export const styles = StyleSheet.create({
         color: 'white'
     },
     editButton: {
-        borderRadius: 3, 
-        borderWidth: 1, 
-        borderColor: '#03A9F4',
-        alignSelf: 'flex-end',
-        backgroundColor: '#FFF',
-        color: '#03A9F4',
-        marginBottom: 5,
-        padding: 4
+        alignSelf: 'center',
+        color: 'black',
+    },
+    editContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        height: 40,
+        backgroundColor: '#6dd1ff',
+        alignItems: 'center',
     }
 });
