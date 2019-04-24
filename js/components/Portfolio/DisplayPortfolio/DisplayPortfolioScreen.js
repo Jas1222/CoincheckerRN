@@ -9,8 +9,7 @@ import {
     Text,
     Alert,
     FlatList,
-    TouchableOpacity,
-    Platform
+    TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
@@ -19,7 +18,6 @@ import { setUserCoinPortfolio, setUserCoins } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
 import EditPortfolioItemComponent from 'EditPortfolioItemComponent';
 import Modal from 'react-native-modal';
-import ActionButton from 'react-native-action-button';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -135,11 +133,11 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         )  
     }
 
-    renderEditButton() {
+    renderEditBar() {
         return (
             <View style={ styles.editContainer }>
                 <View style={{ flexGrow: 1 }}>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => {this.props.navigation.navigate('AddCoinToPortfolio')}} >
                             <Text style={styles.editButton}>{"Add new asset"}</Text>
                     </TouchableOpacity>
                 </View>
@@ -149,16 +147,6 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                             <Text style={styles.editButton}>{"Edit existing asset"}</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-        )
-    };
-
-    renderAddAssetButton() {
-        return (
-            <View>
-                <ActionButton 
-                    buttonColor="#03A9F4"
-                    onPress={() => {}} />
             </View>
         )
     };
@@ -213,7 +201,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             <View>
                 {this.renderCoinEditor()}
                 {this.renderPortfolioPrice()}
-                {this.renderEditButton()}
+                {this.renderEditBar()}
                 <View style={{ margin: 8 }}>
                     <FlatList
                         data={this.props.data}
@@ -221,7 +209,6 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                         keyExtractor={item => item.name}
                         extraData={this.state}
                     />
-                    {this.renderAddAssetButton()}
                 </View>
             </View>
         );

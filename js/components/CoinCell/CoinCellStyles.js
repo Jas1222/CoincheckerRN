@@ -1,6 +1,6 @@
- /**
-  * @providesModule CoinCellStyles
-  */
+/**
+ * @providesModule CoinCellStyles
+ */
 
 import { StyleSheet } from 'react-native';
 
@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
     },
     price: {
         color: '#000000',
-        // marginTop: 10,
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 3
