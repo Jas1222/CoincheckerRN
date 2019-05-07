@@ -109,7 +109,7 @@ export class AddToPortfolioScreen extends React.PureComponent {
                 <Modal
                     isVisible={this.state.showModal}
                     animationIn={'pulse'}
-                    onBackdropPress={() => { this.toggleModal }}
+                    onBackdropPress={this.toggleModal}
                 >
                     <EditPortfolioItemComponent
                         item={this.state.coinToAdd}

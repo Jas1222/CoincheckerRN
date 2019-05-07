@@ -81,12 +81,11 @@ export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
         if (matchedCoin) {
             matchedCoin.quantity = portfolioCoin.quantity;
             matchedCoin.userSum = Math.round(matchedCoin.price * portfolioCoin.quantity * 100) / 100;
-            delete matchedCoin.percentageChange;
             userCoinsWithTotalPrice.push(matchedCoin)
         }
     });
 
-    const totalPortfolioSum = userCoinsWithTotalPrice.map((coin) => coin.userSum).reduce(add, 0);
+    const totalPortfolioSum = Math.round(userCoinsWithTotalPrice.map((coin) => coin.userSum).reduce(add, 0));
 
     return {
         userCoinsWithTotalPrice: userCoinsWithTotalPrice,
