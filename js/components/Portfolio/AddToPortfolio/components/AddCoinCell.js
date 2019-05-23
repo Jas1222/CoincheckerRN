@@ -5,7 +5,6 @@
 import React from 'react';
 import { styles } from 'AddCoinCellStyles';
 import {
-    TextInput,
     Text,
     View,
     TouchableOpacity
@@ -14,9 +13,10 @@ import {
 export default class AddCoinCell extends React.PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
-            showModal: false
-        }
+    }
+
+    handlePress = () => {
+        this.props.onPress(this.props.item);
     }
 
     render() {
@@ -29,7 +29,7 @@ export default class AddCoinCell extends React.PureComponent {
                     </View>
 
                     <View>
-                        <TouchableOpacity onPress={() => this.props.onPress(this.props.item)}>
+                        <TouchableOpacity onPress={this.props.onPress}>
                             <Text style={styles.addButton}>{"ADD"}</Text>
                         </TouchableOpacity>
                     </View>
