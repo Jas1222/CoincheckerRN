@@ -85,7 +85,7 @@ export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
         }
     });
 
-    const totalPortfolioSum = Math.round(userCoinsWithTotalPrice.map((coin) => coin.userSum).reduce(add, 0));
+    const totalPortfolioSum = Math.round(userCoinsWithTotalPrice.map((coin) => coin.userSum).reduce(add, 0) * 100) / 100
 
     return {
         userCoinsWithTotalPrice: userCoinsWithTotalPrice,

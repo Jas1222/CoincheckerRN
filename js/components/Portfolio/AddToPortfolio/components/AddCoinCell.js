@@ -29,7 +29,7 @@ export default class AddCoinCell extends React.PureComponent {
                     </View>
 
                     <View>
-                        <TouchableOpacity onPress={this.props.onPress}>
+                        <TouchableOpacity onPress={this.handlePress}>
                             <Text style={styles.addButton}>{"ADD"}</Text>
                         </TouchableOpacity>
                     </View>
