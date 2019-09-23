@@ -1,12 +1,4 @@
 import React from 'react';
-import {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    FlatList,
-    RefreshControl
-} from 'react-native';
 import  Home from 'Home';
 import { Provider } from 'react-redux';
 import { getStore } from 'GlobalStore';
@@ -14,12 +6,14 @@ import Icon from 'react-native-vector-icons/Feather';
 import CreatePortfolioScreen from 'CreatePortfolioScreen';
 import DisplayPortfolioScreen from 'DisplayPortfolioScreen';
 import PortfolioIndex from 'PortfolioIndex';
+import AddToPortfolioScreen from 'AddToPortfolioScreen';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 
 const PortfolioNavigator = createStackNavigator({
     PortfolioIndex: PortfolioIndex,
     CreatePortfolio: CreatePortfolioScreen,
-    DisplayPortfolio: DisplayPortfolioScreen
+    DisplayPortfolio: DisplayPortfolioScreen,
+    AddCoinToPortfolio: AddToPortfolioScreen
 });
 
 const TabNavigator = createBottomTabNavigator({

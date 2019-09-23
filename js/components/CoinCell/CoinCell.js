@@ -7,7 +7,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import { getFiatSymbol, getPercentageLabel } from 'CoinAdapter';
 import { styles } from 'CoinCellStyles';
 
-export default class CoinCell extends React.Component {
+export default class CoinCell extends React.PureComponent {
     constructor(props) {
         super(props);
     }

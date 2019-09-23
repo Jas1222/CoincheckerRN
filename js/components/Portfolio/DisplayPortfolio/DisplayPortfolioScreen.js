@@ -9,17 +9,15 @@ import {
     Text,
     Alert,
     FlatList,
-    TouchableOpacity,
-    Platform
+    TouchableOpacity
 } from 'react-native';
-import { connect } from 'react-redux';
 import { styles } from 'DisplayPortfolioScreenStyles';
 import { getFiatSymbol } from 'CoinAdapter';
 import { setUserCoinPortfolio, setUserCoins } from 'CoinActions';
 import PortfolioRow from 'PortfolioRow';
 import EditPortfolioItemComponent from 'EditPortfolioItemComponent';
 import Modal from 'react-native-modal';
-import ActionButton from 'react-native-action-button';
+import { connect } from 'react-redux';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -47,75 +45,12 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         });
     };
 
-    onDeletePressed = () => {
-        Alert.alert( 
-            'Confirm Delete',
-            'Are you sure you want to delete ' + this.state.itemToEdit.name,
-            [
-                {text: 'Cancel', onPress: () => this.setState({showModal: false, editMode: false})},
-                {text: 'Ok', onPress: () => this.deleteUserCoin()}
-            ]
-        )
-    };
-
-    onSavePressed = () => {
-        if (!this.state.coinToUpdate) {
-            this.displayErrorMessage();
-            return;
-        }
-
-        Alert.alert( 
-            'Confirm Edit',
-            'Are you sure you want to edit ' + this.state.itemToEdit.name,
-            [
-                { text: 'Cancel', onPress: () => this.setState({showModal: false, editMode: false}) },
-                { text: 'Ok', onPress: () => this.saveUserCoin() }
-            ]
-        )
-    }
-
-    onQuantityChanged = (coinName, quantity) => {
-        const coinToUpdate = {
-            name: coinName,
-            quantity: quantity
-        }
-
+    toggleModal = () => {
         this.setState({
-            coinToUpdate
+            showModal: false,
+            editMode: false
         })
-    };
-
-    getSelectedCoinPosition(selectedCoin, list) {
-        const result = list.findIndex((coin) => {
-            return coin.value = selectedCoin.name
-        })
-
-        return result;
-    };
-
-    deleteUserCoin = () => {
-        const coin = this.state.itemToEdit;
-        const userCoins = this.props.userCoins;
-        const positionToUpdate = this.getSelectedCoinPosition(coin, userCoins);
-
-        userCoins.splice(positionToUpdate, 1);
-
-        this.props.setUserCoins(userCoins);
-        this.setState({ showModal: false })
-    };
-
-    saveUserCoin = () => {
-        const coin = this.state.coinToUpdate;
-        const userCoins = this.props.userCoins;
-        const positionToUpdate = this.getSelectedCoinPosition(coin, userCoins);
-
-        userCoins[positionToUpdate].quantity = coin.quantity;
-
-        this.props.setUserCoinPortfolio(userCoins, this.props.coinData);
-        this.props.setUserCoins(userCoins);
-
-        this.setState({ showModal: false })
-    };
+    }
 
     toggleEditMode = () => {
         const toggleEdit = !this.state.editMode;
@@ -125,40 +60,20 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         })
     };
 
-    displayErrorMessage = () => {
-        Alert.alert( 
-            'Invalid quantity',
-            'Please enter a valid quantity',
-            [
-                {text: 'Ok', onPress: () => {}}
-            ]
-        )  
-    }
-
-    renderEditButton() {
+    renderEditBar() {
         return (
-            <View style={ styles.editContainer }>
+            <View style={styles.editContainer}>
                 <View style={{ flexGrow: 1 }}>
-                    <TouchableOpacity >
-                            <Text style={styles.editButton}>{"Add new asset"}</Text>
+                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('AddCoinToPortfolio') }} >
+                        <Text style={styles.editButton}>{"Add new asset"}</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ flexGrow: 1}}>
+                <View style={{ flexGrow: 1 }}>
                     <TouchableOpacity onPress={this.toggleEditMode} >
-                            <Text style={styles.editButton}>{"Edit existing asset"}</Text>
+                        <Text style={styles.editButton}>{"Edit existing asset"}</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
-        )
-    };
-
-    renderAddAssetButton() {
-        return (
-            <View>
-                <ActionButton 
-                    buttonColor="#03A9F4"
-                    onPress={() => {}} />
             </View>
         )
     };
@@ -194,14 +109,13 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                 <Modal
                     isVisible={this.state.showModal && this.state.editMode}
                     animationIn={'pulse'}
-                    onBackdropPress={() => { this.setState({ showModal: false, editMode: false }) }}
+                    onBackdropPress={this.toggleModal}
                 >
                     <EditPortfolioItemComponent
                         item={this.state.itemToEdit}
-                        onQuantityChanged={this.onQuantityChanged}
-                        onSavePressed={this.onSavePressed}
-                        onDeletePressed={this.onDeletePressed}
                         showModal={this.state.showModal}
+                        expandedOptions={true}
+                        toggleModal={this.toggleModal}
                     />
                 </Modal>
             </View>
@@ -213,7 +127,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
             <View>
                 {this.renderCoinEditor()}
                 {this.renderPortfolioPrice()}
-                {this.renderEditButton()}
+                {this.renderEditBar()}
                 <View style={{ margin: 8 }}>
                     <FlatList
                         data={this.props.data}
@@ -221,7 +135,6 @@ export class DisplayPortfolioScreen extends React.PureComponent {
                         keyExtractor={item => item.name}
                         extraData={this.state}
                     />
-                    {this.renderAddAssetButton()}
                 </View>
             </View>
         );
