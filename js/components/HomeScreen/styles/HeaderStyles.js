@@ -57,5 +57,10 @@ export default styles = StyleSheet.create({
         fontSize: 12,
         alignSelf: 'center',
         color: 'white'
-    }
+    },
+    // iosContainer: {
+    //     flexDirection: 'row',
+    //     justifyContent: 'space-between'
+    // },
+
 });
