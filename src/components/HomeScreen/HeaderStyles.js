@@ -1,8 +1,3 @@
-/**
- * @providesModule HeaderStyles
- * @flow
- */
-
 import { StyleSheet } from 'react-native';
 
 export default styles = StyleSheet.create({
@@ -57,5 +52,12 @@ export default styles = StyleSheet.create({
         fontSize: 12,
         alignSelf: 'center',
         color: 'white'
+    },
+    iosContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    modalContainer: {
+        
     }
 });

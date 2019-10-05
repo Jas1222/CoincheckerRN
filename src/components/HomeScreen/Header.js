@@ -2,9 +2,10 @@ import React from 'react';
 import {
     View,
     Text,
-    LayoutAnimation,
     UIManager,
-    Picker
+    Picker,
+    Platform,
+    Modal
 } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Feather';
@@ -31,11 +32,12 @@ export class Header extends React.Component {
             timeFormat: props.timePeriod,
             currency: props.currencyType,
             numberOfCoins: props.numberOfCoins,
+            showModal: false
         };
 
     }
 
-    _renderLastUpdated = () => {
+    renderLastUpdated = () => {
         return (
             <View style={styles.lastUpdatedContainer}>
                 <Text style={styles.lastUpdatedLabel}>Updated:</Text>
@@ -44,24 +46,24 @@ export class Header extends React.Component {
         )
     };
 
-    _renderTitle() {
+    renderTitle() {
         const coinText = <Text style={[styles.title,]}>COIN-CHECKER</Text>;
-        const settingsTest = <Text style={[styles.title, {textDecorationLine: 'underline'}]}>FILTERS</Text>;
+        const settingsTest = <Text style={[styles.title, { textDecorationLine: 'underline' }]}>FILTERS</Text>;
 
         let titleText = this.state.expanded ? settingsTest : coinText;
 
         return (
             <View style={[styles.titleContainer]}>
-                {this._renderLastUpdated()}
+                {this.renderLastUpdated()}
                 {titleText}
-                <Icon name="filter" size={30} color="#FFFFFF" style={ styles.settingsIcon }
-                      onPress={this._onSettingsPress.bind(this)}/>
+                <Icon name="filter" size={30} color="#FFFFFF" style={styles.settingsIcon}
+                    onPress={this.onSettingsPress} />
             </View>
         )
     }
 
-    _onSettingsPress() {
-        LayoutAnimation.easeInEaseOut();
+    onSettingsPress = () => {
+        // LayoutAnimation.easeInEaseOut();
 
         if (this.state.expanded) {
             this.setState({
@@ -80,80 +82,124 @@ export class Header extends React.Component {
         });
     }
 
-    _renderSettingsContainer() {
-        if (this.state.expanded) {
-            return <View>
-
-                <View style={ styles.rowFormat }>
-                    <Icon name="clock" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Time Period </Text>
-                    <Picker
-                        style={ styles.dropdown }
-                        selectedValue={ this.props.timePeriod }
-                        mode={"dropdown"}
-                        onValueChange={(itemValue) => {
-                            this.props.setPercentageChange(itemValue);
-                            this.props.refresh();
-                        }}>
-                        <Picker.Item label="1 Hour" value="percent_change_1h"/>
-                        <Picker.Item label="24 Hour" value="percent_change_24h"/>
-                        <Picker.Item label="7 day" value="percent_change_7d"/>
-                    </Picker>
-                </View>
-
-                <View style={ styles.rowFormat }>
-                    <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Currency </Text>
-                    <Picker
-                        style={ styles.dropdown }
-                        selectedValue={ this.props.currencyType }
-                        mode={"dropdown"}
-                        onValueChange={(itemValue) => {
-                            this.props.setCurrencyType(itemValue);
-                            this.props.refresh();
-                        }}>
-                        <Picker.Item label="GBP" value="gbp"/>
-                        <Picker.Item label="EUR" value="eur"/>
-                        <Picker.Item label="USD" value="usd"/>
-                    </Picker>
-                </View>
-
-                <View style={ styles.rowFormat }>
-                    <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Number of Coins</Text>
-                    <Picker
-                        style={ styles.dropdown }
-                        selectedValue={ this.props.numberOfCoins }
-                        mode={"dropdown"}
-                        onValueChange={(itemValue) => {
-                            this.props.setNumberOfCoins(itemValue);
-                            this.props.refresh();
-                        }}>
-                        <Picker.Item label="10" value="10"/>
-                        <Picker.Item label="20" value="20"/>
-                        <Picker.Item label="30" value="30"/>
-                        <Picker.Item label="40" value="40"/>
-                        <Picker.Item label="50" value="50"/>
-                    </Picker>
-                </View>
-
-            </View>
-        }
+    toggleModal = () => {
+        this.props.toggleModal();
     }
 
-    _renderHeader() {
+    renderTimePeriodRow = () => {
         return (
-            <View style={[{height: this.state.height}, {backgroundColor: '#03A9F4'}]}>
-                { this._renderTitle() }
-                { this._renderSettingsContainer() }
+            <View style={styles.rowFormat}>
+                <Icon name="clock" size={20} color="#FFFFFF" style={styles.icon} />
+                <Text style={styles.settingsLabels}>Time Period</Text>
+                <Picker
+                    style={styles.dropdown}
+                    selectedValue={this.props.timePeriod}
+                    mode={"dropdown"}
+                    onValueChange={(itemValue) => {
+                        this.props.setPercentageChange(itemValue);
+                        this.props.refresh();
+                    }}>
+                    <Picker.Item label="1 Hour" value="percent_change_1h" />
+                    <Picker.Item label="24 Hour" value="percent_change_24h" />
+                    <Picker.Item label="7 day" value="percent_change_7d" />
+                </Picker>
             </View>
         )
     }
 
+    renderCurrencyRow = () => {
+        return (
+            <View style={styles.rowFormat}>
+                <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.icon} onClick={() => { console.warn('!!!') }} />
+                <Text style={styles.settingsLabels}> Currency </Text>
+                <Picker
+                    style={styles.dropdown}
+                    selectedValue={this.props.currencyType}
+                    mode={"dropdown"}
+                    onValueChange={(itemValue) => {
+                        this.props.setCurrencyType(itemValue);
+                        this.props.refresh();
+                    }}>
+                    <Picker.Item label="GBP" value="gbp" />
+                    <Picker.Item label="EUR" value="eur" />
+                    <Picker.Item label="USD" value="usd" />
+                </Picker>
+            </View>
+        )
+    }
+
+    renderNumberOfCoinsRow = () => {
+        return (
+            <View style={styles.rowFormat}>
+                <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon} />
+                <Text style={styles.settingsLabels}> Number of Coins</Text>
+                <Picker
+                    style={styles.dropdown}
+                    selectedValue={this.props.numberOfCoins}
+                    mode={"dropdown"}
+                    onValueChange={(itemValue) => {
+                        this.props.setNumberOfCoins(itemValue);
+                        this.props.refresh();
+                    }}>
+                    <Picker.Item label="10" value="10" />
+                    <Picker.Item label="20" value="20" />
+                    <Picker.Item label="30" value="30" />
+                    <Picker.Item label="40" value="40" />
+                    <Picker.Item label="50" value="50" />
+                </Picker>
+            </View>
+        )
+    }
+
+    renderAndroidFilterSection() {
+        if (this.state.expanded) {
+            return (
+                <View>
+                    {this.renderTimePeriodRow()}
+                    {this.renderCurrencyRow()}
+                    {this.renderNumberOfCoinsRow()}
+                </View>)
+        }
+    }
+
+    renderIosFilterSection = () => {
+        return (
+            <View style={styles.rowFormat}>
+                <Icon name="clock" size={20} color="#FFFFFF" style={styles.icon} onPress={this.toggleModal}/>
+                <MaterialIcon name="currency-gbp" size={20} color="#FFFFFF" style={styles.icon} onPress={() => { this.setState({ showModal: !this.state.showModal }) }} />
+                <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon} />
+            </View>
+        )
+    }
+
+    renderHeader = () => {
+        return (
+            <View style={{ backgroundColor: '#03A9F4' }}>
+                {Platform.OS === 'android' ? this.renderAndroidFilterSection() : this.renderIosFilterSection()}
+            </View>
+        )
+    }
+
+    // renderModal = () => {
+    //     return (
+
+    //             <Modal
+    //                 visible={this.state.showModal}
+    //                 animationIn={'pulse'}
+    //                 onBackdropPress={() => { }}
+    //                 transparent={true}
+    //                 >
+
+    //                 <View style={{justifyContent: 'center', alignSelf: 'center', height: 200, width: 200, backgroundColor: 'red' }} />
+    //             </Modal>
+    //     )
+    // }
+
     render() {
         return (
             <View>
-                { this._renderHeader()}
+                {this.renderTitle()}
+                {this.renderHeader()}
             </View>
         );
     }

@@ -2,12 +2,13 @@ import React from 'react';
 import {
     View,
     FlatList,
+    Modal
 } from 'react-native';
 import CoinCell from '../CoinCell/CoinCell';
 import Header from './Header';
 import { connect } from 'react-redux';
 import {
-    getAllCoins, 
+    getAllCoins,
     getUserCoins,
     setUserCoinPortfolio
 } from '../../redux/actions/CoinActions';
@@ -24,6 +25,7 @@ export class Home extends React.Component {
         this.state = {
             coinData: props.coinData,
             refreshing: false,
+            showModal: false
         };
     }
 
@@ -33,12 +35,12 @@ export class Home extends React.Component {
         }
     }
 
-     refresh = async () => {
-        this.setState({refreshing: true});
+    refresh = async () => {
+        this.setState({ refreshing: true });
         await this.props.getAllCoins();
         await this.props.getUserCoins();
-        
-        this.setState({refreshing: false});
+
+        this.setState({ refreshing: false });
     };
 
     componentDidMount = () => {
@@ -58,7 +60,9 @@ export class Home extends React.Component {
     renderHeader = () => {
         return (
             <Header
-                refresh={this.refresh}/>
+                refresh={this.refresh}
+                toggleModal={this.toggleModal}
+            />
         )
     };
 
@@ -77,13 +81,13 @@ export class Home extends React.Component {
     renderContent = () => {
         if (this.props.failedRequest && !this.props.lastRefreshed) {
             return (
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                    <Header/>
-                        <ErrorMessage
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.refresh}
-                            style={{alignSelf: 'center', justifyContent: 'center'}}
-                        />
+                <View style={{ flex: 1, flexDirection: 'column' }}>
+                    <Header />
+                    <ErrorMessage
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.refresh}
+                        style={{ alignSelf: 'center', justifyContent: 'center' }}
+                    />
                 </View>
             )
         } else {
@@ -101,10 +105,29 @@ export class Home extends React.Component {
         }
     };
 
+    toggleModal = () => {
+        const currentState = this.state.showModal;
+        this.setState({showModal: !currentState})
+    }
+
+    renderModal = () => {
+        return (
+                <Modal
+                    visible={this.state.showModal}
+                    animationIn={'pulse'}
+                    onBackdropPress={() => { }}
+                    transparent={true}
+                    >
+                    <View style={{alignSelf: 'center', height: 200, width: 200, backgroundColor: 'red' }} />
+                </Modal>
+        )
+    }
+
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1, justifyContent: 'center' }}>
                 {this.renderContent()}
+                {this.renderModal()}
             </View>
         );
     }
