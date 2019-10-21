@@ -1,7 +1,3 @@
-/**
- * @providesModule CoinCellStyles
- */
-
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -10,7 +6,10 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFFF',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 9
+        margin: 4,
+        padding: 9,
+        borderRadius: 10,
+        elevation: 1
     },
     columnContainer: {
         flexDirection: 'column'

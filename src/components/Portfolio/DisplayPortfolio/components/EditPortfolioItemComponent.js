@@ -42,14 +42,18 @@ export class EditPortfolioItemComponent extends React.PureComponent {
     }
 
     onSavePressed = () => {
+        const addMessage = `Are you sure you want to add ${this.state.coinToUpdate.quantity} ${this.props.item.name}`;
+        const editMessage = `About to edit ${this.state.coinToUpdate.value} quantity to ${this.state.coinToUpdate.quantity}`;
+        const modeMessage = this.props.expandedOptions ? editMessage : addMessage
+
         if (!this.state.coinToUpdate) {
             this.displayErrorMessage();
             return;
         }
 
         Alert.alert(
-            'Confirm Edit',
-            'Are you sure you want to edit ' + this.props.item.name,
+            "Confirm",
+            modeMessage,
             [
                 { text: 'Cancel', onPress: () => this.props.toggleModal },
                 { text: 'Ok', onPress: () => this.saveUserCoin() }
@@ -91,13 +95,13 @@ export class EditPortfolioItemComponent extends React.PureComponent {
         const coin = this.state.coinToUpdate;
         const userCoins = this.props.userCoins;
 
-        if (this.props.expandedOptions) {            
+        if (this.props.expandedOptions) {
             const positionToUpdate = this.getSelectedCoinPosition(coin, userCoins);
             userCoins[positionToUpdate].quantity = coin.quantity;
         } else {
             userCoins.push(coin)
         }
-        
+
 
         this.props.setUserCoinPortfolio(userCoins, this.props.coinData);
         this.props.setUserCoins(userCoins);
@@ -124,38 +128,43 @@ export class EditPortfolioItemComponent extends React.PureComponent {
                     {"Enter your new " + this.props.item.name + " quantity:"}
                 </Text>
 
+            
                 <TextInput
                     onChangeText={(value) => this.onQuantityChanged(this.props.item.name, value)}
-                    placeholder={"New quantity"}
+                    placeholder={"0.0"}
                     style={styles.inputTextPresent}
                     keyboardType={'numeric'}
+                    style={{alignSelf: 'center', fontSize: 24, fontWeight: 'bold', marginTop: 10, marginBottom: 10}}
                 >
 
                 </TextInput>
 
-                <TouchableOpacity
-                    style={{ alignItems: 'center' }}
-                    onPress={this.onSavePressed}>
-                    <Text style={styles.saveButton}>
-                        {"SAVE"}
-                    </Text>
-                </TouchableOpacity>
-
-                {(this.props.expandedOptions &&
-                    <View>
-                        <Text style={styles.orText}>
-                            {"OR"}
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        style={{ alignItems: 'center' }}
+                        onPress={this.onSavePressed}>
+                        <Text style={styles.saveButton}>
+                            {"SAVE"}
                         </Text>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={{ justifyContent: 'center' }}
-                            onPress={this.onDeletePressed}>
-                            <Text style={styles.deleteButton}>
-                                {"DELETE"}
+                    {this.props.expandedOptions &&
+                        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+                            <Text style={styles.orText}>
+                                {"OR"}
                             </Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
+                        </View>
+                    }
+
+                    {this.props.expandedOptions && <TouchableOpacity
+                        style={{ justifyContent: 'center' }}
+                        onPress={this.onDeletePressed}>
+                        <Text style={styles.deleteButton}>
+                            {"DELETE"}
+                        </Text>
+                    </TouchableOpacity>
+                    }
+                </View>
 
             </View>
         );

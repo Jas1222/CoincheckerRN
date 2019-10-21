@@ -1,39 +1,35 @@
-/**
- * @providesModule DisplayPortfolioScreenStyles
- * @flow
- */
-
 import { StyleSheet } from 'react-native';
+import { appTheme } from '../../../Colors';
 
 export const styles = StyleSheet.create({
     header: {
         height: 125, 
         alignItems: 'center', 
         marginTop: 20,
-        borderRadius: 5,
-        backgroundColor: '#03A9F4'
+        backgroundColor: appTheme.primary
     },
     title: {
         fontSize: 30, 
         fontWeight: 'bold', 
         alignSelf: 'center',
-        color: 'white'
-
+        color: appTheme.secondaryText
     },
     subtitle: {
         fontSize: 22, 
         fontWeight: '300',
-        color: 'white'
+        color: appTheme.secondaryText
     },
     editButton: {
         alignSelf: 'center',
-        color: 'black',
+        color: appTheme.secondaryText
     },
     editContainer: {
         flexDirection: 'row',
         width: '100%',
         height: 40,
-        backgroundColor: '#6dd1ff',
+        borderTopWidth: 2,
+        borderColor: appTheme.accent,
+        backgroundColor: appTheme.secondary,
         alignItems: 'center',
     }
 });

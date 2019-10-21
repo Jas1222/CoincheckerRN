@@ -7,7 +7,7 @@ import CoinCell from '../CoinCell/CoinCell';
 import Header from './Header';
 import { connect } from 'react-redux';
 import {
-    getAllCoins, 
+    getAllCoins,
     getUserCoins,
     setUserCoinPortfolio
 } from '../../redux/actions/CoinActions';
@@ -33,12 +33,12 @@ export class Home extends React.Component {
         }
     }
 
-     refresh = async () => {
-        this.setState({refreshing: true});
+    refresh = async () => {
+        this.setState({ refreshing: true });
         await this.props.getAllCoins();
         await this.props.getUserCoins();
-        
-        this.setState({refreshing: false});
+
+        this.setState({ refreshing: false });
     };
 
     componentDidMount = () => {
@@ -47,43 +47,33 @@ export class Home extends React.Component {
 
     renderRow = (data) => {
         return (
+
             <CoinCell
                 name={data.item.name}
                 price={data.item.price}
                 percentageChange={data.item.percentageChange}
                 symbol={data.item.symbol}>
             </CoinCell>)
+
     };
 
     renderHeader = () => {
         return (
             <Header
-                refresh={this.refresh}/>
+                refresh={this.refresh} />
         )
-    };
-
-    renderSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: "#CED0CE",
-                }}
-            />
-        );
     };
 
     renderContent = () => {
         if (this.props.failedRequest && !this.props.lastRefreshed) {
             return (
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                    <Header/>
-                        <ErrorMessage
-                            refreshing={this.state.refreshing}
-                            onRefresh={this.refresh}
-                            style={{alignSelf: 'center', justifyContent: 'center'}}
-                        />
+                <View style={{ flex: 1, flexDirection: 'column' }}>
+                    <Header />
+                    <ErrorMessage
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.refresh}
+                        style={{ alignSelf: 'center', justifyContent: 'center' }}
+                    />
                 </View>
             )
         } else {
@@ -94,7 +84,6 @@ export class Home extends React.Component {
                     refreshing={this.state.refreshing}
                     renderItem={this.renderRow}
                     ListHeaderComponent={this.renderHeader()}
-                    ItemSeparatorComponent={this.renderSeparator}
                     keyExtractor={item => item.name}
                 />
             )
@@ -103,7 +92,7 @@ export class Home extends React.Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1, backgroundColor: '#EEEEEE'}}>
                 {this.renderContent()}
             </View>
         );

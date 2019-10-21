@@ -43,6 +43,9 @@ export function setUserCoins(userCoins) {
 
 export function setUserCoinPortfolio(userCoinData, allCoins) {
     return async (dispatch) => {
+        if (!userCoinData) {
+            return;
+        }
         const portfolioData = await calculateUserCoinPortfolio(userCoinData, allCoins);
         return dispatch({type: SET_PORTFOLIO_VALUE, portfolioData});
     }
@@ -50,7 +53,7 @@ export function setUserCoinPortfolio(userCoinData, allCoins) {
 
 export function getAllCoins() {
     return async (dispatch) => {
-        let data = {};
+        const data = {};
 
         try {
             const rawData = await getCryptocurrencyData();

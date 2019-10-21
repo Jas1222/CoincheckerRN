@@ -54,14 +54,3 @@ export default class App extends React.Component {
         );
     }
 }
-
-
-// export default class App extends React.Component {
-//     render() {
-//         return (
-//             <Provider store={getStore()}>
-//                 <TabNavigator/>
-//             </Provider>
-//         );
-//     }
-// }

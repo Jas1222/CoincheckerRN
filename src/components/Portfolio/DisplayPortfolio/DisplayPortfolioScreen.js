@@ -13,6 +13,7 @@ import PortfolioRow from './PortfolioRow';
 import EditPortfolioItemComponent from './components/EditPortfolioItemComponent';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
+import { appTheme } from '../../../Colors';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -119,7 +120,7 @@ export class DisplayPortfolioScreen extends React.PureComponent {
 
     render() {
         return (
-            <View>
+            <View style={{flex:1, backgroundColor: appTheme.primaryBackgroundColor }}>
                 {this.renderCoinEditor()}
                 {this.renderPortfolioPrice()}
                 {this.renderEditBar()}
