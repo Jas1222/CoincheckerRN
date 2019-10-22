@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     header: {
         height: 125, 
         alignItems: 'center', 
-        marginTop: 20,
+        paddingTop: 25,
         backgroundColor: appTheme.primary
     },
     title: {

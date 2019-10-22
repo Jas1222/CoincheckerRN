@@ -1,9 +1,10 @@
 import { StyleSheet } from 'react-native';
+import { appTheme } from '../../Colors';
 
 export const styles = StyleSheet.create({
     primaryContainer: {
         flex: 1,
-        backgroundColor: '#FFFF',
+        backgroundColor: appTheme.secondaryBackgroundColor,
         flexDirection: 'row',
         justifyContent: 'space-between',
         margin: 4,
@@ -15,34 +16,35 @@ export const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     name: {
-        color: '#000000',
+        color: appTheme.primaryText,
         fontSize: 22,
         marginBottom: 3
     },
     price: {
-        color: '#000000',
+        color: appTheme.primaryText,
         fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 3
     },
     positivePercent: {
-        color: '#3D9970',
+        color: appTheme.positive,
         fontSize: 15,
         fontWeight: 'bold',
     },
     negativePercent: {
-        color: '#FF4136',
+        color: appTheme.negative,
         fontSize: 15,
         fontWeight: 'bold',
     },
     secondaryContainer: {
         flex: 1,
-        backgroundColor: '#FFFF',
+        backgroundColor: appTheme.secondaryBackgroundColor,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     symbol: {
         fontSize: 13,
+        color: appTheme.primaryText,
         justifyContent: 'flex-start',
     }
 });

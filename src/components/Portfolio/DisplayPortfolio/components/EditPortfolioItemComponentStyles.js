@@ -48,6 +48,6 @@ export const styles = StyleSheet.create({
     buttonContainer: {
         width: '100%',
         justifyContent: 'space-around',
-        flexDirection: appTheme.red,
+        flexDirection: 'row',
     }
 });

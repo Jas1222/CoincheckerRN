@@ -8,6 +8,7 @@ import DisplayPortfolioScreen from './src/components/Portfolio/DisplayPortfolio/
 import PortfolioIndex from './src/components/Portfolio/PortfolioIndex';
 import AddToPortfolioScreen from './src/components/Portfolio/AddToPortfolio/AddToPortfolioScreen';
 import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { appTheme } from './src/Colors';
 
 const PortfolioNavigator = createStackNavigator({
     PortfolioIndex: PortfolioIndex,
@@ -33,7 +34,7 @@ const TabNavigator = createBottomTabNavigator({
             return <Icon name={iconName} size={horizontal ? 20 : 25} color={tintColor}/>;
         },
         tabBarOptions: {
-            activeTintColor: '#03A9F4',
+            activeTintColor: appTheme.accent,
             inactiveTintColor: 'gray',
             activeBackgroundColor: '#FAFAFA',
             inactiveBackgroundColor: '#FAFAFA',
