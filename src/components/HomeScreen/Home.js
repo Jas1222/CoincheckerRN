@@ -12,6 +12,8 @@ import {
     setUserCoinPortfolio
 } from '../../redux/actions/CoinActions';
 import ErrorMessage from './ErrorMessage';
+import { appTheme } from '../../Colors';
+
 
 export class Home extends React.Component {
     static navigationOptions = {
@@ -92,7 +94,7 @@ export class Home extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: '#EEEEEE'}}>
+            <View style={{ flex: 1, backgroundColor: appTheme.primaryBackgroundColor}}>
                 {this.renderContent()}
             </View>
         );

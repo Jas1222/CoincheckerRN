@@ -2,7 +2,6 @@ import React from 'react';
 import {
     View,
     Text,
-    FlatList,
     TextInput,
     TouchableOpacity
 } from 'react-native';
@@ -10,7 +9,7 @@ import { connect } from 'react-redux';
 import { styles } from './CreatePortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
 import { setUserCoins, setUserCoinPortfolio } from '../../../redux/actions/CoinActions';
-
+import { withNavigation } from 'react-navigation';
 
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
@@ -206,6 +205,7 @@ export class CreatePortfolioScreen extends React.Component {
     };
 
     render() {
+
         return (
             <View style={styles.container}>
                 <Text
@@ -260,4 +260,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePortfolioScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(CreatePortfolioScreen))
