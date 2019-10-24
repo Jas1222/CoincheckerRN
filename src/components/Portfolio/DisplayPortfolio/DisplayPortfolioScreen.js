@@ -13,6 +13,8 @@ import PortfolioRow from './PortfolioRow';
 import EditPortfolioItemComponent from './components/EditPortfolioItemComponent';
 import Modal from 'react-native-modal';
 import { connect } from 'react-redux';
+import { appTheme } from '../../../Colors';
+import { withNavigation } from 'react-navigation';
 
 export class DisplayPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
@@ -58,15 +60,15 @@ export class DisplayPortfolioScreen extends React.PureComponent {
     renderEditBar() {
         return (
             <View style={styles.editContainer}>
-                <View style={{ flexGrow: 1 }}>
+                <View style={[styles.buttonContainer, { borderRightWidth: 4 }]}>
                     <TouchableOpacity onPress={() => { this.props.navigation.navigate('AddCoinToPortfolio') }} >
-                        <Text style={styles.editButton}>{"Add new asset"}</Text>
+                        <Text style={styles.editButton}>{"Add New Asset"}</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ flexGrow: 1 }}>
+                <View style={styles.buttonContainer}>
                     <TouchableOpacity onPress={this.toggleEditMode} >
-                        <Text style={styles.editButton}>{"Edit existing asset"}</Text>
+                        <Text style={styles.editButton}>{"Edit Existing Asset"}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -117,9 +119,13 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         )
     }
 
+    userHasCoins = () => {
+        return this.props.coinData && this.props.coinData.length > 0
+    };  
+
     render() {
         return (
-            <View>
+            <View style={{ flex: 1, backgroundColor: appTheme.primaryBackgroundColor }}>
                 {this.renderCoinEditor()}
                 {this.renderPortfolioPrice()}
                 {this.renderEditBar()}
@@ -156,4 +162,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisplayPortfolioScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(DisplayPortfolioScreen))

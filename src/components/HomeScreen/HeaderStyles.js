@@ -1,26 +1,25 @@
-/**
- * @providesModule HeaderStyles
- * @flow
- */
-
 import { StyleSheet } from 'react-native';
+import { appTheme } from '../../Colors';
 
 export default styles = StyleSheet.create({
     titleContainer: {
         padding: 10,
         flexDirection: 'row',
-        backgroundColor: '#03A9F4',
+        backgroundColor: appTheme.primary,
         justifyContent: 'space-between'
+    },
+    subcontainer: {
+        backgroundColor: appTheme.secondary
     },
     title: {
         fontSize: 20,
         marginTop: 8,
         fontWeight: 'bold',
-        color: '#ffffff',
+        color: appTheme.text,
         alignSelf: 'center'
     },
     dropdown: {
-        color: '#ffffff',
+        color: appTheme.text,
         width: '40%',
         marginLeft: 20,
     },
@@ -36,7 +35,7 @@ export default styles = StyleSheet.create({
         alignSelf: 'flex-end'
     },
     settingsLabels: {
-        color: '#FFFFFF',
+        color: appTheme.text,
         fontSize: 15,
         marginLeft: 25,
         marginTop: 15,
@@ -48,7 +47,7 @@ export default styles = StyleSheet.create({
         flexDirection: 'column'
     },
     lastUpdatedLabel: {
-        color: 'white',
+        color: appTheme.text,
         fontSize: 12,
         alignSelf: 'center',
         textDecorationLine: 'underline'
@@ -56,6 +55,6 @@ export default styles = StyleSheet.create({
     lastUpdatedTime: {
         fontSize: 12,
         alignSelf: 'center',
-        color: 'white'
+        color: appTheme.text
     }
 });

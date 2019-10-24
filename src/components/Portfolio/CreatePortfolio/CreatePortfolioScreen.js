@@ -2,7 +2,6 @@ import React from 'react';
 import {
     View,
     Text,
-    FlatList,
     TextInput,
     TouchableOpacity
 } from 'react-native';
@@ -10,8 +9,8 @@ import { connect } from 'react-redux';
 import { styles } from './CreatePortfolioScreenStyles';
 import SelectMultiple from 'react-native-select-multiple'
 import { setUserCoins, setUserCoinPortfolio } from '../../../redux/actions/CoinActions';
-
-
+import { withNavigation } from 'react-navigation';
+import { isValidInput, alertInvalidInput } from './../../Utils/ValidateInput';
 // TODO extract to a labels file
 const newUserMessage = "Select your coins below and enter your quantity to start your portfolio";
 
@@ -118,39 +117,43 @@ export class CreatePortfolioScreen extends React.Component {
     };
 
     onChangeText = (name, value) => {
-        const coinsWithQuantities = this.state.coinsWithQuantities;
-        const selectedCoins = this.state.selectedCoins;
-
-        let isPreviouslySelected = [false, 0];
-
-        if (selectedCoins.length) {
-            isPreviouslySelected = this.hasUserPreviouslySelectedCoin(name, coinsWithQuantities)
-        }
-        
-        if (isPreviouslySelected[0]) {
-            coinsWithQuantities[isPreviouslySelected[1]].quantity = value;
-        } else {
-            const coinToAdd = {
-                value: name,
-                quantity: value
-            };    
+        if (isValidInput(value)) {
+            const coinsWithQuantities = this.state.coinsWithQuantities;
+            const selectedCoins = this.state.selectedCoins;
     
-            coinsWithQuantities.push(coinToAdd);
-        }
-
-        if (coinsWithQuantities.length) {
+            let isPreviouslySelected = [false, 0];
+    
+            if (selectedCoins.length) {
+                isPreviouslySelected = this.hasUserPreviouslySelectedCoin(name, coinsWithQuantities)
+            }
+            
+            if (isPreviouslySelected[0]) {
+                coinsWithQuantities[isPreviouslySelected[1]].quantity = value;
+            } else {
+                const coinToAdd = {
+                    value: name,
+                    quantity: value
+                };    
+        
+                coinsWithQuantities.push(coinToAdd);
+            }
+    
+            if (coinsWithQuantities.length) {
+                this.setState({
+                    buttonDisabled: false
+                })
+            } else {
+                this.setState({
+                    buttonDisabled: true
+                })        
+            }
+    
             this.setState({
-                buttonDisabled: false
-            })
+                coinsWithQuantities: coinsWithQuantities
+            });
         } else {
-            this.setState({
-                buttonDisabled: true
-            })        
+            alertInvalidInput(() => {});
         }
-
-        this.setState({
-            coinsWithQuantities: coinsWithQuantities
-        });
     };
     
     isSubmitEnabled = () => {
@@ -206,6 +209,7 @@ export class CreatePortfolioScreen extends React.Component {
     };
 
     render() {
+
         return (
             <View style={styles.container}>
                 <Text
@@ -260,4 +264,4 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePortfolioScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(CreatePortfolioScreen))

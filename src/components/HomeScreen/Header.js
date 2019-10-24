@@ -61,8 +61,6 @@ export class Header extends React.Component {
     }
 
     _onSettingsPress() {
-        LayoutAnimation.easeInEaseOut();
-
         if (this.state.expanded) {
             this.setState({
                 height: this.state.height - headerOffset,
@@ -120,7 +118,7 @@ export class Header extends React.Component {
 
                 <View style={ styles.rowFormat }>
                     <Icon name="hash" size={20} color="#FFFFFF" style={styles.icon}/>
-                    <Text style={styles.settingsLabels}> Number of Coins</Text>
+                    <Text style={styles.settingsLabels}>Number of Coins</Text>
                     <Picker
                         style={ styles.dropdown }
                         selectedValue={ this.props.numberOfCoins }
@@ -134,6 +132,11 @@ export class Header extends React.Component {
                         <Picker.Item label="30" value="30"/>
                         <Picker.Item label="40" value="40"/>
                         <Picker.Item label="50" value="50"/>
+                        <Picker.Item label="60" value="60"/>
+                        <Picker.Item label="70" value="70"/>
+                        <Picker.Item label="80" value="80"/>
+                        <Picker.Item label="90" value="90"/>
+                        <Picker.Item label="100" value="100"/>
                     </Picker>
                 </View>
 
@@ -143,7 +146,7 @@ export class Header extends React.Component {
 
     _renderHeader() {
         return (
-            <View style={[{height: this.state.height}, {backgroundColor: '#03A9F4'}]}>
+            <View style={[{ height: this.state.height}, { backgroundColor: '#8667AC' }, { marginBottom: 10 }]}>
                 { this._renderTitle() }
                 { this._renderSettingsContainer() }
             </View>

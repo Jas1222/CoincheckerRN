@@ -1,13 +1,10 @@
- /**
-  * @providesModule AddCoinCellStyles
-  */
-
  import { StyleSheet } from 'react-native';
+ import { appTheme } from './../../../Colors';
 
  export const styles = StyleSheet.create({
     primaryContainer: {
         flex: 1,
-        backgroundColor: '#FFFF',
+        backgroundColor: appTheme.secondaryText,
         padding: 9,
         flexDirection: 'column'
     },
@@ -31,8 +28,8 @@
         fontWeight: 'bold',
         borderWidth: 1,
         borderRadius: 5,
-        borderColor: '#03A9F4',
-        color: '#03A9F4',
+        borderColor: appTheme.primary,
+        color: appTheme.primary,
         padding: 5
     }
  });

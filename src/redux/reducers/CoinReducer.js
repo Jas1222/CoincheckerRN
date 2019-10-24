@@ -8,13 +8,14 @@ import { CHANGE_CURRENCY_TYPE,
 
 const initialState = {
     currencyType: 'gbp',
-    numberOfCoins: 200,
+    numberOfCoins: 20,
     timePeriod: 'percent_change_24h',
     coinData: [],
     lastRefreshed: '',
     failedRequest: false,
     userCoins: [],
-    portfolioData: []
+    portfolioData: [],
+    userCoinsWithTotalPrice: []
 };
 
 export function coinReducer(state = initialState, action) {

@@ -1,8 +1,3 @@
-/**
- * @providesModule PortfolioRowStyles
- * @flow
- */
-
 import { StyleSheet } from 'react-native';
 
 export const getStyles = (editMode) => {

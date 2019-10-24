@@ -18,7 +18,7 @@
       "backgroundColor": "#ffffff"
     },
     "android": {
-        "package": "com.jhayer.coinchecker"
+      "package": "com.jhayer.coinchecker"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,6 +28,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "description": "",
+    "androidStatusBar": {
+      "backgroundColor": "#695998"
     }
   }
 }

@@ -1,38 +1,31 @@
-/**
- * @providesModule PortfolioIndex
- * @flow
- */
-
 import React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationActions, StackActions } from 'react-navigation'
+import { View } from 'react-native';
 import {connect} from 'react-redux';
+import CreatePortfolioScreen from './CreatePortfolio/CreatePortfolioScreen'
+import DisplayPortfolioScreen from './DisplayPortfolio/DisplayPortfolioScreen';
+
 
 export class PortfolioIndex extends React.Component {
     static navigationOptions = {
-        tabBarLabel: 'Portfolio'
+        tabBarLabel: 'Portfolio',
+        header: null
     };
 
     constructor(props) {
         super(props);
     }
 
-    componentDidMount() {
-        this.checkUserHasCoins();
-    }
-
-    checkUserHasCoins = () => {
-        const routeName = this.props.coinData && this.props.coinData.length > 0 ? 'DisplayPortfolio' : 'CreatePortfolio';
-
-        this.props.navigation.navigate(routeName);
+    userHasCoins = () => {
+        return this.props.coinData && this.props.coinData.length > 0
     };
 
     render() {
         return (
-            <View>
-                <Text> {"SDKLFNDSLF"} </Text>
+            <View style={{flex: 1}}>
+            {this.userHasCoins() ? <DisplayPortfolioScreen/> : <CreatePortfolioScreen/>}            
             </View>
         )
+        
     }
 
 }

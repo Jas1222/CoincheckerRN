@@ -8,14 +8,15 @@ import AddCoinCell from './components/AddCoinCell';
 import SearchBar from './components/SearchBar';
 import EditPortfolioItemComponent from '../DisplayPortfolio/components/EditPortfolioItemComponent';
 import Modal from 'react-native-modal';
+import { appTheme } from './../../../Colors';
 
 export class AddToPortfolioScreen extends React.PureComponent {
     static navigationOptions = {
         title: 'Add Coins To Portfolio',
         headerStyle: {
-            backgroundColor: '#03A9F4'
+            backgroundColor: appTheme.primary
         },
-        headerTintColor: '#fff'
+        headerTintColor: appTheme.secondaryText
     };
 
     constructor(props) {
@@ -124,10 +125,4 @@ function mapStateToProps(state) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddToPortfolioScreen)
+export default connect(mapStateToProps, null)(AddToPortfolioScreen)

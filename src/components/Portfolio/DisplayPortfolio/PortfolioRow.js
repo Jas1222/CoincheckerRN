@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { getStyles } from './PortfolioRowStyles';
 import Icon from 'react-native-vector-icons/Feather';
+import { appTheme } from './../../../Colors';
 
 export default class PortfolioRow extends React.Component {
 
@@ -34,7 +35,7 @@ export default class PortfolioRow extends React.Component {
 
                 <Icon name="edit-2" 
                         size={30}
-                        color={'#03A9F4'} 
+                        color={ appTheme.accent } 
                         style={ this.styles.editRowButton }
                         onPress={() => this.props.onRowEditPressed(this.props.item)}/>
             </View>
