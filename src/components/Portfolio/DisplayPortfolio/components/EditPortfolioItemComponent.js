@@ -9,13 +9,16 @@ import {
 import { styles } from './EditPortfolioItemComponentStyles';
 import { setUserCoinPortfolio, setUserCoins } from '../../../../redux/actions/CoinActions';
 import { connect } from 'react-redux';
+import { isValidInput, alertInvalidInput } from './../../../Utils/ValidateInput';
+import { relativeTimeRounding } from 'moment';
 
 export class EditPortfolioItemComponent extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.state = ({
-            coinToUpdate: null
+            coinToUpdate: null,
+            isValidInput: false
         });
     }
 
@@ -31,17 +34,29 @@ export class EditPortfolioItemComponent extends React.PureComponent {
     }
 
     onQuantityChanged = (coinName, quantity) => {
-        const coinToUpdate = {
-            value: coinName,
-            quantity: quantity
-        }
+        if (isValidInput(quantity)) {
+            this.setState({isValidInput: true});
 
-        this.setState({
-            coinToUpdate
-        })
+            const coinToUpdate = {
+                value: coinName,
+                quantity: quantity
+            }
+            this.setState({
+                coinToUpdate,
+                isValidInput: true
+            })
+        } else {
+            this.setState({isValidInput: false})
+            alertInvalidInput(() => {});
+        }
     }
 
     onSavePressed = () => {
+        if (!this.state.isValidInput) {
+            alertInvalidInput(() => {})
+            return;
+        }
+
         const addMessage = `Are you sure you want to add ${this.state.coinToUpdate.quantity} ${this.props.item.name}`;
         const editMessage = `About to edit ${this.state.coinToUpdate.value} quantity to ${this.state.coinToUpdate.quantity}`;
         const modeMessage = this.props.expandedOptions ? editMessage : addMessage
@@ -142,7 +157,9 @@ export class EditPortfolioItemComponent extends React.PureComponent {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={{ alignItems: 'center' }}
-                        onPress={this.onSavePressed}>
+                        onPress={this.onSavePressed}
+                        disabled={!this.state.isValidInput}
+                        >
                         <Text style={styles.saveButton}>
                             {"SAVE"}
                         </Text>

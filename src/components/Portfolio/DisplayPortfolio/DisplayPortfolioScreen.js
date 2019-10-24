@@ -119,6 +119,10 @@ export class DisplayPortfolioScreen extends React.PureComponent {
         )
     }
 
+    userHasCoins = () => {
+        return this.props.coinData && this.props.coinData.length > 0
+    };  
+
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: appTheme.primaryBackgroundColor }}>

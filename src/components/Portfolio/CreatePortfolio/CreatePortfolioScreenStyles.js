@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { appTheme } from './../../../Colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,7 +11,7 @@ export const styles = StyleSheet.create({
         fontSize: 50,
         fontWeight: "200",
         marginTop: '20%',
-        color: '#03A9F4'
+        color: appTheme.primary
     },
     subtitle: {
         textAlign: 'center',
@@ -44,8 +45,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     button: {
-        backgroundColor: '#03A9F4',
-        color: 'white',
+        backgroundColor: appTheme.primary,
+        color: appTheme.secondaryText,
         fontSize: 18,
         fontWeight: '600',
         marginBottom: '1%',
