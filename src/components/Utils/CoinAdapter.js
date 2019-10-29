@@ -62,6 +62,11 @@ function add(a, b) {
     return a + b;
 }
 
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  }
+  
+
 export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
     if (!userPortfolio) {
         return;
@@ -82,9 +87,10 @@ export async function calculateUserCoinPortfolio(userPortfolio, latestPrices) {
     });
 
     const totalPortfolioSum = Math.round(userCoinsWithTotalPrice.map((coin) => coin.userSum).reduce(add, 0) * 100) / 100
+    const formattedSum = formatNumber(totalPortfolioSum);
 
     return {
         userCoinsWithTotalPrice: userCoinsWithTotalPrice,
-        totalPortfolioSum: totalPortfolioSum
+        totalPortfolioSum: formattedSum
     }
 }
