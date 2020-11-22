@@ -50,9 +50,6 @@ export function getPercentageLabel() {
 export function convertJsonTypes(item) {
     const currencyType = getStore().getState().coinReducer.currencyType;
     const timePeriod = getStore().getState().coinReducer.timePeriod;
-    console.warn({item})
-    console.warn({currencyType})
-    console.warn({timePeriod})
     const obj = item.quote[currencyType.toUpperCase()];
 
     return {

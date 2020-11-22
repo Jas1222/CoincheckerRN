@@ -63,7 +63,6 @@ export function getAllCoins() {
             
             return dispatch({type: GET_COIN_DATA, data});
         } catch (error) {
-            console.warn({error})
             data.failedRequest = true;
         }
 
