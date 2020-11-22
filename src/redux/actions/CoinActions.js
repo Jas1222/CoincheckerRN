@@ -57,13 +57,16 @@ export function getAllCoins() {
 
         try {
             const rawData = await getCryptocurrencyData();
-            data.adaptedData = adaptCoinData(rawData);
+
+            data.adaptedData = adaptCoinData(rawData.data);
             data.lastRefreshed = getCurrentTime();
+            
+            return dispatch({type: GET_COIN_DATA, data});
         } catch (error) {
+            console.warn({error})
             data.failedRequest = true;
         }
 
-        return dispatch({type: GET_COIN_DATA, data});
     }
 }
 

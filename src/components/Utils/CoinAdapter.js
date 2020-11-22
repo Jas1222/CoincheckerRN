@@ -1,13 +1,13 @@
 import { getStore } from '../../redux/store/GlobalStore';
 
 export function adaptCoinData(data) {
-    return data.data.map(coin => {
+    return data.map(coin => {
         let convertedCoin = convertJsonTypes(coin);
 
         return {
-            name: coin.name,
+            name: coin.slug.toUpperCase(),
             symbol: coin.symbol,
-            percentageChange: convertedCoin.percentageChange,
+            percentageChange: Math.round(convertedCoin.percentageChange * 100) / 100,
             price: convertedCoin.price
         };
     });
@@ -50,7 +50,10 @@ export function getPercentageLabel() {
 export function convertJsonTypes(item) {
     const currencyType = getStore().getState().coinReducer.currencyType;
     const timePeriod = getStore().getState().coinReducer.timePeriod;
-    const obj = item.quotes[currencyType.toUpperCase()];
+    console.warn({item})
+    console.warn({currencyType})
+    console.warn({timePeriod})
+    const obj = item.quote[currencyType.toUpperCase()];
 
     return {
         price: obj.price,

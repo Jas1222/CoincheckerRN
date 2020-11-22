@@ -3,7 +3,7 @@
     "name": "Coinchecker",
     "slug": "Coinchecker",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
+    "sdkVersion": "37.0.0",
     "platforms": [
       "ios",
       "android",
@@ -32,7 +32,6 @@
     "description": "",
     "androidStatusBar": {
       "backgroundColor": "#695998"
-    },
-    "permissions": []
+    }
   }
 }
